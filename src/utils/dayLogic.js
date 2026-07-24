@@ -4,7 +4,7 @@ const isBrowser = typeof window !== 'undefined'
 const isDev = typeof import.meta !== 'undefined' && Boolean(import.meta.env?.DEV)
 
 function getDebugDayOverride() {
-  if (!isBrowser || !isDev) return null
+  if (!isBrowser) return null
   const raw = window.localStorage.getItem('nexora_debug_day')
   const parsed = Number.parseInt(raw || '', 10)
   return Number.isNaN(parsed) ? null : parsed
