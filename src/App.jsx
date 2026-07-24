@@ -39,6 +39,7 @@ function App() {
     const savedProfile = readProfileName()
     return savedProfile ? DEFAULT_PAGE : 'profile'
   })
+  const [progressInitialDay, setProgressInitialDay] = useState(null)
 
   const testerId = useMemo(() => profileName.trim() || null, [profileName])
 
@@ -54,10 +55,21 @@ function App() {
       return
     }
 
+    if (pageId !== 'progress') {
+      setProgressInitialDay(null)
+    }
+
     if (pageId === activePage) return
 
     setActivePage(pageId)
     trackEvent({ type: 'navigation', destination: pageId, tester_id: testerId })
+  }
+
+  const handleNavigateToProgress = (day) => {
+    if (day) {
+      setProgressInitialDay(day)
+    }
+    navigateTo('progress')
   }
 
   const handleProfileSaved = (name) => {
@@ -107,12 +119,12 @@ function App() {
         return (
           <Exercises
             testerId={testerId}
-            onNavigateToProgress={() => navigateTo('progress')}
+            onNavigateToProgress={handleNavigateToProgress}
             onReturnToProgram={() => navigateTo('exercises')}
           />
         )
       case 'progress':
-        return <Progress />
+        return <Progress initialOpenDay={progressInitialDay} />
       case 'feedback':
         return <Feedback testerId={testerId} />
       case 'profile':

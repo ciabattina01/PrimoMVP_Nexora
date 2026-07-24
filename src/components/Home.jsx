@@ -53,8 +53,9 @@ function Home({ onStartExercises }) {
               Inizia ad applicare <span className="gradient-text">i concetti sul grafico</span>
             </h1>
             <p className="lead hero-lead">
-              <strong>Ogni giorno trovi 3 esercizi</strong>: uno sul trend, uno sulle zone e uno sul trigger/rischio. In ogni esercizio analizzi un <strong>grafico reale</strong>.
+              <strong>Ogni giorno hai 3 esercizi.</strong> <strong>Ogni esercizio:</strong>•📉Grafico reale •⌚7-10min.
             </p>
+            <h2 className="daily-goal-title">Obiettivo giornaliero</h2>
             <div className="hero-highlights" aria-label="Punti chiave del percorso">
               {HERO_CARDS.map((card) => (
                 <div key={card.title} className="hero-highlight">
@@ -76,14 +77,18 @@ function Home({ onStartExercises }) {
           </div>
 
           <aside className="weekly-goal-card" aria-labelledby="weekly-goal-title">
-            <h2 id="weekly-goal-title">OBIETTIVO</h2>
+            <h2 id="weekly-goal-title">OBIETTIVO – Cosa alleni</h2>
             <p>
-              Completa i 3 esercizi quotidiani per 6 giorni e sblocca lo <strong>scenario finale — dove applichi
-              tutto insieme sul grafico </strong>
+              Ogni giorno ti allenerai a ragionare direttamente sul grafico attraverso tre esercizi:
             </p>
-            <div className="weekly-goal-status" role="status">
-              <span>Bloccato — giorno 0/6</span>
-            </div>
+            <ul className="weekly-goal-list">
+              <li>Riconoscere i trend e i cambi di struttura.</li>
+              <li>Individuare le zone in cui il prezzo ha reagito.</li>
+              <li>Riconoscere i possibili punti di entrata (Trigger) e dove posizionare lo Stop Loss.</li>
+            </ul>
+            <p className="weekly-goal-note">
+              Questa versione non è ancora definitiva: è un primo test per capire quale metodo di apprendimento risulta più chiaro ed efficace.
+            </p>
           </aside>
         </div>
       </section>
@@ -131,21 +136,19 @@ function Home({ onStartExercises }) {
               Grafici semplici per analizzare Trend, Zone, Trigger e Rischio.
             </p>
           </article>
-          
+
           <article className="level-card level-development">
             <div className="level-card-header">
               <h3>2.</h3>
               <span className="level-badge level-badge-development">In sviluppo</span>
             </div>
-            
           </article>
-          
+
           <article className="level-card level-development">
             <div className="level-card-header">
               <h3>3.</h3>
               <span className="level-badge level-badge-development">In sviluppo</span>
             </div>
-          
           </article>
         </div>
       </section>

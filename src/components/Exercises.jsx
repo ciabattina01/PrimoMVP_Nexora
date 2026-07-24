@@ -37,6 +37,8 @@ const DAY_SCENARIO_LABELS = {
   3: 'GBP/USD',
 }
 
+const FREE_RESPONSE_ANSWER = 'RISPOSTA_LIBERA'
+
 function buildRichTextBlocks(text) {
   const lines = String(text || '').split('\n')
   const blocks = []
@@ -203,7 +205,10 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   }
 
   const handleConfirmAnswer = () => {
-    if (!selectedExercise || !pendingAnswer) return
+    if (!selectedExercise) return
+
+    const isFreeResponseExercise = !selectedExercise.answers?.length
+    if (!isFreeResponseExercise && !pendingAnswer) return
 
     // Validate observation text
     if (!observationText.trim()) {
@@ -211,12 +216,13 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       return
     }
 
-    const isCorrect = pendingAnswer === selectedExercise.correctAnswer
+    const submittedAnswer = isFreeResponseExercise ? FREE_RESPONSE_ANSWER : pendingAnswer
+    const isCorrect = isFreeResponseExercise || submittedAnswer === selectedExercise.correctAnswer
     const numericExerciseId = getExerciseNumber(selectedExercise)
 
     saveRisposta({
       esercizio_id: numericExerciseId,
-      risposta_scelta: pendingAnswer,
+      risposta_scelta: submittedAnswer,
       risposta_corretta: isCorrect,
       motivazione_utente: observationText.trim(),
     })
@@ -224,7 +230,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     const updatedRisposte = [...savedRisposte]
     const newRisposta = {
       esercizio_id: numericExerciseId,
-      risposta_scelta: pendingAnswer,
+      risposta_scelta: submittedAnswer,
       risposta_corretta: isCorrect,
       motivazione_utente: observationText.trim(),
       timestamp: new Date().toISOString(),
@@ -247,7 +253,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       markDay1Completion()
     }
 
-    setSelectedAnswer(pendingAnswer)
+    setSelectedAnswer(submittedAnswer)
     setPendingAnswer(null)
     setShowConfirmModal(false)
     setObservationText('')
@@ -349,9 +355,10 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   if (selectedExercise) {
     const initialImage = selectedExercise.imageBefore ?? selectedExercise.image ?? null
     const explainedImage = selectedExercise.imageAfter ?? selectedExercise.explanationImage ?? null
+    const isFreeResponseExercise = !selectedExercise.answers?.length
     const hasAnswered = Boolean(selectedAnswer)
     const answerButtonDisabled = hasAnswered || isReviewMode
-    const isAnswerCorrect = hasAnswered && selectedAnswer === selectedExercise.correctAnswer
+    const isAnswerCorrect = hasAnswered && (isFreeResponseExercise || selectedAnswer === selectedExercise.correctAnswer)
     const feedbackCopy = hasAnswered && selectedExercise.feedback
       ? selectedExercise.feedback
       : 'Il feedback comparirà dopo la risposta.'
@@ -401,18 +408,29 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
 
           <div className="exercise-section">
             <div className="exercise-answers">
-              {selectedExercise.answers.map((answer) => (
+              {isFreeResponseExercise ? (
                 <button
-                  key={answer.key}
                   type="button"
-                  className={`answer-option${(selectedAnswer === answer.key || pendingAnswer === answer.key) ? ' is-selected' : ''}`}
-                  onClick={() => handleAnswerSelect(answer.key)}
+                  className="btn btn-action"
+                  onClick={() => setShowConfirmModal(true)}
                   disabled={answerButtonDisabled}
                 >
-                  <span className="answer-key">{answer.key}.</span>
-                  <span className="answer-text">{answer.text}</span>
+                  Conferma e confronta
                 </button>
-              ))}
+              ) : (
+                selectedExercise.answers.map((answer) => (
+                  <button
+                    key={answer.key}
+                    type="button"
+                    className={`answer-option${(selectedAnswer === answer.key || pendingAnswer === answer.key) ? ' is-selected' : ''}`}
+                    onClick={() => handleAnswerSelect(answer.key)}
+                    disabled={answerButtonDisabled}
+                  >
+                    <span className="answer-key">{answer.key}.</span>
+                    <span className="answer-text">{answer.text}</span>
+                  </button>
+                ))
+              )}
             </div>
           </div>
 
@@ -490,16 +508,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
             <div className="exercise-confirm-modal__backdrop" role="presentation">
               <div className="exercise-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-answer-title">
                 <h3 id="confirm-answer-title">Confermi?</h3>
-                <p>Prima di vedere il ragionamento guidato, scrivi <strong>in breve</strong> cosa hai osservato.</p>
-                
-                <div className="exercise-confirm-modal__guide">
-                  <p>Puoi aiutarti con una di queste domande:</p>
-                  <ul>
-                    <li>Quale parte del grafico hai osservato di più?</li>
-                    <li>Quale movimento o elemento ti ha fatto scegliere questa risposta?</li>
-                    <li>C'è qualcosa che ti rende sicuro/a oppure ti fa avere dubbi?</li>
-                  </ul>
-                </div>
+                <p>Prima di vedere il ragionamento guidato, descrivi in poche parole cosa hai osservato sul grafico.</p>
 
                 <div className="exercise-confirm-modal__field">
                   <textarea
@@ -639,6 +648,15 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                             >
                               {buttonLabel}
                             </button>
+                            {hasConfirmedResponse && onNavigateToProgress && (
+                              <button
+                                type="button"
+                                className="btn btn-outline"
+                                onClick={() => onNavigateToProgress(exercise.day)}
+                              >
+                                Vai a Progressi
+                              </button>
+                            )}
                             {!testerId && (
                               <span className="exercise-hint">
                                 Salva il profilo per abilitare il tracciamento quando gli esercizi saranno attivi.

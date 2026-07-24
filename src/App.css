@@ -574,6 +574,12 @@
   color: var(--color-text-muted);
 }
 
+.daily-goal-title {
+  margin: 22px 0 12px;
+  color: #18201b;
+  font-size: 1.15rem;
+}
+
 .day-pill {
   display: inline-flex;
   align-items: center;
@@ -621,16 +627,20 @@
   line-height: 1.55;
 }
 
-.weekly-goal-status {
-  border-radius: 999px;
-  padding: 10px 16px;
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #f5f7f4;
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.weekly-goal-list {
+  margin: 0;
+  padding-left: 20px;
+  color: rgba(245, 247, 244, 0.92);
+  line-height: 1.55;
+}
+
+.weekly-goal-list li + li {
+  margin-top: 10px;
+}
+
+.weekly-goal-note {
+  font-size: 0.85rem;
+  color: rgba(245, 247, 244, 0.78) !important;
 }
 
 .app--home .sidebar {
@@ -1635,30 +1645,6 @@
   flex-wrap: wrap;
   gap: 12px;
   justify-content: flex-end;
-}
-
-.exercise-confirm-modal__guide {
-  background: rgba(107, 158, 125, 0.1);
-  border-radius: 12px;
-  padding: 16px;
-  margin: 8px 0;
-}
-
-.exercise-confirm-modal__guide p {
-  margin: 0 0 8px 0;
-  font-weight: 500;
-  color: var(--color-primary-dark);
-}
-
-.exercise-confirm-modal__guide ul {
-  margin: 0;
-  padding-left: 20px;
-  color: var(--color-text-muted);
-}
-
-.exercise-confirm-modal__guide li {
-  margin: 4px 0;
-  line-height: 1.5;
 }
 
 .exercise-confirm-modal__field {

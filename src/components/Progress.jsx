@@ -9,7 +9,7 @@ const LEARNING_NOTES = {
     subtitle: '📉 Come riconoscere un Trend',
     bullets: [
       'Osserva come si susseguono massimi e minimi in sequenza.',
-      'un singolo rialzo o ribasso non è una conferma d un cambio di trend, serve vedere se la nuova struttura  continua per più movimenti consecutivi.',
+      '❗Osserva bene: un singolo rialzo o ribasso non è una conferma d un cambio di trend, serve vedere se la nuova struttura  continua per più movimenti consecutivi.',
       'Quando pensi che il trend stia cambiando, prima cerca di capire se il prezzo sta davvero costruendo  una nuova sequenza di massimi e minimi sempre più alti o bassi.',
     ],
   },
@@ -117,9 +117,9 @@ La conferma arriva solo quando una candela chiude sopra o sotto quel livello: qu
   },
 }
 
-function Progress() {
-  const [hasInteractedWithDays, setHasInteractedWithDays] = useState(false)
-  const [openDays, setOpenDays] = useState(new Set([1]))
+function Progress({ initialOpenDay = null }) {
+  const [hasInteractedWithDays, setHasInteractedWithDays] = useState(() => initialOpenDay != null)
+  const [openDays, setOpenDays] = useState(() => new Set([initialOpenDay || 1]))
   const risposte = useMemo(() => getRisposte(), [])
 
   const risposteByExercise = useMemo(() => {

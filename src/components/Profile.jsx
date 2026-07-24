@@ -193,15 +193,9 @@ function Profile({ onSave, onDelete }) {
             type="text"
             placeholder="es. tester_03"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            readOnly
             required
           />
-        </div>
-
-        <div className="form-actions">
-          <button type="submit" className="btn btn-action">
-            Salva
-          </button>
         </div>
       </form>
 
