@@ -8,9 +8,9 @@ const LEARNING_NOTES = {
     title: 'Esercizio 1 — Trend',
     subtitle: '📉 Come riconoscere un Trend',
     bullets: [
-      'Individua sempre la direzione del mercato prima di cercare un ingresso.',
-      'Osserva la sequenza di massimi e minimi.',
-      'Una sequenza ordinata ti permette di riconoscere se il mercato sta salendo, scendendo o cambiando direzione.',
+      'Osserva come si susseguono massimi e minimi in sequenza.',
+      'un singolo rialzo o ribasso non è una conferma d un cambio di trend, serve vedere se la nuova struttura  continua per più movimenti consecutivi.',
+      'Quando pensi che il trend stia cambiando, prima cerca di capire se il prezzo sta davvero costruendo  una nuova sequenza di massimi e minimi sempre più alti o bassi.',
     ],
   },
   2: {
