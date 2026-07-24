@@ -567,7 +567,7 @@ Osserva bene 👀: la conferma arriva quando una candela chiude al di sotto di q
     title: 'Esercizio 9 — Stop Loss e ingresso',
     block: 'Trigger / Rischio',
     description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
-    imageBefore: '/Grafici/GBPUSD_M15_DOMANDA_TRIGGER_STOPLOSS_3.PNG',
+    imageBefore: '/Grafici/GBPUSD_M15_APERTA_TRIGGER_STOPLOSS_3.PNG',
     imageAfter: '/Grafici/GBPUSD_M15_SOLUZIONE_TRIGGER_STOPLOSS_3.PNG',
     chartMeta: {
       source: 'TradingView',
