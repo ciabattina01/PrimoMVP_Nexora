@@ -615,7 +615,6 @@ Perché l’ingresso e lo stop loss sono posizionati dove indicato sul grafico?`
 
 📈Per questo motivo, in un’operazione rialzista, può avere senso posizionare lo stop loss sotto una zona importante che sostiene il trend del time frame superiore, come nell’esempio mostrato in figura. 
 
-❗Se il prezzo rompe quella zona, significa che la struttura rialzista più ampia si è indebolita e potrebbe aver cambiato, o stare iniziando a cambiare, direzione. 
 
 Lo stop viene quindi collocato nel punto in cui viene meno il motivo principale per cui l’operazione era stata aperta.`,
   },

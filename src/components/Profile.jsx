@@ -132,7 +132,7 @@ function Profile({ onSave, onDelete }) {
             <h4>COME SI SVOLGE IL TEST:</h4>
             <div className="onboarding-test-details">
               <div className="onboarding-test-item">
-                <span>• Durata: <strong>3 giorni · 9 esercizi · 10–30 Min ciascuno</strong></span>
+                <span>• Durata: <strong>3 giorni · 9 esercizi</strong></span>
               </div>
               <div className="onboarding-test-item">
                 <span>• Accesso attuale: <strong>unico percorso di test</strong></span>

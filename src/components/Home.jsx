@@ -87,7 +87,7 @@ function Home({ onStartExercises }) {
               <li>Riconoscere i possibili punti di entrata (Trigger) e dove posizionare lo Stop Loss.</li>
             </ul>
             <p className="weekly-goal-note">
-              Questa versione non è ancora definitiva: è un primo test per capire quale metodo di apprendimento risulta più chiaro ed efficace.
+              Questa versione non è definitiva: è un primo test per capire quale metodo di apprendimento risulta più efficace.
             </p>
           </aside>
         </div>

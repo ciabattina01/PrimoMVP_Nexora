@@ -1,29 +1,140 @@
-import test from 'node:test'
+import test, { beforeEach, afterEach } from 'node:test'
 import assert from 'node:assert/strict'
-import { getDayMeta } from './dayLogic.js'
+import {
+  getDayMeta,
+  getDayStartedAtStorageKey,
+  markDayStarted,
+  readDayStartedAt,
+} from './dayLogic.js'
 
-test('sblocca il giorno successivo solo dopo il giorno calendario successivo quando il giorno precedente è completato', () => {
-  const risposteByExercise = new Map([
-    [1, { esercizio_id: 1, risposta_scelta: 'A', risposta_corretta: true, timestamp: '2026-07-09T21:30:00.000Z' }],
-    [2, { esercizio_id: 2, risposta_scelta: 'B', risposta_corretta: false, timestamp: '2026-07-09T21:35:00.000Z' }],
-    [3, { esercizio_id: 3, risposta_scelta: 'C', risposta_corretta: false, timestamp: '2026-07-09T21:40:00.000Z' }],
-  ])
+class LocalStorageMock {
+  constructor() {
+    this.store = new Map()
+  }
 
-  const day1Meta = getDayMeta(1, risposteByExercise, new Date(2026, 6, 9, 22, 0))
-  assert.equal(day1Meta.isCompleted, true)
-  assert.equal(day1Meta.correctCount, 1)
+  getItem(key) {
+    return this.store.has(key) ? this.store.get(key) : null
+  }
 
-  const day2Meta = getDayMeta(2, risposteByExercise, new Date(2026, 6, 10, 0, 0))
-  assert.equal(day2Meta.isUnlocked, true)
+  setItem(key, value) {
+    this.store.set(key, String(value))
+  }
+
+  removeItem(key) {
+    this.store.delete(key)
+  }
+
+  clear() {
+    this.store.clear()
+  }
+}
+
+beforeEach(() => {
+  globalThis.window = {
+    localStorage: new LocalStorageMock(),
+  }
 })
 
-test('non sblocca il giorno successivo nello stesso giorno calendario', () => {
-  const risposteByExercise = new Map([
-    [1, { esercizio_id: 1, risposta_scelta: 'A', risposta_corretta: true, timestamp: '2026-07-09T21:30:00.000Z' }],
-    [2, { esercizio_id: 2, risposta_scelta: 'B', risposta_corretta: false, timestamp: '2026-07-09T21:35:00.000Z' }],
-    [3, { esercizio_id: 3, risposta_scelta: 'C', risposta_corretta: false, timestamp: '2026-07-09T21:40:00.000Z' }],
-  ])
+afterEach(() => {
+  delete globalThis.window
+})
 
-  const day2Meta = getDayMeta(2, risposteByExercise, new Date(2026, 6, 9, 23, 0))
+function setDayStartedAt(day, date) {
+  window.localStorage.setItem(getDayStartedAtStorageKey(day), date.toISOString())
+}
+
+function buildResponses(exerciseNumbers) {
+  return new Map(
+    exerciseNumbers.map((exerciseNumber) => [
+      exerciseNumber,
+      {
+        esercizio_id: exerciseNumber,
+        risposta_scelta: 'A',
+        risposta_corretta: true,
+        timestamp: new Date(2026, 6, 9, 12, exerciseNumber).toISOString(),
+      },
+    ]),
+  )
+}
+
+test('sblocca Giorno 2 quando Giorno 1 e completato ed e iniziato il giorno calendario successivo', () => {
+  setDayStartedAt(1, new Date(2026, 6, 9, 10, 0))
+  const risposteByExercise = buildResponses([1, 2, 3])
+
+  const day2Meta = getDayMeta(2, risposteByExercise, new Date(2026, 6, 10, 0, 0))
+
+  assert.equal(day2Meta.isUnlocked, true)
+  assert.equal(day2Meta.isBlockedByPreviousDay, false)
+  assert.equal(day2Meta.isBlockedByDate, false)
+})
+
+test('sblocca Giorno 3 quando Giorno 2 e completato ed e iniziato il giorno calendario successivo', () => {
+  setDayStartedAt(2, new Date(2026, 6, 10, 9, 0))
+  const risposteByExercise = buildResponses([4, 5, 6])
+
+  const day3Meta = getDayMeta(3, risposteByExercise, new Date(2026, 6, 11, 0, 0))
+
+  assert.equal(day3Meta.isUnlocked, true)
+  assert.equal(day3Meta.isBlockedByPreviousDay, false)
+  assert.equal(day3Meta.isBlockedByDate, false)
+})
+
+test('considera raggiunto il vincolo temporale esattamente dalla mezzanotte locale successiva', () => {
+  setDayStartedAt(1, new Date(2026, 6, 9, 23, 30))
+  const risposteByExercise = buildResponses([1, 2, 3])
+
+  const beforeMidnight = getDayMeta(2, risposteByExercise, new Date(2026, 6, 9, 23, 59))
+  const atMidnight = getDayMeta(2, risposteByExercise, new Date(2026, 6, 10, 0, 0))
+
+  assert.equal(beforeMidnight.isUnlocked, false)
+  assert.equal(beforeMidnight.isBlockedByDate, true)
+  assert.equal(atMidnight.isUnlocked, true)
+  assert.equal(atMidnight.isBlockedByDate, false)
+})
+
+test('mantiene bloccato il giorno successivo se la data e raggiunta ma il giorno precedente e incompleto', () => {
+  setDayStartedAt(1, new Date(2026, 6, 9, 10, 0))
+  const risposteByExercise = buildResponses([1, 2])
+
+  const day2Meta = getDayMeta(2, risposteByExercise, new Date(2026, 6, 10, 9, 0))
+
   assert.equal(day2Meta.isUnlocked, false)
+  assert.equal(day2Meta.isBlockedByPreviousDay, true)
+  assert.equal(day2Meta.isBlockedByDate, false)
+})
+
+test('mantiene bloccato il giorno successivo se il giorno precedente e completo ma la data non e raggiunta', () => {
+  setDayStartedAt(1, new Date(2026, 6, 9, 10, 0))
+  const risposteByExercise = buildResponses([1, 2, 3])
+
+  const day2Meta = getDayMeta(2, risposteByExercise, new Date(2026, 6, 9, 22, 0))
+
+  assert.equal(day2Meta.isUnlocked, false)
+  assert.equal(day2Meta.isBlockedByPreviousDay, false)
+  assert.equal(day2Meta.isBlockedByDate, true)
+})
+
+test('nexora_debug_day sblocca senza creare o modificare le date reali', () => {
+  window.localStorage.setItem('nexora_debug_day', '3')
+  const risposteByExercise = new Map()
+
+  const day3Meta = getDayMeta(3, risposteByExercise, new Date(2026, 6, 9, 10, 0))
+
+  assert.equal(day3Meta.isUnlocked, true)
+  assert.equal(readDayStartedAt(1), null)
+  assert.equal(readDayStartedAt(2), null)
+  assert.equal(readDayStartedAt(3), null)
+})
+
+test('markDayStarted persiste startedAt una sola volta senza sovrascriverlo', () => {
+  const firstStart = new Date(2026, 6, 9, 10, 0)
+  const secondStart = new Date(2026, 6, 10, 10, 0)
+
+  const firstSaved = markDayStarted(1, firstStart)
+  const secondSaved = markDayStarted(1, secondStart)
+  const stored = window.localStorage.getItem(getDayStartedAtStorageKey(1))
+
+  assert.equal(firstSaved.toISOString(), firstStart.toISOString())
+  assert.equal(secondSaved.toISOString(), firstStart.toISOString())
+  assert.equal(stored, firstStart.toISOString())
 })

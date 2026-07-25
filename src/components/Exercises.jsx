@@ -5,7 +5,7 @@ import {
   getExercisesForDay,
 } from '../data/exercises'
 import { getRisposte, saveRisposta, saveDifficultyRating, getDifficultyRatingForExercise, updateRispostaWithDifficulty } from '../utils/dataTracking'
-import { getDayMeta, getExerciseNumber } from '../utils/dayLogic'
+import { getDayMeta, getExerciseNumber, markDayStarted } from '../utils/dayLogic'
 
 function markDay1Completion() {
   window.localStorage?.setItem('nexora_day1_completion_date', new Date().toISOString())
@@ -157,16 +157,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     }
   }, [activeDay, day1Status, day2Status, hasInteractedWithDays, selectedExerciseId])
 
-  const handleSelectDay = (day) => {
-    setHasInteractedWithDays(true)
-    setActiveDay(day)
-    setSelectedExerciseId(null)
-    setSelectedAnswer(null)
-    setPendingAnswer(null)
-    setShowConfirmModal(false)
-    setIsReviewMode(false)
-  }
-
   const toggleDay = (day) => {
     const newOpenDays = new Set(openDays)
     if (newOpenDays.has(day)) {
@@ -179,6 +169,11 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   }
 
   const handleStartExercise = (exerciseId) => {
+    const exercise = getExerciseById(exerciseId)
+    if (exercise?.day) {
+      markDayStarted(exercise.day)
+    }
+
     setSelectedExerciseId(exerciseId)
     setSelectedAnswer(null)
     setPendingAnswer(null)
@@ -578,19 +573,13 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
           const isLocked = day > 1 && !status?.isUnlocked
           const isCompleted = status?.isCompleted
           const isNotStarted = !isLocked && status?.completedCount === 0
-          const isInProgress = !isLocked && !isCompleted && status?.completedCount > 0
-          
-          // Check if day is unlockable (previous day completed and next calendar day has arrived)
-          const previousDay = day > 1 ? day - 1 : null
-          const previousDayMeta = previousDay ? dayStatuses.find((item) => item.day === previousDay) : null
-          const isUnlockable = day > 1 && 
-            previousDayMeta?.isCompleted && 
-            previousDayMeta?.completedAt &&
-            !status?.isUnlocked
           const scenarioLabel = DAY_SCENARIO_LABELS[day]
           const dayHeading = scenarioLabel
             ? `Giorno ${day} – Scenario: ${scenarioLabel}`
             : `Giorno ${day}`
+          const lockCopy = status?.isBlockedByDate
+            ? 'Disponibile dal giorno successivo.'
+            : 'Termina prima il giorno precedente.'
 
           return (
             <section key={day} className={`exercise-day-section ${isOpen ? 'is-open' : 'is-collapsed'}`}>
@@ -673,19 +662,8 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                   {isLocked ? (
                     <div className="exercise-day-summary-card">
                       <span className="exercise-day-summary-score">🔒 Bloccato</span>
-                      <span className="exercise-day-summary-copy">Termina prima il Giorno precedente.</span>
+                      <span className="exercise-day-summary-copy">{lockCopy}</span>
                     </div>
-                  ) : isUnlockable ? (
-                    <>
-                      <div className="exercise-day-summary-card">
-                        <span className="exercise-day-summary-score">SBLOCCABILE</span>
-                      </div>
-                      <div className="exercise-day-summary-actions">
-                        <button type="button" className="btn btn-action" onClick={() => handleSelectDay(day)}>
-                          Sblocca e inizia
-                        </button>
-                      </div>
-                    </>
                   ) : isNotStarted ? (
                     <>
                       <div className="exercise-day-summary-card">

@@ -101,19 +101,28 @@ Per individuare dove avviene:`,
       'traccia mentalmente un livello orizzontale da quel minimo;',
       'la chiusura di una candela sotto quel livello conferma il cambio di struttura.',
     ],
-    note: `• 📉 Continuazione del trend
-
-Chiediti:
-
-I compratori o i venditori continuano a battere la controparte?
+    note: `• 📉 Continuazione del trend: i compratori o i venditori continuano a battere la controparte?
 
 Se i venditori riprendono il controllo e una candela chiude sotto quel livello, il trend ribassista continua.
 
-💡 Da ricordare
-
-Una semplice rottura del livello non basta.
-
-La conferma arriva solo quando una candela chiude sopra o sotto quel livello: questa è l’accettazione della rottura.`,
+💡 Da ricordare: la conferma arriva solo quando una candela chiude sopra o sotto quel livello: questa è l’accettazione della rottura.`,
+  },
+  9: {
+    title: 'Esercizio 9 — Stop Loss e ingresso',
+    subtitle: '🎯 Entrata',
+    bullets: [
+      "Quale punto conferma che il trend rialzista osservato su H4 si stia confermando anche su M15?",
+      "Osserva la struttura ribassista che precede il rialzo e individua l'ultimo massimo che la mantiene valida.",
+      "Quando una candela chiude al di sopra di quel livello, il rialzo viene confermato anche su M15: questo può rappresentare il trigger di entrata.",
+    ],
+    secondaryDividerTop: '⸻',
+    secondarySubtitle: '🛡️ Stop Loss',
+    secondaryBullets: [
+      'Fino a quando un trend resta valido? Finché il prezzo non rompe i livelli che ne sostengono la struttura.',
+      'In questo esempio, lo Stop Loss è posizionato sotto la Zona A, che sostiene il trend rialzista individuato su H4.',
+      '❗ Se il prezzo rompe quella zona, il motivo principale dell’operazione viene meno: la struttura rialzista potrebbe essersi indebolita o aver iniziato un’inversione.',
+    ],
+    note: '⸻',
   },
 }
 
@@ -219,17 +228,11 @@ function Progress({ initialOpenDay = null }) {
           const isCompleted = status?.isCompleted
           const isLocked = day > 1 && !status?.isUnlocked
           const isNotStarted = !isLocked && status?.completedCount === 0
-          
-          // Check if day is unlockable (previous day completed and next calendar day has arrived)
-          const previousDay = day > 1 ? day - 1 : null
-          const previousDayMeta = previousDay ? dayStatuses.find((item) => item.day === previousDay) : null
-          const isUnlockable = day > 1 && 
-            previousDayMeta?.isCompleted && 
-            previousDayMeta?.completedAt &&
-            !status?.isUnlocked
-          
           const summaryLabel = `${status?.correctCount ?? 0}/${dayExercises.length} corretti`
           const summarySubtitle = isCompleted ? 'Giorno completato' : 'Rivedi il ragionamento'
+          const lockCopy = status?.isBlockedByDate
+            ? 'Disponibile dal giorno successivo.'
+            : 'Termina prima il giorno precedente.'
 
           const toggleDay = () => {
             const newOpenDays = new Set(openDays)
@@ -263,13 +266,13 @@ function Progress({ initialOpenDay = null }) {
                     const exerciseNumber = getExerciseNumber(exercise)
                     const risposta = risposteByExercise.get(exerciseNumber)
                     const hasAnswered = Boolean(risposta?.risposta_scelta)
+                    if (!hasAnswered) {
+                      return null
+                    }
+
                     const isCorrect = Boolean(risposta?.risposta_corretta)
-                    const statusLabel = !hasAnswered ? 'Non iniziato' : isCorrect ? 'Completato' : 'Da rivedere'
-                    const statusClass = !hasAnswered
-                      ? 'is-idle'
-                      : isCorrect
-                        ? 'is-complete'
-                        : 'is-review'
+                    const statusLabel = isCorrect ? 'Completato' : 'Da rivedere'
+                    const statusClass = isCorrect ? 'is-complete' : 'is-review'
                     const learningNote = LEARNING_NOTES[exerciseNumber] || null
                     const displayTitle = learningNote?.title || exercise.title
 
@@ -295,6 +298,19 @@ function Progress({ initialOpenDay = null }) {
                                     <li key={bullet}>{bullet}</li>
                                   ))}
                                 </ul>
+                                {learningNote.secondaryDividerTop && (
+                                  <p className="progress-learning-note">{learningNote.secondaryDividerTop}</p>
+                                )}
+                                {learningNote.secondarySubtitle && (
+                                  <p className="progress-learning-subtitle">{learningNote.secondarySubtitle}</p>
+                                )}
+                                {learningNote.secondaryBullets?.length > 0 && (
+                                  <ul className="progress-learning-list">
+                                    {learningNote.secondaryBullets.map((bullet) => (
+                                      <li key={bullet}>{bullet}</li>
+                                    ))}
+                                  </ul>
+                                )}
                                 {learningNote.note && (
                                   <p className="progress-learning-note">{learningNote.note}</p>
                                 )}
@@ -313,17 +329,12 @@ function Progress({ initialOpenDay = null }) {
                   {isLocked ? (
                     <div className="exercise-day-summary-card">
                       <span className="exercise-day-summary-score">🔒 Bloccato</span>
-                      <span className="exercise-day-summary-copy">Termina prima il Giorno precedente.</span>
+                      <span className="exercise-day-summary-copy">{lockCopy}</span>
                     </div>
                   ) : isNotStarted ? (
                     <div className="exercise-day-summary-card">
                       <span className="exercise-day-summary-score">Sbloccato</span>
                       <span className="exercise-day-summary-copy">Disponibile per iniziare gli esercizi.</span>
-                    </div>
-                  ) : isUnlockable ? (
-                    <div className="exercise-day-summary-card">
-                      <span className="exercise-day-summary-score">SBLOCCABILE</span>
-                      <span className="exercise-day-summary-copy">Disponibile dal giorno successivo</span>
                     </div>
                   ) : (
                     <div className="exercise-day-summary-card">

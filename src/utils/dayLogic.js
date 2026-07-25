@@ -1,10 +1,43 @@
 import { getExercisesForDay } from '../data/exercises.js'
 
-const isBrowser = typeof window !== 'undefined'
-const isDev = typeof import.meta !== 'undefined' && Boolean(import.meta.env?.DEV)
+const DAY_STARTED_AT_KEY_PREFIX = 'nexora_day_started_at_'
+
+function hasLocalStorage() {
+  return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
+}
+
+function parseDateValue(value) {
+  if (!value) return null
+  const parsed = new Date(value)
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+export function getDayStartedAtStorageKey(day) {
+  const parsedDay = Number.parseInt(day, 10)
+  return `${DAY_STARTED_AT_KEY_PREFIX}${Number.isNaN(parsedDay) ? 0 : parsedDay}`
+}
+
+export function readDayStartedAt(day) {
+  if (!hasLocalStorage()) return null
+  const raw = window.localStorage.getItem(getDayStartedAtStorageKey(day))
+  return parseDateValue(raw)
+}
+
+export function markDayStarted(day, at = new Date()) {
+  if (!hasLocalStorage()) return null
+
+  const existingDate = readDayStartedAt(day)
+  if (existingDate) {
+    return existingDate
+  }
+
+  const normalizedDate = parseDateValue(at) || new Date()
+  window.localStorage.setItem(getDayStartedAtStorageKey(day), normalizedDate.toISOString())
+  return normalizedDate
+}
 
 function getDebugDayOverride() {
-  if (!isBrowser) return null
+  if (!hasLocalStorage()) return null
   const raw = window.localStorage.getItem('nexora_debug_day')
   const parsed = Number.parseInt(raw || '', 10)
   return Number.isNaN(parsed) ? null : parsed
@@ -47,15 +80,15 @@ function toLocalDateOnly(date) {
   return new Date(source.getFullYear(), source.getMonth(), source.getDate())
 }
 
-function isAfterNextCalendarDay(completionAt, now) {
-  const completionDate = toLocalDateOnly(completionAt)
+function hasReachedNextCalendarDay(startedAt, now) {
+  const startedDate = toLocalDateOnly(startedAt)
   const nowDate = toLocalDateOnly(now)
 
-  if (!completionDate || !nowDate) {
+  if (!startedDate || !nowDate) {
     return false
   }
 
-  return nowDate.getTime() > completionDate.getTime()
+  return nowDate.getTime() > startedDate.getTime()
 }
 
 export function getDayMeta(day, risposteByExercise, now = new Date()) {
@@ -86,17 +119,29 @@ export function getDayMeta(day, risposteByExercise, now = new Date()) {
     }
   })
 
+  const startedAt = readDayStartedAt(day)
   const completedAt = latestTimestamp ? new Date(latestTimestamp) : null
   const isCompleted = exercises.length > 0 && completedCount === exercises.length
 
   const previousDay = day > 1 ? day - 1 : null
   const previousDayMeta = previousDay ? getDayMeta(previousDay, risposteByExercise, now) : null
+  const hasCompletedPreviousDay = Boolean(previousDayMeta?.isCompleted)
+  const hasReachedUnlockDate = Boolean(
+    previousDayMeta?.startedAt && hasReachedNextCalendarDay(previousDayMeta.startedAt, now),
+  )
   const debugDay = getDebugDayOverride()
+  const isDebugUnlocked = Boolean(debugDay && debugDay >= day)
   const isUnlocked = Boolean(
+    day === 1 ||
+      isDebugUnlocked ||
+      (day > 1 && hasCompletedPreviousDay && hasReachedUnlockDate),
+  )
+  const isBlockedByPreviousDay = Boolean(day > 1 && !isDebugUnlocked && !hasCompletedPreviousDay)
+  const isBlockedByDate = Boolean(
     day > 1 &&
-      previousDayMeta?.isCompleted &&
-      previousDayMeta?.completedAt &&
-      (debugDay ? debugDay >= day : isAfterNextCalendarDay(previousDayMeta.completedAt, now)),
+      !isDebugUnlocked &&
+      hasCompletedPreviousDay &&
+      !hasReachedUnlockDate,
   )
 
   return {
@@ -104,8 +149,11 @@ export function getDayMeta(day, risposteByExercise, now = new Date()) {
     exercises,
     completedCount,
     correctCount,
+    startedAt,
     isCompleted,
     isUnlocked,
+    isBlockedByPreviousDay,
+    isBlockedByDate,
     completedAt,
     previousDayMeta,
   }
