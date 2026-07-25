@@ -126,20 +126,19 @@ export function getDayMeta(day, risposteByExercise, now = new Date()) {
   const previousDay = day > 1 ? day - 1 : null
   const previousDayMeta = previousDay ? getDayMeta(previousDay, risposteByExercise, now) : null
   const hasCompletedPreviousDay = Boolean(previousDayMeta?.isCompleted)
-  const hasReachedUnlockDate = Boolean(
-    previousDayMeta?.startedAt && hasReachedNextCalendarDay(previousDayMeta.startedAt, now),
-  )
   const debugDay = getDebugDayOverride()
-  const isDebugUnlocked = Boolean(debugDay && debugDay >= day)
+  const hasReachedDebugDay = Boolean(debugDay && debugDay >= day)
+  const hasReachedUnlockDate = Boolean(
+    hasReachedDebugDay ||
+      (previousDayMeta?.startedAt && hasReachedNextCalendarDay(previousDayMeta.startedAt, now)),
+  )
   const isUnlocked = Boolean(
     day === 1 ||
-      isDebugUnlocked ||
       (day > 1 && hasCompletedPreviousDay && hasReachedUnlockDate),
   )
-  const isBlockedByPreviousDay = Boolean(day > 1 && !isDebugUnlocked && !hasCompletedPreviousDay)
+  const isBlockedByPreviousDay = Boolean(day > 1 && !hasCompletedPreviousDay)
   const isBlockedByDate = Boolean(
     day > 1 &&
-      !isDebugUnlocked &&
       hasCompletedPreviousDay &&
       !hasReachedUnlockDate,
   )

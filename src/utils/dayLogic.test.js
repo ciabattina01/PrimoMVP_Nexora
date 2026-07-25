@@ -114,16 +114,29 @@ test('mantiene bloccato il giorno successivo se il giorno precedente e completo 
   assert.equal(day2Meta.isBlockedByDate, true)
 })
 
-test('nexora_debug_day sblocca senza creare o modificare le date reali', () => {
+test('nexora_debug_day bypassa solo il vincolo temporale senza creare o modificare le date reali', () => {
   window.localStorage.setItem('nexora_debug_day', '3')
-  const risposteByExercise = new Map()
+  const risposteByExercise = buildResponses([4, 5, 6])
 
   const day3Meta = getDayMeta(3, risposteByExercise, new Date(2026, 6, 9, 10, 0))
 
   assert.equal(day3Meta.isUnlocked, true)
+  assert.equal(day3Meta.isBlockedByPreviousDay, false)
+  assert.equal(day3Meta.isBlockedByDate, false)
   assert.equal(readDayStartedAt(1), null)
   assert.equal(readDayStartedAt(2), null)
   assert.equal(readDayStartedAt(3), null)
+})
+
+test('nexora_debug_day non sblocca Giorno 3 se Giorno 2 e incompleto', () => {
+  window.localStorage.setItem('nexora_debug_day', '3')
+  const risposteByExercise = buildResponses([4, 5])
+
+  const day3Meta = getDayMeta(3, risposteByExercise, new Date(2026, 6, 9, 10, 0))
+
+  assert.equal(day3Meta.isUnlocked, false)
+  assert.equal(day3Meta.isBlockedByPreviousDay, true)
+  assert.equal(day3Meta.isBlockedByDate, false)
 })
 
 test('markDayStarted persiste startedAt una sola volta senza sovrascriverlo', () => {
