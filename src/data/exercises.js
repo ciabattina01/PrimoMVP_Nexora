@@ -216,7 +216,7 @@ Per questo motivo la Candela 3 rappresenta il punto di ingresso con la conferma 
                  * Candela 2 = primo segnale di possibile inversione.
                  * Candela 4 = conferma della nuova struttura ribassista.
 
-🔎Osserva: nella Candela 2 compare il primo segnale di possibile inversione ribassista. Fino a quel momento il mercato aveva costruito una struttura rialzista; da questa candela, invece, inizia a formarsi una sequenza di massimi e minimi decrescenti, indicando che i venditori stanno iniziando a prendere il controllo.
+🔎Osserva:  L’ultimo minimo della struttura rialzista che precede quella ribassista è proprio indicato dal pallino 🟡. Quel minimo individua un livello (immagina una linea orizzontale da 🟡 verso destra) di rottura = possibile cambio di trend da rialzista a ribassista. A questo punto si cerca di capire quale candela chiude sotto a questo livello: è proprio la candela 2. La candela 2 indica l'inizio del trend ribassista. Fino a quel momento il mercato aveva costruito una struttura rialzista; da questa candela, invece, inizia a formarsi una sequenza di massimi e minimi decrescenti, indicando che i venditori stanno iniziando a prendere il controllo.
 
 •🧐Presta attenzione: questo rappresenta però solo un primo segnale, non una conferma definitiva del nuovo trend.
 
