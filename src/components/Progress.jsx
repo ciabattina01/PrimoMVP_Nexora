@@ -69,10 +69,11 @@ In altre parole, dopo quel massimo, i venditori riprendono il controllo del merc
     bullets: [
       'Concentrati sulla zona in cui il prezzo torna dopo essersi allontanato (ritracciamento).',
       'Scendi su un timeframe più dettagliato per cercare una conferma della ripresa del trend osservato sul timeframe superiore (ribassista).',
-      'Individua l’ultimo massimo del precedente trend rialzista (è proprio🟡), poi chiediti da quale minimo deriva. Questo minimo identifica il livello di rottura (linea arancione nel grafico)',
+      'Individua l’ultimo minimo del precedente trend rialzista. Questo minimo identifica il livello di rottura (linea arancione nel grafico)',
       'Quando il prezzo rompe il livello, hai la conferma più chiara della ripresa del trend ribassista.',
       'La candela che rompe quel livello = conferma chiara cambio trend da rialzo a ribasso. Quella candela è il punto di Trigger.',
     ],
+    
     note: '💡 Ricorda: il timeframe principale ti dice dove osservare, quello inferiore ti aiuta a capire quando entrare.',
   },
   7: {
