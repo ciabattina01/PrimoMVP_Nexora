@@ -378,7 +378,7 @@ ___
 
 Per questo motivo scendiamo su un timeframe più dettagliato, in questo caso 1 H. Lo scopo non è trovare un nuovo trend, ma osservare cosa succede all’interno della zona D e 🔁 cercare una conferma che il mercato stia davvero riprendendo il trend ribassista visto sul Daily.
 
-Osservando il grafico H1, notiamo che nel punto evidenziato dal pallino giallo il prezzo crea un nuovo massimo. A questo punto dobbiamo chiederci:
+Osservando il grafico H1, notiamo che il massimo indicato dal pallino 🟡, individua l’ultimo massimo della struttura rialzista. A questo punto dobbiamo chiederci:
 
 🧐“Da quale minimo è partito questo nuovo massimo?”.
 
