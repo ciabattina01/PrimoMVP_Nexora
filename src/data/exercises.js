@@ -153,9 +153,8 @@ Prima di rispondere, prova a riflettere su queste due domande:
 
 Dopo aver selezionato la risposta, ti chiederemo di spiegare brevemente il tuo ragionamento.
 
-👉🏻Domanda:
-
-Osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend rialzista?`,
+🔎In questo esercizio, la conferma che cerchiamo è la rottura della struttura ribassista.
+👉🏻Domanda: osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend rialzista?`,
     answers: [
       { key: 'A', text: 'Candela 3 ' },
       { key: 'B', text: 'Candela 1' },
@@ -183,7 +182,11 @@ Osservando il grafico, notiamo che il prezzo continua inizialmente a costruire u
 
 “Quale livello deve superare il prezzo per dimostrarci che la struttura ribassista è terminata?”
 
-Quel livello corrisponde al punto da cui parte la linea orizzontale arancione. È un livello importante perché rappresenta l’ultimo massimo della struttura ribassista. Finché il prezzo non riesce a superarlo, il mercato continua infatti a mostrare una struttura ribassista sul timeframe a 1 minuto.
+1- Individua l’ultimo massimo che tiene in piedi la struttura ribassista.
+
+2- Questo massimo individua il livello di rottura, è proprio la linea arancione. 
+
+3- Finché il prezzo non riesce a superare questo livello, il mercato continua la struttura ribassista.
 
 💡Quando il prezzo supera quel livello, come avviene sulla Candela 3, il mercato ci mostra che la precedente struttura ribassista non è più valida e che i compratori stanno iniziando a riprendere il controllo. Questa è la conferma che stavamo cercando e ci indica che il trend rialzista osservato sul timeframe 1 H potrebbe riprendere.
 
@@ -357,7 +360,7 @@ Prima di rispondere, prova a riflettere su queste due domande:
 
 Dopo aver selezionato la risposta, ti chiederemo di spiegare brevemente il tuo ragionamento.
 
-🔎In questo esercizio, la conferma che cerchiamo è la rottura della struttura rialzista sul timeframe H1.
+🔎Ricordi l'esercizio 3? Lì hai visto la stessa rottura strutturale, ma in direzione rialzista. Qui si applica lo stesso criterio al contrario. In questo esercizio, la conferma che cerchiamo è la rottura della struttura rialzista sul timeframe H1.
 
 👉🏻Domanda: osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista?`,
     answers: [
@@ -378,15 +381,17 @@ ___
 
 Per questo motivo scendiamo su un timeframe più dettagliato, in questo caso 1 H. Lo scopo non è trovare un nuovo trend, ma osservare cosa succede all’interno della zona D e 🔁 cercare una conferma che il mercato stia davvero riprendendo il trend ribassista visto sul Daily.
 
-Osservando il grafico H1, notiamo che il massimo indicato dal pallino 🟡, individua l’ultimo massimo della struttura rialzista. A questo punto dobbiamo chiederci:
+ Osservando il grafico H1, notiamo che il massimo indicato dal pallino 🟡, individua l’ultimo massimo della struttura rialzista. A questo punto dobbiamo chiederci:
 
-🧐“Da quale minimo è partito questo nuovo massimo?”.
+💡Ecco lo stesso ragionamento (al contrario) dell'esercizio 3: 
 
+1. 🧐“Da quale minimo è partito questo nuovo massimo?”.
 
+2. Quel minimo corrisponde al punto da cui parte la linea arancione.
 
-Quel minimo corrisponde al punto da cui parte la linea orizzontale arancione. Finché quel livello rimane intatto, il mercato continua a mostrare una struttura rialzista sul timeframe H1.
+Linea arancione = livello di rottura: finchè quel livello rimane intatto, il mercato continua a mostrare una struttura rialzista sul timeframe H1.
 
-🎯Quando il prezzo rompe quel minimo, come avviene sulla Candela 2, la struttura rialzista viene invalidata e il mercato ci fornisce la conferma che stavamo cercando: 🔁il trend ribassista osservato sul Daily potrebbe riprendere.
+3.🎯Quando il prezzo rompe quel livello, come avviene sulla Candela 2, la struttura rialzista viene invalidata e il mercato ci fornisce la conferma che stavamo cercando: 🔁il trend ribassista osservato sul Daily potrebbe riprendere.
 
 Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista.`,
   },
