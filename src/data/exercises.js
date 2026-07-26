@@ -35,7 +35,7 @@ Solo allora puoi considerare la nuova struttura sufficientemente chiara.`,
       { key: 'C', text: 'Trend rialzista, poi ribassista e infine rialzista.' },
     ],
     correctAnswer: 'C',
-    feedback: `Nel grafico si possono riconoscere tre strutture direzionali abbastanza chiare, evidenziate dalle due frecce verdi e dalla freccia rossa.
+    feedback: `🟩La risposta corretta è la C: nel grafico si possono riconoscere tre strutture direzionali, evidenziate dalle due frecce verdi e dalla freccia rossa.
 
 Zona 1 – Struttura rialzista 📈
 
@@ -61,13 +61,6 @@ La sequenza ribassista perde continuità e iniziano nuovamente a costruirsi mass
 
 I compratori tornano quindi a prevalere e si sviluppa una nuova struttura rialzista.
 
-🪞 Il ragionamento è speculare
-
-Il passaggio tra le due direzioni segue la stessa logica, osservata al contrario:
-
-* per passare da rialzista a ribassista, la sequenza di massimi e minimi crescenti deve interrompersi e lasciare spazio a massimi e minimi decrescenti;
-* per passare da ribassista a rialzista, la sequenza di massimi e minimi decrescenti deve interrompersi e lasciare spazio a massimi e minimi crescenti.
-
 La cosa importante è quindi seguire nel tempo il modo in cui si costruiscono i massimi e i minimi e verificare se la nuova direzione continua per più movimenti consecutivi.
 
 `,
@@ -87,7 +80,7 @@ La cosa importante è quindi seguire nel tempo il modo in cui si costruiscono i 
       timeframe: '1H',
       instrument: 'Gold Spot / U.S. Dollar',
     },
-    question: `Il grafico mostra lo stesso mercato dell’esercizio precedente (Esercizio 1), sempre sul timeframe 1H, ma con uno zoom su una parte.
+    question: ` Il grafico mostra lo stesso mercato dell’esercizio precedente (Esercizio 1), sempre sul timeframe 1H, ma con uno zoom su una parte.
 
 Prima di rispondere, prova a riflettere su queste domande:
 
@@ -107,6 +100,8 @@ Secondo te, in quale delle zone indicate è più sensato cercare una possibile r
     ],
     correctAnswer: 'B',
     feedback: `
+🟩La risposta corretta è la Zona B. 
+
 Per individuare una zona valida bisogna verificare che presenti almeno una di queste caratteristiche:
 
 * la zona rappresenta un punto di continuazione del trend in corso, in questo caso rialzista;
@@ -115,8 +110,6 @@ Per individuare una zona valida bisogna verificare che presenti almeno una di qu
 Studiamo ora ogni zona.
 
 Zona A
-
-La zona A identifica un minimo.
 
 Osserva 👀: il massimo locale precedente è indicato dalla seconda candela partendo da sinistra, contrassegnata dal pallino colorato (1).
 
@@ -170,7 +163,9 @@ Osservando il grafico, quale candela numerata rappresenta il punto di ingresso c
       { key: 'D', text: 'Candela 4' },
     ],
     correctAnswer: 'A',
-    feedback: `Nell’esercizio precedente abbiamo individuato come corretta la zona B. 
+    feedback: `🟩La risposta corretta è la Candela 3.
+    
+    Nell’esercizio precedente abbiamo individuato come corretta la zona B. 
     
     🧐Perchè questa zona B?
     
@@ -215,7 +210,9 @@ Per questo motivo la Candela 3 rappresenta il punto di ingresso con la conferma 
       { key: 'C', text: 'Il trend ribassista inizia alla candela 2 e viene confermato alla candela 4.' },
     ],
     correctAnswer: 'C',
-    feedback: `
+    feedback: `🟩 Risposta corretta:
+                 * Candela 2 = primo segnale di possibile inversione.
+                 * Candela 4 = conferma della nuova struttura ribassista.
 
 🔎Osserva: nella Candela 2 compare il primo segnale di possibile inversione ribassista. Fino a quel momento il mercato aveva costruito una struttura rialzista; da questa candela, invece, inizia a formarsi una sequenza di massimi e minimi decrescenti, indicando che i venditori stanno iniziando a prendere il controllo.
 
@@ -227,10 +224,9 @@ Quel minimo rappresentava infatti l’ultimo livello che manteneva ancora valida
 
 •Quando invece il mercato rompe e chiude sotto quel minimo, dimostra che i compratori non sono più riusciti a difendere la struttura rialzista e che i venditori hanno preso il controllo del mercato. È proprio questa rottura che conferma il nuovo trend ribassista.
 
-In sintesi:
 
-* Candela 2 = primo segnale di possibile inversione.
-* Candela 4 = conferma della nuova struttura ribassista.`,
+
+`,
   },
   {
     id: 'day2-ex2',
@@ -272,7 +268,7 @@ Domanda
       { key: 'C', text: 'Zone B e D' },
     ],
     correctAnswer: 'C',
-    feedback: `
+    feedback: `🟩Risposta corretta: Zone B e D. Perchè?
 
 Passo 1 – 📉 Osserva il trend ribassista
 
@@ -369,10 +365,12 @@ Osservando il grafico, quale candela numerata rappresenta il punto di ingresso c
       { key: 'D', text: 'Candela 4' },
     ],
     correctAnswer: 'B',
-    feedback: `🧐Perchè la zona D?
+    feedback: `🟩Risposta corretta: Candela 2. 
+   
+  ___  Piccola parentesi: 🧐Perchè la zona D?
     
      Perché è l’unica delle due zone in cui il prezzo torna dopo essersi allontanato (questo movimento viene chiamato ritracciamento), dandoci così la possibilità di cercare un punto di ingresso.
-
+___
 
 🔎Sul timeframe Daily abbiamo individuato il contesto generale del mercato e una zona in cui il trend ribassista potrebbe riprendere. Tuttavia, il solo fatto che il prezzo arrivi in quella zona non è sufficiente per entrare.
 
@@ -435,7 +433,7 @@ Partendo da quel massimo, traccia mentalmente un livello orizzontale.
       { key: 'D', text: 'Candela 4' },
     ],
     correctAnswer: 'C',
-    feedback: `
+    feedback: `🟩Risposta corretta: Candela 3. Perchè?
 
 🧐 1. Individua l’ultimo minimo del trend ribassista
 
@@ -515,7 +513,8 @@ In un trend rialzista, individua l’ultimo massimo e poi il minimo precedente c
       { key: 'D', text: 'Zona 4' },
     ],
     correctAnswer: 'A',
-    feedback: `* Zona 1
+    feedback: `🟩Risposta corretta: Zona 1. Perchè?
+    * Zona 1
 
 La zona 1 appartiene ancora alla precedente struttura rialzista. Da questo punto in poi i compratori non riescono più a creare un nuovo massimo significativo e iniziano progressivamente a perdere il controllo del mercato.
 
