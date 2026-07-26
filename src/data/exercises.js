@@ -385,7 +385,7 @@ Per questo motivo scendiamo su un timeframe più dettagliato, in questo caso 1 H
 
 💡Ecco lo stesso ragionamento (al contrario) dell'esercizio 3: 
 
-1. 🧐“Da quale minimo è partito questo nuovo massimo?”.
+1. 🧐“Da quale minimo è partito questo nuovo massimo? Questo minimo tiene in piedi ancora la struttura rialzista.”.
 
 2. Quel minimo corrisponde al punto da cui parte la linea arancione.
 
