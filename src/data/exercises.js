@@ -357,9 +357,9 @@ Prima di rispondere, prova a riflettere su queste due domande:
 
 Dopo aver selezionato la risposta, ti chiederemo di spiegare brevemente il tuo ragionamento.
 
-Domanda:
+🔎In questo esercizio, la conferma che cerchiamo è la rottura della struttura rialzista sul timeframe H1.
 
-Osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista?`,
+👉🏻Domanda: osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista?`,
     answers: [
       { key: 'A', text: 'Candela 1' },
       { key: 'B', text: 'Candela 2' },
