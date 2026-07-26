@@ -203,7 +203,9 @@ Per questo motivo la Candela 3 rappresenta il punto di ingresso con la conferma 
       instrument: 'EUR/USD',
     },
     question:
-      '👉🏻Domanda: secondo te, osservando il grafico, qual è la candela numerata dove inizia il trend ribassista e qual è la candela numerata in cui questo trend ribassista viene confermato?',
+      `Osserva il trend rialzista da sinistra verso destra. Noterai che poi inizia un trend ribassista. Individua l’ultimo minimo della struttura rialzista che precede quella ribassista. Quel minimo individua il livello (linea orizzontale) di rottura. Che vuol dire? che una candela che chiude sotto a questo livello indica l'inizio del trend ribassista.
+      
+      👉🏻Domanda: secondo te, qual è la candela numerata dove inizia il trend ribassista e qual è la candela numerata in cui questo trend ribassista viene confermato?`,
     answers: [
       { key: 'A', text: 'Il trend ribassista inizia alla candela 1 e viene confermato alla candela 3.' },
       { key: 'B', text: 'Il trend ribassista inizia alla candela 3 e viene confermato alla candela 4.' },
