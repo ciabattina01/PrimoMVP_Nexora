@@ -491,7 +491,7 @@ Prova a riflettere su questi 2 aspetti:
 
 Un piccolo aiuto sulla parte sinistra estrema del grafico 🔎:
 
-Nota il breve trend rialzista nella parte sinistra del grafico: in un trend rialzista, individua l’ultimo minimo precedente che appartiene alla stessa struttura rialzista. Tracciando una linea orizzontale da quel minimo ottieni un livello importante: la sua rottura può indicare un cambio strutturale.
+Nota il breve trend rialzista nella parte sinistra del grafico: in un trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: la sua rottura può indicare un cambio strutturale.
 
 👉🏻Domanda: c’è una zona fra 1, 2, 3 e 4 che NON genera né una continuazione del trend ribassista né un cambio strutturale da trend rialzista a ribassista, quale?
 
