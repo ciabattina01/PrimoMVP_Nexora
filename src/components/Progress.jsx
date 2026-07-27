@@ -95,8 +95,7 @@ Per individuare un cambio di struttura, segui questo procedimento:`,
 
 Per individuare dove avviene:`,
     bullets: [
-      'individua l’ultimo massimo della precedente struttura rialzista;',
-      'individua l’ultimo minimo che ha generato proprio quel massimo;',
+      'individua l’ultimo minimo della precedente struttura rialzista;',
       '❗ non confonderlo con un minimo appartenente a un semplice movimento di ritracciamento (come il minimo indicato dalla freccia rossa);',
       'traccia mentalmente un livello orizzontale da quel minimo;',
       'la chiusura di una candela sotto quel livello conferma il cambio di struttura.',

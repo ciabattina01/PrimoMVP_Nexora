@@ -489,9 +489,9 @@ Prova a riflettere su questi 2 aspetti:
 * Continuazione del trend ribassista. Per ciascuna zona chiediti: qual è il minimo oltre il quale i venditori hanno superato i compratori, facendo proseguire il movimento ribassista?
 * Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
 
-Un piccolo aiuto 🔎:
+Un piccolo aiuto sulla parte sinistra estrema del grafico 🔎:
 
-In un trend rialzista, individua l’ultimo massimo e poi il minimo precedente che appartiene alla stessa struttura rialzista. Tracciando una linea orizzontale da quel minimo ottieni un livello importante: la sua rottura può indicare un cambio strutturale.
+Nota il breve trend rialzista nella parte sinistra del grafico: in un trend rialzista, individua l’ultimo minimo precedente che appartiene alla stessa struttura rialzista. Tracciando una linea orizzontale da quel minimo ottieni un livello importante: la sua rottura può indicare un cambio strutturale.
 
 👉🏻Domanda: c’è una zona fra 1, 2, 3 e 4 che NON genera né una continuazione del trend ribassista né un cambio strutturale da trend rialzista a ribassista, quale?
 
@@ -512,7 +512,7 @@ La zona 1 appartiene ancora alla precedente struttura rialzista. Da questo punto
 
 🔁2. Inoltre, questa zona non rappresenta nemmeno il punto in cui avviene il cambio di struttura da rialzista a ribassista.
 
-Per individuare un vero cambio di struttura dobbiamo infatti individuare l’ultimo massimo appartenente alla precedente struttura rialzista e, successivamente, l’ultimo minimo che ha generato proprio quel massimo.
+Per individuare un vero cambio di struttura dobbiamo infatti individuare l’ultimo minimo appartenente alla precedente struttura rialzista.
 
 È proprio quel minimo a rappresentare il livello strutturale più importante: quando una candela chiude al di sotto di quel livello, i venditori prendono il controllo del mercato e il cambio di struttura viene confermato. 
 
@@ -520,7 +520,7 @@ Per questo motivo, la zona 1 non rappresenta ancora il punto in cui avviene il c
 
  👀Perché non è il minimo indicato dalla freccia rossa?
 
-Per individuare un cambio di struttura bisogna considerare l’ultimo minimo che ha generato l’ultimo massimo, ❗ della precedente struttura rialzista.
+Per individuare un cambio di struttura bisogna considerare l’ultimo minimo, ❗ della precedente struttura rialzista.
 
 Il minimo indicato dalla freccia rossa non soddisfa questa condizione: si forma dopo che la struttura rialzista ha già iniziato a perdere forza e appartiene a un semplice movimento di ritracciamento. 🔎 Lo si capisce perché il massimo successivo (Zona 2) non riesce più a superare il massimo precedente (Zona 1), ma si ferma più in basso, mostrando che i compratori stanno perdendo il controllo del mercato.
 
