@@ -414,7 +414,7 @@ Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma 
 * Obiettivo: cercare il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
 Osserva: a sinistra è presente un evidente trend ribassista.
 
-* Qual è l’ultimo massimo appartenente a questo trend ribassista?
+* Qual è l’ultimo massimo appartenente a questo trend ribassista? Attenzione, l’ultimo massimo deve essere.
 
 Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista.
 
@@ -422,7 +422,7 @@ Devi quindi individuare l’ultimo massimo appartenente alla precedente struttur
 
 * Infine: quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
 
- Quella candela che chiude sopra questo livello è la conferma del cambio di struttura da trend ribassista a trend rialzista.
+La candela che chiude sopra questo livello è la conferma del cambio di struttura da trend ribassista a trend rialzista.
  
 👉🏻Domanda: individua la candela dalla quale viene confermato l’inizio del trend rialzista, ossia il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
 `,
@@ -435,23 +435,13 @@ Devi quindi individuare l’ultimo massimo appartenente alla precedente struttur
     correctAnswer: 'C',
     feedback: `🟩Risposta corretta: Candela 3. Perchè?
 
-🧐 1. Individua l’ultimo minimo del trend ribassista
+ 
 
 Osserva la parte sinistra del grafico.
 
-È presente un evidente trend ribassista, caratterizzato da una successione di massimi e minimi decrescenti.
+🧐 1. È presente un evidente trend ribassista, caratterizzato da una successione di massimi e minimi decrescenti.
 
-Qual è l’ultimo minimo appartenente a questo trend ribassista?
-
-È proprio da questo minimo che inizia il ragionamento.
-
-⸻
-
-👀 2. Individua il massimo che ha generato quel minimo
-
-Ora chiediti: 🧐da quale massimo è nato quel minimo?
-
-Quel massimo rappresenta l’ultimo massimo della precedente struttura ribassista.
+👀 2. Individua l’ultimo massimo appartenente a questa struttura ribassista.
 
 È proprio questo il massimo che dovrai prendere come riferimento.
 
@@ -463,17 +453,17 @@ Traccia mentalmente una linea orizzontale da quel massimo.
 
 Segui poi il movimento del prezzo verso destra.
 
-Osserva bene 👀: non basta che una candela tocchi o superi momentaneamente quel livello.
+Ora individua la candela che chiude sopra questo livello.
 
-La conferma arriva solo quando una candela chiude sopra quel livello (linea orizzontale).
+Osserva bene 👀: la conferma arriva solo quando una candela chiude sopra quel livello (linea orizzontale).
 
-Questa chiusura indica che il mercato ha accettato la rottura.
+Questa chiusura indica che il mercato ha accettato la rottura: accettazione della rottura.
 
 ⸻
 
 👉🏻 4. Individua la candela
 
-La candela numero 3 è la prima candela che chiude sopra il massimo della precedente struttura ribassista.
+La candela numero 3 è la prima candela che chiude sopra il (ultimo) massimo della precedente struttura ribassista.
 
 Da quel momento il cambio di struttura viene confermato e il mercato passa da trend ribassista a trend rialzista.
 
