@@ -410,28 +410,21 @@ Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma 
     },
     question: `
 
-👉🏻Domanda: individua la candela dalla quale viene confermato l’inizio del trend rialzista. Ragiona in questo modo:
 
-* Individua l’ultimo minimo
+* Obiettivo: cercare il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
+Osserva: a sinistra è presente un evidente trend ribassista.
 
-A sinistra è presente un evidente trend ribassista.
-
-Qual è l’ultimo minimo appartenente a questo trend ribassista?
-
-*  Individua il massimo che ha generato quel minimo
-
-Dopo aver trovato l’ultimo minimo, chiediti:
-
-Da quale massimo ha avuto origine quel minimo?
+* Qual è l’ultimo massimo appartenente a questo trend ribassista?
 
 Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista.
 
-* Cerca la chiusura sopra il livello
+* Partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
 
-Partendo da quel massimo, traccia mentalmente un livello orizzontale.
+* Infine: quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
 
-🔁Individua poi la candela che chiude al di sopra di quel livello. Quella chiusura conferma il cambio di struttura da trend ribassista a trend rialzista.
+ Quella candela che chiude sopra questo livello è la conferma del cambio di struttura da trend ribassista a trend rialzista.
  
+👉🏻Domanda: individua la candela dalla quale viene confermato l’inizio del trend rialzista, ossia il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
 `,
     answers: [
       { key: 'A', text: 'Candela 1' },
