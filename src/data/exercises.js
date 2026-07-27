@@ -512,7 +512,7 @@ La zona 1 appartiene ancora alla precedente struttura rialzista. Da questo punto
 
 🔁2. Inoltre, questa zona non rappresenta nemmeno il punto in cui avviene il cambio di struttura da rialzista a ribassista.
 
-Per individuare un vero cambio di struttura dobbiamo infatti individuare l’ultimo minimo appartenente alla precedente struttura rialzista.
+Per individuare un vero cambio di struttura (parte sinistra estrema del grafico: da rialzista a ribassista) dobbiamo infatti individuare l’ultimo minimo appartenente alla precedente struttura rialzista.
 
 È proprio quel minimo a rappresentare il livello strutturale più importante: quando una candela chiude al di sotto di quel livello, i venditori prendono il controllo del mercato e il cambio di struttura viene confermato. 
 
