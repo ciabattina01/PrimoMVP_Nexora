@@ -82,10 +82,9 @@ In altre parole, dopo quel massimo, i venditori riprendono il controllo del merc
 
 Per individuare un cambio di struttura, segui questo procedimento:`,
     bullets: [
-      '1. individua l’ultimo minimo, ma appartenente al trend precedente (quindi ribassista);',
-      '2. trova il massimo che ha generato quel minimo;',
-      '3. traccia mentalmente un livello orizzontale da quel massimo;',
-      '4. attendi la prima candela che chiude sopra quel livello (accettazione della rottura).',
+      '1. individua l’ultimo massimo appartenente al trend precedente (quindi ribassista);',
+      '2. traccia mentalmente un livello orizzontale da quel massimo;',
+      '3. attendi la prima candela che chiude sopra quel livello (accettazione della rottura).',
     ],
     note: 'Solo allora il cambio di struttura è confermato.',
   },
