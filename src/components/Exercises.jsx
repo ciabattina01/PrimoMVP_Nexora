@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import {
   EXERCISE_DAYS,
   getExerciseById,
@@ -112,8 +112,13 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   const [observationText, setObservationText] = useState('')
   const [observationError, setObservationError] = useState('')
   const [difficultyRating, setDifficultyRating] = useState(null)
+  const [difficultyFeedbackText, setDifficultyFeedbackText] = useState('')
+  const [difficultyFeedbackError, setDifficultyFeedbackError] = useState('')
   const [difficultySaved, setDifficultySaved] = useState(false)
   const [showDifficultyToast, setShowDifficultyToast] = useState(false)
+  const [difficultyToastMessage, setDifficultyToastMessage] = useState('')
+  const [showDifficultyFeedbackPrompt, setShowDifficultyFeedbackPrompt] = useState(false)
+  const difficultyFeedbackTextareaRef = useRef(null)
   const savedRisposte = useMemo(
     () => getRisposte(),
     [selectedExerciseId, selectedAnswer, pendingAnswer, showConfirmModal, isReviewMode],
@@ -265,31 +270,59 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   const handleDifficultySelect = (value) => {
     if (!selectedExercise || !testerId) return
     
+    setDifficultyRating(value)
+    setDifficultySaved(false)
+    setDifficultyFeedbackError('')
+    setShowDifficultyToast(false)
+    setShowDifficultyFeedbackPrompt(true)
+  }
+
+  const persistDifficultyFeedback = () => {
+    if (!selectedAnswer || !testerId || !selectedExercise || difficultyRating == null) return false
+
+    const normalizedFeedback = difficultyFeedbackText.trim()
+    if (!normalizedFeedback) {
+      setDifficultyFeedbackError('Questo campo è obbligatorio.')
+      return false
+    }
+
     const exerciseNumber = getExerciseNumber(selectedExercise)
     const day = selectedExercise.day
-    
-    // Save to nexora_difficolta_esercizi (existing functionality)
-    saveDifficultyRating({
+    const difficultyFeedbackPayload = {
       testerId,
       giorno: day,
       esercizio_id: exerciseNumber,
-      difficolta_percepita: value
-    })
-    
-    // Also update the existing response record in nexora_risposte
+      difficolta_percepita: difficultyRating,
+      cosa_non_chiaro: normalizedFeedback,
+    }
+
+    saveDifficultyRating(difficultyFeedbackPayload)
+
     updateRispostaWithDifficulty({
-      testerId,
-      esercizio_id: exerciseNumber,
-      difficolta_percepita: value
+      ...difficultyFeedbackPayload,
     })
-    
-    setDifficultyRating(value)
+
     setDifficultySaved(true)
+    return true
+  }
+
+  const handleConfirmDifficultyFeedback = () => {
+    const isPersisted = persistDifficultyFeedback()
+    if (!isPersisted) {
+      setShowDifficultyToast(true)
+      setDifficultyToastMessage('Scrivi cosa ti ha creato più difficoltà prima di proseguire.')
+      return
+    }
+
+    setShowDifficultyFeedbackPrompt(false)
+    setShowDifficultyToast(false)
+    setDifficultyToastMessage('')
   }
 
   const handleReturnToProgram = () => {
     // If exercise is completed but difficulty not selected, show validation message
     if (selectedAnswer && !difficultyRating && !difficultySaved) {
+      setDifficultyToastMessage('Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.')
       setShowDifficultyToast(true)
       // Auto-scroll to difficulty form
       setTimeout(() => {
@@ -303,6 +336,31 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
         setShowDifficultyToast(false)
       }, 3000)
       return
+    }
+
+    if (selectedAnswer && !difficultyFeedbackText.trim()) {
+      setDifficultyFeedbackError('Questo campo è obbligatorio.')
+      setDifficultyToastMessage('Scrivi cosa ti ha creato più difficoltà prima di proseguire.')
+      setShowDifficultyToast(true)
+      setShowDifficultyFeedbackPrompt(true)
+      setTimeout(() => {
+        const feedbackField = document.querySelector('.exercise-difficulty-feedback textarea')
+        if (feedbackField) {
+          feedbackField.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          feedbackField.focus()
+        }
+      }, 100)
+      setTimeout(() => {
+        setShowDifficultyToast(false)
+      }, 3000)
+      return
+    }
+
+    if (selectedAnswer && testerId && selectedExercise && !difficultySaved) {
+      const isPersisted = persistDifficultyFeedback()
+      if (!isPersisted) {
+        return
+      }
     }
     
     const returnDay = selectedExercise?.day ?? activeDay ?? 1
@@ -320,10 +378,22 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     setPendingAnswer(null)
     setShowConfirmModal(false)
     setIsReviewMode(false)
+    setDifficultyFeedbackError('')
+    setShowDifficultyFeedbackPrompt(false)
     if (onReturnToProgram) {
       onReturnToProgram()
     }
   }
+
+  useEffect(() => {
+    if (!showDifficultyFeedbackPrompt) return
+
+    const timeoutId = window.setTimeout(() => {
+      difficultyFeedbackTextareaRef.current?.focus()
+    }, 30)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [showDifficultyFeedbackPrompt])
 
   // Reset and load difficulty rating when exercise changes
   useEffect(() => {
@@ -333,17 +403,27 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       
       if (existingRating) {
         setDifficultyRating(existingRating.difficolta_percepita)
-        setDifficultySaved(true)
+        const savedFeedback = existingRating.cosa_non_chiaro || ''
+        setDifficultyFeedbackText(savedFeedback)
+        setDifficultySaved(Boolean(savedFeedback.trim()))
       } else {
         setDifficultyRating(null)
+        setDifficultyFeedbackText('')
         setDifficultySaved(false)
       }
       // Reset toast when changing exercises
       setShowDifficultyToast(false)
+      setDifficultyFeedbackError('')
+      setDifficultyToastMessage('')
+      setShowDifficultyFeedbackPrompt(false)
     } else {
       setDifficultyRating(null)
+      setDifficultyFeedbackText('')
       setDifficultySaved(false)
       setShowDifficultyToast(false)
+      setDifficultyFeedbackError('')
+      setDifficultyToastMessage('')
+      setShowDifficultyFeedbackPrompt(false)
     }
   }, [selectedExercise, testerId])
 
@@ -487,12 +567,42 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
             </div>
           )}
 
-          {showDifficultyToast && (
-            <div className="difficulty-toast">
-              <p>Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.</p>
+          {hasAnswered && difficultyRating != null && showDifficultyFeedbackPrompt && (
+            <div className="exercise-confirm-modal__backdrop" role="presentation">
+              <div className="exercise-confirm-modal exercise-difficulty-feedback-modal" role="dialog" aria-modal="true" aria-labelledby="difficulty-feedback-title">
+                <h3 id="difficulty-feedback-title">Cosa non hai capito del grafico, della domanda o della spiegazione? Facci capire 💡</h3>
+                <div className="exercise-difficulty-feedback">
+                  <textarea
+                    ref={difficultyFeedbackTextareaRef}
+                    className={`exercise-confirm-modal__textarea ${difficultyFeedbackError ? 'has-error' : ''}`}
+                    placeholder="Scrivi cosa ti ha creato più difficoltà, cosa non ti è stato chiaro o quale parte del grafico/domanda ti ha messo in difficoltà…"
+                    value={difficultyFeedbackText}
+                    onChange={(e) => {
+                      setDifficultyFeedbackText(e.target.value)
+                      setDifficultyFeedbackError('')
+                      if (difficultySaved) {
+                        setDifficultySaved(false)
+                      }
+                    }}
+                    rows={7}
+                  />
+                  {difficultyFeedbackError && (
+                    <p className="exercise-confirm-modal__error">{difficultyFeedbackError}</p>
+                  )}
+                </div>
+                <div className="exercise-confirm-modal__actions">
+                  <button type="button" className="btn" onClick={handleConfirmDifficultyFeedback}>
+                    Salva feedback
+                  </button>
+                </div>
+              </div>
             </div>
           )}
-
+          {showDifficultyToast && (
+            <div className="difficulty-toast">
+              <p>{difficultyToastMessage || 'Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.'}</p>
+            </div>
+          )}
           <div className="exercise-detail-actions">
             <button type="button" className="btn" onClick={handleReturnToProgram}>
               Torna al programma

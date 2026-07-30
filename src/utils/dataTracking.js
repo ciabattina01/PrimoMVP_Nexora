@@ -56,9 +56,9 @@ export function upsertRispostaRemote(risposta) {
   postToAppsScript('risposta', risposta)
 }
 
-export function updateRispostaDifficultyRemote({ tester_id, esercizio_id, difficolta_percepita }) {
+export function updateRispostaDifficultyRemote({ tester_id, esercizio_id, difficolta_percepita, cosa_non_chiaro }) {
   if (!isBrowser || !tester_id) return
-  postToAppsScript('risposta_difficolta', { tester_id, esercizio_id, difficolta_percepita })
+  postToAppsScript('risposta_difficolta', { tester_id, esercizio_id, difficolta_percepita, cosa_non_chiaro })
 }
 
 export function upsertValutazioneRemote(valutazionePayload) {
@@ -138,6 +138,7 @@ export function saveRisposta({ esercizio_id, risposta_scelta, risposta_corretta,
     risposta_corretta,
     motivazione_utente: motivazione_utente || '',
     timestamp: new Date().toISOString(),
+    cosa_non_chiaro: '',
   }
 
   const risposte = getAllRisposte()
@@ -149,7 +150,7 @@ export function saveRisposta({ esercizio_id, risposta_scelta, risposta_corretta,
   console.log('RISPOSTA SALVATA', risposta)
 }
 
-export function updateRispostaWithDifficulty({ testerId, esercizio_id, difficolta_percepita }) {
+export function updateRispostaWithDifficulty({ testerId, esercizio_id, difficolta_percepita, cosa_non_chiaro }) {
   if (!isBrowser) return
   
   try {
@@ -161,13 +162,23 @@ export function updateRispostaWithDifficulty({ testerId, esercizio_id, difficolt
     if (existingIndex >= 0) {
       // Update existing response with difficulty rating (preserve completion timestamp)
       risposte[existingIndex].difficolta_percepita = difficolta_percepita
+      risposte[existingIndex].cosa_non_chiaro = cosa_non_chiaro || ''
       
       writeJsonArray(TEST_STORAGE_KEYS.risposte, risposte)
       updateRispostaDifficultyRemote({
         tester_id: testerId,
         esercizio_id,
         difficolta_percepita,
+        cosa_non_chiaro: cosa_non_chiaro || '',
       })
+      const titoloEsercizio = `Giorno ${risposte[existingIndex].giorno ?? '-'} - Domanda ${esercizio_id}`
+      const testoCosaNonEChiaro = (cosa_non_chiaro ?? '').trim()
+      console.log('=== Feedback esercizio ===')
+      console.log(`Esercizio: ${titoloEsercizio}`)
+      console.log(`Difficoltà percepita: ${difficolta_percepita}`)
+      console.log('Cosa non è chiaro:')
+      console.log(`"${testoCosaNonEChiaro}"`)
+      console.log('==========================')
       console.log('RISPOSTA AGGIORNATA CON DIFFICOLTA', risposte[existingIndex])
     } else {
       console.warn('Nessuna risposta trovata per l\'esercizio', esercizio_id)
@@ -211,7 +222,7 @@ export function getDifficultyRatings() {
   }
 }
 
-export function saveDifficultyRating({ testerId, giorno, esercizio_id, difficolta_percepita }) {
+export function saveDifficultyRating({ testerId, giorno, esercizio_id, difficolta_percepita, cosa_non_chiaro }) {
   if (!isBrowser) return
   
   try {
@@ -228,6 +239,7 @@ export function saveDifficultyRating({ testerId, giorno, esercizio_id, difficolt
       giorno,
       esercizio_id,
       difficolta_percepita,
+      cosa_non_chiaro: (cosa_non_chiaro ?? '').trim(),
       timestamp
     }
     
