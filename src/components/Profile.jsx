@@ -159,7 +159,7 @@ function Profile({ onSave, onDelete }) {
                 id="profileName"
                 name="profileName"
                 type="text"
-                placeholder="es. tester_03"
+                placeholder="es. Marco"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 required
