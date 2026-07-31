@@ -393,7 +393,11 @@ Linea arancione = livello di rottura: finchè quel livello rimane intatto, il me
 
 3.🎯Quando il prezzo rompe quel livello, come avviene sulla Candela 2, la struttura rialzista viene invalidata e il mercato ci fornisce la conferma che stavamo cercando: 🔁il trend ribassista osservato sul Daily potrebbe riprendere.
 
-Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista.`,
+Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista.
+
+❗❗Ma perchè non è la Candela 4? 
+
+È normale pensare che la Candela 4 sia una conferma migliore, perché il ribasso è ormai evidente. In realtà la conferma arriva già con la Candela 2, quando viene invalidata la struttura rialzista. Le candele successive mostrano solo la continuazione dello stesso movimento. Aspettare sempre un’ulteriore conferma può portare a un blocco operativo, mentre entrare troppo tardi significa spesso avere un punto di ingresso meno favorevole.`,
   },
   {
     id: 'day3-ex1',
