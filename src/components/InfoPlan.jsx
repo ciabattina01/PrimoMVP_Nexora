@@ -4,7 +4,7 @@ function InfoPlan() {
       <div className="info-plan-card">
         <span className="info-plan-badge">Percorso personalizzato</span>
         <h1 className="info-plan-title">
-          Piano Allenati — prova 7 giorni gratis e poi 14,90€/mese
+          Piano Allenati — prova 7 giorni gratis
         </h1>
         <ul className="info-plan-list">
           <li>Capisci dove sbagli e perché, ogni volta</li>
