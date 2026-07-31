@@ -570,12 +570,12 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
           {hasAnswered && difficultyRating != null && showDifficultyFeedbackPrompt && (
             <div className="exercise-confirm-modal__backdrop" role="presentation">
               <div className="exercise-confirm-modal exercise-difficulty-feedback-modal" role="dialog" aria-modal="true" aria-labelledby="difficulty-feedback-title">
-                <h3 id="difficulty-feedback-title">1-Cosa non hai capito del grafico o della spiegazione? 2-(rispondi pure solo una volta) A che livello sei? Ti orienti già da solo o stai studiando ma non sai cosa guardare sul grafico? </h3>
+                <h3 id="difficulty-feedback-title">🧐1-Cosa non hai capito della spiegazione? 🔎2-(rispondi solo una volta)Ti orienti già da solo o stai studiando ma non sai cosa guardare sul grafico? </h3>
                 <div className="exercise-difficulty-feedback">
                   <textarea
                     ref={difficultyFeedbackTextareaRef}
                     className={`exercise-confirm-modal__textarea ${difficultyFeedbackError ? 'has-error' : ''}`}
-                    placeholder="1-Scrivi cosa ti ha creato più difficoltà. 2- Hai difficoltà con il grafico o ti sai orientare da solo?"
+                    placeholder="1-Scrivi cosa ti ha creato più difficoltà. 2- Ti orienti già da solo o stai studiando ma non sai cosa guardare sul grafico"
                     value={difficultyFeedbackText}
                     onChange={(e) => {
                       setDifficultyFeedbackText(e.target.value)
