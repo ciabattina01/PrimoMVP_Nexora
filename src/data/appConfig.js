@@ -4,7 +4,7 @@ export const NAV_ITEMS = [
   { id: 'progress', label: 'Progressi', icon: 'progress' },
   { id: 'feedback', label: 'Feedback', icon: 'feedback' },
   { id: 'profile', label: 'Profilo', icon: 'profile' },
-  { id: 'info-plan', label: 'Info Piano Allenati', icon: 'info' },
+  { id: 'info-plan', label: '✨Piano Allenati (aggiornato)', icon: 'info' },
 ];
 
 export const APP_META = {
