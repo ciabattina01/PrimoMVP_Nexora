@@ -8,7 +8,7 @@ export const NAV_ITEMS = [
 ];
 
 export const APP_META = {
-  name: 'Nexora MVP',
+  name: 'Percep MVP',
   prototypeVersion: 'mvp_01',
 };
 
