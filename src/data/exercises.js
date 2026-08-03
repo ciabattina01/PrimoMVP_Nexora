@@ -262,9 +262,7 @@ Per ciascun massimo chiediti:
 
 Solo se tutte queste condizioni sono soddisfatte, quella zona rappresenta una continuazione del trend ribassista.
 
-Domanda
-
-👉🏻 Riesci a individuare 2 zone che rappresentano una continuazione del trend ribassista?
+👉🏻Domanda: riesci a individuare 2 zone che rappresentano una continuazione del trend ribassista?
 
 `,
     answers: [
