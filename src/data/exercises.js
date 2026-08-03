@@ -495,12 +495,13 @@ Da quel momento il cambio di struttura viene confermato e il mercato passa da tr
 
 Un piccolo aiuto sulla parte sinistra estrema del grafico 🔎:
 
-*Ragionamento dei precedenti esercizi: in un trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: una candela che chiude sopra a questo livello conferma il cambio di struttura a ribassista.
+* Nel trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: una candela che chiude sopra a questo livello conferma il cambio di struttura a ribassista.
+
 
 -INIZIO DEL TREND RIBASSISTA-
 
 
-*Riflessione 2. Continuazione del trend ribassista. Per ciascuna zona numerata chiediti: qual è il minimo oltre il quale i venditori hanno superato i compratori, facendo proseguire il movimento ribassista?
+* Riflessione 2. Continuazione del trend ribassista. Per ciascuna zona numerata chiediti: qual è il minimo oltre il quale i venditori hanno superato i compratori, facendo proseguire il movimento ribassista?
 
 👉🏻Domanda: c’è una zona fra 1, 2, 3 e 4 che NON genera né un cambio strutturale da trend rialzista a ribassista (parte estrema sinistra), né una continuazione del trend ribassista, quale?
 
