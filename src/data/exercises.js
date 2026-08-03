@@ -578,7 +578,7 @@ In questo grafico siamo su timeframe m15 (15 minuti) per individuare il trigger 
 
 Rifletti:
 
-* SL: ripensa al ragionamento sulle zone del precedente esercizio 8: un trend resta valido finché il prezzo non rompe i livelli che ne sostengono la struttura
+* SL: ripensa al ragionamento sulle zone del precedente esercizio 8, un trend resta valido finché il prezzo non rompe i livelli che ne sostengono la struttura
 * Ingresso: quale punto conferma che il trend rialzista si stia riconfermando anche su m15? Da qui usa lo stesso ragionamento dei precedenti esercizi...qual è l'ultimo massimo del trend ribassista (che anticipa quello rialzista)?
 
 👉🏻Domanda:
