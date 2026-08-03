@@ -493,7 +493,7 @@ Da quel momento il cambio di struttura viene confermato e il mercato passa da tr
 
 * Riflessione 1. Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
 
-Un piccolo aiuto 🔎:
+Un piccolo aiuto🔎:
 
 - Nel trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: una candela che chiude sopra a questo livello conferma il cambio di struttura a ribassista.
 
