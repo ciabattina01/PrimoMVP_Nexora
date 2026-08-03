@@ -487,7 +487,7 @@ Da quel momento il cambio di struttura viene confermato e il mercato passa da tr
     question: `🧐Spunto di partenza: osserva la parte estrema sinistra del grafico, c'è un breve trend rialzista, e, da un certo punto in poi, inizia il trend ribassista. Per questo esercizio non importa che osservi la parte destra del grafico (dalla zona 4 in poi). 
     
 - PARTE ESTREMA SINISTRA - prova a riflettere su questo:
-👀Cosa individuare: il punto in cui avviene il cambio di struttura da trend rialzista a ribassista nella parte estrema sinistra del grafico
+👀Trova il punto in cui avviene il cambio di struttura da trend rialzista a ribassista nella parte estrema sinistra del grafico.
 
 * Riflessione 1. Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
 
@@ -499,8 +499,8 @@ Un piccolo aiuto🔎:
 -INIZIO DEL TREND RIBASSISTA-
 
 * Riflessione 2. Continuazione del trend ribassista. Per ciascuna zona numerata chiediti: qual è il minimo oltre il quale i venditori hanno superato i compratori, facendo proseguire il movimento ribassista?
-
-👉🏻Domanda: c’è una zona fra 1, 2, 3 e 4 che NON genera né un cambio strutturale da trend rialzista a ribassista (parte estrema sinistra), né una continuazione del trend ribassista, quale?
+--------
+👉🏻Domanda finale: c’è una zona fra 1, 2, 3 e 4 che NON genera né un cambio strutturale da trend rialzista a ribassista (parte estrema sinistra), né una continuazione del trend ribassista, quale?
 
 `,
     answers: [
@@ -576,12 +576,10 @@ Osserva bene 👀: la conferma arriva quando una candela chiude al di sotto di q
 
 In questo grafico siamo su timeframe m15 (15 minuti) per individuare il trigger di entrata.
 
-💡 Ricorda: si sceglie un timeframe inferiore di almeno 8–16 volte rispetto a quello utilizzato per individuare il trend principale.
-
 Rifletti:
 
-* SL: ripensa al ragionamento sulle zone del precedente esercizio 8.
-* Ingresso: quale punto conferma che il trend rialzista si stia riconfermando anche su m15?
+* SL: ripensa al ragionamento sulle zone del precedente esercizio 8: un trend resta valido finché il prezzo non rompe i livelli che ne sostengono la struttura
+* Ingresso: quale punto conferma che il trend rialzista si stia riconfermando anche su m15? Da qui usa lo stesso ragionamento dei precedenti esercizi...qual è l'ultimo massimo del trend ribassista (che anticipa quello rialzista)?
 
 👉🏻Domanda:
 
