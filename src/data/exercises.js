@@ -415,18 +415,18 @@ Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma 
     question: `
 
 
-* Obiettivo: cercare il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
-Osserva: a sinistra è presente un evidente trend ribassista.
-
-* Qual è l’ultimo massimo appartenente a questo trend ribassista? Attenzione, l’ultimo massimo deve essere.
+* Obiettivo: cercare il punto (candela) di conferma del cambio di struttura: da trend ribassista a trend rialzista.
+Osserva a sinistra che è presente un evidente trend ribassista.
+🧐Ma dove finisce questo trend ribassista? é il punto che stiamo cercando. 
+* 1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? Attenzione, l’ultimo massimo deve essere.
 
 Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista.
 
-* Partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
+*2. Individua il livello di rottura: partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
 
-* Infine: quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
+*3. Quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
 
-La candela che chiude sopra questo livello è la conferma del cambio di struttura da trend ribassista a trend rialzista.
+La candela che chiude sopra questo livello è il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
  
 👉🏻Domanda: individua la candela dalla quale viene confermato l’inizio del trend rialzista, ossia il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
 `,
@@ -486,18 +486,20 @@ Da quel momento il cambio di struttura viene confermato e il mercato passa da tr
       timeframe: '4 H',
       instrument: 'GBP/USD',
     },
-    question: `Osserva la parte sinistra del grafico che identifica un breve trend rialzista, e poi il trend ribassista. Per questo esercizio non importa che osservi la parte destra del grafico (dal punto 4 in poi). 
+    question: `🧐Spunto di partenza: osserva la parte estrema sinistra del grafico, c'è un breve trend rialzista, e, da un certo punto in poi, inizia il trend ribassista. Per questo esercizio non importa che osservi la parte destra del grafico (dalla zona 4 in poi). 
+    
+- PARTE ESTREMA SINISTRA - prova a riflettere su questo:
+👀Cosa individuare: il punto in cui avviene il cambio di struttura da trend rialzista a ribassista nella parte estrema sinistra del grafico?
 
-Prova a riflettere su questi 2 aspetti:
-
-* Continuazione del trend ribassista. Per ciascuna zona chiediti: qual è il minimo oltre il quale i venditori hanno superato i compratori, facendo proseguire il movimento ribassista?
-* Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
+*Riflessione 1. Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
 
 Un piccolo aiuto sulla parte sinistra estrema del grafico 🔎:
 
-Nota il breve trend rialzista nella parte sinistra del grafico: in un trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: la sua rottura può indicare un cambio strutturale.
+*Ragionamento dei precedenti esercizi: in un trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: una candela che chiude sopra a questo livello conferma il cambio di struttura a ribassista.
+-INIZIO DEL TREND RIBASSISTA-
+*Riflessione 2. Continuazione del trend ribassista. Per ciascuna zona numerata chiediti: qual è il minimo oltre il quale i venditori hanno superato i compratori, facendo proseguire il movimento ribassista?
 
-👉🏻Domanda: c’è una zona fra 1, 2, 3 e 4 che NON genera né una continuazione del trend ribassista né un cambio strutturale da trend rialzista a ribassista, quale?
+👉🏻Domanda: c’è una zona fra 1, 2, 3 e 4 che NON genera né un cambio strutturale da trend rialzista a ribassista (parte estrema sinistra), né una continuazione del trend ribassista, quale?
 
 `,
     answers: [
