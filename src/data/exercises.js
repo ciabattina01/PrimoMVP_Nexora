@@ -264,7 +264,7 @@ Solo se tutte queste condizioni sono soddisfatte, quella zona rappresenta una co
 
 Domanda
 
-👉🏻 Riesci a individuare le 2 zone valide?
+👉🏻 Riesci a individuare 2 zone che rappresentano una continuazione del trend ribassista?
 
 `,
     answers: [
@@ -418,13 +418,13 @@ Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma 
 * Obiettivo: cercare il punto (candela) di conferma del cambio di struttura: da trend ribassista a trend rialzista.
 Osserva a sinistra che è presente un evidente trend ribassista.
 🧐Ma dove finisce questo trend ribassista? é il punto che stiamo cercando. 
-* 1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? Attenzione, l’ultimo massimo deve essere.
+1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? Attenzione, l’ultimo massimo deve essere.
 
 Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista.
 
-*2. Individua il livello di rottura: partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
+2. Individua il livello di rottura: partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
 
-*3. Quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
+3. Quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
 
 La candela che chiude sopra questo livello è il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
  
