@@ -489,11 +489,11 @@ Da quel momento il cambio di struttura viene confermato e il mercato passa da tr
     question: `🧐Spunto di partenza: osserva la parte estrema sinistra del grafico, c'è un breve trend rialzista, e, da un certo punto in poi, inizia il trend ribassista. Per questo esercizio non importa che osservi la parte destra del grafico (dalla zona 4 in poi). 
     
 - PARTE ESTREMA SINISTRA - prova a riflettere su questo:
-👀Cosa individuare: il punto in cui avviene il cambio di struttura da trend rialzista a ribassista nella parte estrema sinistra del grafico?
+👀Cosa individuare: il punto in cui avviene il cambio di struttura da trend rialzista a ribassista nella parte estrema sinistra del grafico
 
 * Riflessione 1. Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
 
-Un piccolo aiuto sulla parte sinistra estrema del grafico 🔎:
+Un piccolo aiuto 🔎:
 
 - Nel trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: una candela che chiude sopra a questo livello conferma il cambio di struttura a ribassista.
 
