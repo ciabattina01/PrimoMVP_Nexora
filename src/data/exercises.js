@@ -256,8 +256,8 @@ Prova a riflettere su questo aspetto:
 
 Per ciascun massimo chiediti:
 
-* è l’ultimo massimo prima della continuazione del trend ribassista?
-* qual è l’ultimo minimo precedente a quel massimo?
+
+* qual è l’ultimo minimo precedente a ciascuna zona (A, B, C, D) che stai osservando?
 * una candela chiude sotto il livello individuato da quel minimo?
 
 Solo se tutte queste condizioni sono soddisfatte, quella zona rappresenta una continuazione del trend ribassista.
@@ -287,7 +287,7 @@ Osserva i massimi indicati.
 
 Chiediti:
 
-🤔 Questo massimo è l’ultimo massimo prima della ripresa del movimento ribassista?
+🤔 Questo massimo è l’ultimo massimo relativo (non assoluto) prima della ripresa del movimento ribassista?
 
 Se la risposta è no, quella zona non può essere quella corretta.
 
@@ -295,13 +295,13 @@ Se la risposta è no, quella zona non può essere quella corretta.
 
 Passo 3 – Zona A e Zona C
 
-La Zona A appartiene ancora alla precedente struttura rialzista.
+La Zona A appartiene ancora alla precedente struttura rialzista e da quel massimo (A)non viene rotto nessun minimo.
 
 Per questo motivo non rappresenta un massimo da cui ha origine la continuazione del trend ribassista.
 
 Osserva ora la Zona C.
 
-Dopo la Zona C, il prezzo forma ancora un altro massimo (Zona D) prima di riprendere il ribasso.
+Dopo la Zona C, il prezzo forma ancora un altro piccolo massimo relativo (Zona D) prima di riprendere il ribasso.
 
 📶 È quindi la Zona D a rappresentare l’ultimo massimo.
 
