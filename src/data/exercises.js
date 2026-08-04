@@ -529,7 +529,7 @@ Per questo motivo, la zona 1 non rappresenta ancora il punto in cui avviene il c
 
 Per individuare un cambio di struttura (parte sinistra estrema del grafico: da rialzista a ribassista)bisogna considerare l’ultimo minimo, ❗ della precedente struttura rialzista.
 
-Il minimo indicato dalla freccia rossa non soddisfa questa condizione: si forma prima di aver rotto e chiuso sotto al precedente minimo della struttura rialzista. 🔎 Inoltre il massimo successivo (Zona 2) non riesce più a superare il massimo precedente (Zona 1), ma si ferma più in basso, mostrando che i compratori stanno perdendo il controllo del mercato.
+Il minimo indicato dalla freccia rossa non soddisfa questa condizione: si forma prima che una candela chiuda al di sotto del livello stabilito dal minimo della precedente struttura rialzista. 🔎 Inoltre il massimo successivo (Zona 2) non riesce più a superare il massimo precedente (Zona 1), ma si ferma più in basso, mostrando che i compratori stanno perdendo il controllo del mercato.
 
 * Zona 3
 
