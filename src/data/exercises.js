@@ -416,6 +416,7 @@ Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma 
 * Obiettivo: cercare il punto (candela) di conferma del cambio di struttura: da trend ribassista a trend rialzista.
 Osserva a sinistra, è presente un evidente trend ribassista.
 🧐Ma dove finisce questo trend ribassista? é il punto che stiamo cercando. 
+
 1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? 
 
 Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista che abbia generato un nuovo minimo.
