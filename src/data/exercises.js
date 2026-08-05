@@ -414,15 +414,15 @@ Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma 
 
 
 * Obiettivo: cercare il punto (candela) di conferma del cambio di struttura: da trend ribassista a trend rialzista.
-Osserva a sinistra che è presente un evidente trend ribassista.
+Osserva a sinistra, è presente un evidente trend ribassista.
 🧐Ma dove finisce questo trend ribassista? é il punto che stiamo cercando. 
-1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? Attenzione, l’ultimo massimo deve essere.
+1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? 
 
-Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista.
+Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista che abbia generato un nuovo minimo.
 
 2. Individua il livello di rottura: partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
 
-3. Quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello
+3. Quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello.
 
 La candela che chiude sopra questo livello è il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
  
@@ -443,9 +443,9 @@ Osserva la parte sinistra del grafico.
 
 🧐 1. È presente un evidente trend ribassista, caratterizzato da una successione di massimi e minimi decrescenti.
 
-👀 2. Individua l’ultimo massimo appartenente a questa struttura ribassista.
+👀 2. Individua l’ultimo massimo appartenente a questa struttura ribassista, che abbia generato un nuovo minimo.
 
-È proprio questo il massimo che dovrai prendere come riferimento.
+È proprio questo il massimo da prendere come riferimento.
 
 ⸻
 
@@ -465,7 +465,7 @@ Questa chiusura indica che il mercato ha accettato la rottura: accettazione dell
 
 👉🏻 4. Individua la candela
 
-La candela numero 3 è la prima candela che chiude sopra il (ultimo) massimo della precedente struttura ribassista.
+La candela numero 3 è la prima candela che chiude sopra il livello stabilito dall’ultimo massimo della precedente struttura ribassista (terzo pallino colorato).
 
 Da quel momento il cambio di struttura viene confermato e il mercato passa da trend ribassista a trend rialzista.
 

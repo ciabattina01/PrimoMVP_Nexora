@@ -8,7 +8,7 @@ export const NAV_ITEMS = [
 ];
 
 export const APP_META = {
-  name: '📣Scrivimi su Discord—sto raccogliendo feedback.  Profilo Instagram: @percep_progetto.',
+  name: '📣Scrivimi su Discord—sto raccogliendo feedback. Profilo Instagram: @percep_progetto.',
   prototypeVersion: 'mvp_01',
 };
 
