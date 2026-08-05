@@ -109,8 +109,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   const [isReviewMode, setIsReviewMode] = useState(false)
   const [hasInteractedWithDays, setHasInteractedWithDays] = useState(false)
   const [openDays, setOpenDays] = useState(new Set([1]))
-  const [observationText, setObservationText] = useState('')
-  const [observationError, setObservationError] = useState('')
   const [difficultyRating, setDifficultyRating] = useState(null)
   const [difficultyFeedbackText, setDifficultyFeedbackText] = useState('')
   const [difficultyFeedbackError, setDifficultyFeedbackError] = useState('')
@@ -210,12 +208,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     const isFreeResponseExercise = !selectedExercise.answers?.length
     if (!isFreeResponseExercise && !pendingAnswer) return
 
-    // Validate observation text
-    if (!observationText.trim()) {
-      setObservationError('Scrivi almeno una breve osservazione prima di vedere il ragionamento.')
-      return
-    }
-
     const submittedAnswer = isFreeResponseExercise ? FREE_RESPONSE_ANSWER : pendingAnswer
     const isCorrect = isFreeResponseExercise || submittedAnswer === selectedExercise.correctAnswer
     const numericExerciseId = getExerciseNumber(selectedExercise)
@@ -224,7 +216,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       esercizio_id: numericExerciseId,
       risposta_scelta: submittedAnswer,
       risposta_corretta: isCorrect,
-      motivazione_utente: observationText.trim(),
+      motivazione_utente: '',
     })
 
     const updatedRisposte = [...savedRisposte]
@@ -232,7 +224,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       esercizio_id: numericExerciseId,
       risposta_scelta: submittedAnswer,
       risposta_corretta: isCorrect,
-      motivazione_utente: observationText.trim(),
+      motivazione_utente: '',
       timestamp: new Date().toISOString(),
     }
     const existingIndex = updatedRisposte.findIndex((r) => r.esercizio_id === numericExerciseId)
@@ -256,15 +248,11 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     setSelectedAnswer(submittedAnswer)
     setPendingAnswer(null)
     setShowConfirmModal(false)
-    setObservationText('')
-    setObservationError('')
   }
 
   const handleCancelConfirmation = () => {
     setPendingAnswer(null)
     setShowConfirmModal(false)
-    setObservationText('')
-    setObservationError('')
   }
 
   const handleDifficultySelect = (value) => {
@@ -540,12 +528,12 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
 
           {hasAnswered && (
             <div className="exercise-difficulty-rating">
-              <h4>Quanto era facile o difficile per te?</h4>
+              <h4>Quanto hai capito dopo la spiegazione?</h4>
               <div className="difficulty-scale">
                 <div className="scale-labels">
-                  <span className="scale-label scale-label-left">Troppo facile</span>
-                  <span className="scale-label scale-label-center">Per me andava bene così</span>
-                  <span className="scale-label scale-label-right">Troppo difficile</span>
+                  <span className="scale-label scale-label-left">Non mi è chiaro</span>
+                  <span className="scale-label scale-label-center">Niente di nuovo</span>
+                  <span className="scale-label scale-label-right">Ho capito cose nuove</span>
                 </div>
                 <div className="scale-buttons">
                   {[1, 2, 3, 4, 5, 6, 7].map((value) => (
@@ -613,23 +601,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
             <div className="exercise-confirm-modal__backdrop" role="presentation">
               <div className="exercise-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-answer-title">
                 <h3 id="confirm-answer-title">Confermi?</h3>
-                <p>Prima di vedere il ragionamento guidato, descrivi in poche parole cosa hai osservato sul grafico.</p>
-
-                <div className="exercise-confirm-modal__field">
-                  <textarea
-                    placeholder="Scrivi in poche parole cosa hai osservato…"
-                    value={observationText}
-                    onChange={(e) => {
-                      setObservationText(e.target.value)
-                      setObservationError('')
-                    }}
-                    className={`exercise-confirm-modal__textarea ${observationError ? 'has-error' : ''}`}
-                    rows={3}
-                  />
-                  {observationError && (
-                    <p className="exercise-confirm-modal__error">{observationError}</p>
-                  )}
-                </div>
 
                 <div className="exercise-confirm-modal__actions">
                   <button type="button" className="btn btn-outline" onClick={handleCancelConfirmation}>
