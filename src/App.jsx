@@ -13,6 +13,22 @@ import { trackEvent } from './utils/tracking'
 import './App.css'
 
 const DEFAULT_PAGE = NAV_ITEMS[0]?.id || 'home'
+const STORAGE_VERSION_KEY = 'nexora_storage_version'
+const REQUIRED_STORAGE_VERSION = 'beta_2026_08_18_v1'
+
+function ensureRequiredStorageVersion() {
+  if (typeof window === 'undefined' || !window.localStorage) return
+
+  try {
+    const currentStorageVersion = window.localStorage.getItem(STORAGE_VERSION_KEY)
+    if (currentStorageVersion === REQUIRED_STORAGE_VERSION) return
+
+    clearLocalTestData()
+    window.localStorage.setItem(STORAGE_VERSION_KEY, REQUIRED_STORAGE_VERSION)
+  } catch (error) {
+    console.warn('Impossibile applicare il reset versionato dello storage', error)
+  }
+}
 
 function readProfileName() {
   if (typeof window === 'undefined' || !window.localStorage) return ''
@@ -35,6 +51,8 @@ function readProfileName() {
 }
 
 function App() {
+  ensureRequiredStorageVersion()
+
   const [profileName, setProfileName] = useState(() => readProfileName())
   const [activePage, setActivePage] = useState(() => {
     const savedProfile = readProfileName()
