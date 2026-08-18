@@ -41,6 +41,23 @@ const ICONS = {
       />
     </svg>
   ),
+  intro: (
+    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
+      <path
+        d="M6 5.5h12a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+      />
+      <path
+        d="M8.25 9h7.5M8.25 12h7.5M8.25 15h4.25"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
   progress: (
     <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
       <path
@@ -53,6 +70,45 @@ const ICONS = {
       />
       <path
         d="M4 6.5V18H20"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
+  'progress-bars': (
+    <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
+      <path
+        d="M5 18V14"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M10 18V11"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M15 18V8"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M20 18V5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+      <path
+        d="M3.5 18h17"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.8"

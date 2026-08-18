@@ -7,7 +7,7 @@ function PlaceholderPage({ section, description }) {
         <p className="muted">{description}</p>
         <div className="placeholder-outline">
           <p>
-            Questa sezione è in fase di progettazione. Qui verranno inseriti esercizi guidati, feedback
+            Questa sezione è in fase di progettazione. Qui verranno inseriti step guidati, feedback
             e progressi per i tester.
           </p>
         </div>

@@ -3,6 +3,25 @@ import { STORAGE_KEYS } from '../data/appConfig'
 import { saveTesterRemote } from '../utils/dataTracking'
 import { trackEvent } from '../utils/tracking'
 
+const INITIAL_SKILL_OPTIONS = [
+  'Mi oriento da solo.',
+  'Ho qualche base ma mi perdo spesso.',
+  'Spesso non so cosa guardare.',
+]
+
+const GRAPH_BLOCK_BEHAVIOR_OPTIONS = [
+  { value: 'Lascio perdere o rimando', label: 'Lascio perdere o rimando' },
+  {
+    value: 'Cerco altre informazioni o spiegazioni (video, libri, forum, persone…)',
+    label: 'Cerco altre informazioni o spiegazioni (video, libri, forum, persone…)',
+  },
+  {
+    value: 'Continuo comunque e finisco spesso per decidere a sensazione',
+    label: 'Continuo comunque e finisco spesso per decidere a sensazione',
+  },
+  { value: 'Non mi ci rivedo', label: 'Non mi ci rivedo' },
+]
+
 function readTesterId() {
   if (typeof window === 'undefined' || !window.localStorage) return ''
   return window.localStorage.getItem('nexora_tester_id') || ''
@@ -46,6 +65,10 @@ function TrashIcon(props) {
 
 function Profile({ onSave, onDelete }) {
   const [name, setName] = useState('')
+  const [initialSkillLevel, setInitialSkillLevel] = useState('')
+  const [initialSkillError, setInitialSkillError] = useState('')
+  const [graphBlockBehavior, setGraphBlockBehavior] = useState('')
+  const [graphBlockBehaviorError, setGraphBlockBehaviorError] = useState('')
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
@@ -65,13 +88,41 @@ function Profile({ onSave, onDelete }) {
       return
     }
 
+    if (showOnboarding) {
+      let hasOnboardingError = false
+
+      if (!initialSkillLevel) {
+        setInitialSkillError('Seleziona un’opzione prima di continuare.')
+        hasOnboardingError = true
+      }
+
+      if (!graphBlockBehavior) {
+        setGraphBlockBehaviorError('Seleziona un’opzione prima di continuare.')
+        hasOnboardingError = true
+      }
+
+      if (hasOnboardingError) {
+        return
+      }
+    }
+
     try {
       window.localStorage.setItem(
         STORAGE_KEYS.profile,
         JSON.stringify({ name: trimmedName, savedAt: new Date().toISOString() }),
       )
       window.localStorage.setItem('nexora_tester_id', trimmedName)
-      saveTesterRemote({ tester_id: trimmedName })
+      console.log('AUTOVALUTAZIONE INIZIALE', {
+        tester_id: trimmedName,
+        livello_percepito: initialSkillLevel || '',
+        comportamento_blocco_grafico: graphBlockBehavior || '',
+      })
+      saveTesterRemote({
+        tester_id: trimmedName,
+        filtro: initialSkillLevel || '',
+        comportamento_blocco_grafico: graphBlockBehavior || '',
+        timestamp: new Date().toISOString(),
+      })
       trackEvent({ type: 'profile_saved', tester_id: trimmedName || null })
       if (onSave) onSave(trimmedName)
     } catch (error) {
@@ -121,7 +172,7 @@ function Profile({ onSave, onDelete }) {
               <span className="onboarding-info-dot" aria-hidden="true" />
               <span>
                 Pensato per:{' '}
-                <strong>chi è alle prime armi o sta costruendo un metodo</strong>
+                <strong>chi è alle prime armi</strong>
               </span>
             </div>
           </div>
@@ -132,14 +183,14 @@ function Profile({ onSave, onDelete }) {
             <h4>COME SI SVOLGE IL TEST:</h4>
             <div className="onboarding-test-details">
               <div className="onboarding-test-item">
-                <span>• Durata: <strong>3 giorni · 9 esercizi</strong></span>
+                <span>• Durata: <strong>3 giorni · 9 step</strong></span>
               </div>
               <div className="onboarding-test-item">
-                <span>• Accesso attuale: <strong>unico percorso di test</strong></span>
+                <span>• Accesso attuale: <strong>2 step facoltativi per iniziare da 0 + percorso con 9 step</strong></span>
               </div>
               <div className="onboarding-test-item">
                 <span>
-                  • Formato del test:<strong>grafici statici reali per concentrarsi sul metodo di ragionamento</strong>.
+                  • Formato del test:<strong>grafici statici reali</strong>.
                 </span>
               </div>
               <div className="onboarding-test-item">
@@ -153,8 +204,59 @@ function Profile({ onSave, onDelete }) {
               <strong>Non è la versione definitiva. Prima di sviluppare tutte le funzionalità, verifichiamo che il metodo di apprendimento sia efficace.</strong>
              
             </p>
+
+            <div className="onboarding-skill-card" role="group" aria-labelledby="initial-skill-title">
+              <p id="initial-skill-title" className="onboarding-skill-title">📊 Sul grafico io…</p>
+              <div className="onboarding-skill-options">
+                {INITIAL_SKILL_OPTIONS.map((option) => (
+                  <label key={option} className="onboarding-skill-option">
+                    <input
+                      type="radio"
+                      name="initialSkillLevel"
+                      value={option}
+                      checked={initialSkillLevel === option}
+                      onChange={(event) => {
+                        setInitialSkillLevel(event.target.value)
+                        setInitialSkillError('')
+                      }}
+                    />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
+              {initialSkillError && (
+                <p className="onboarding-skill-error">{initialSkillError}</p>
+              )}
+            </div>
+
+            <div className="onboarding-skill-card" role="group" aria-labelledby="graph-block-behavior-title">
+              <p id="graph-block-behavior-title" className="onboarding-skill-title">
+                Quando sei davanti a un grafico, non sai bene cosa guardare e ti blocchi, cosa fai più spesso?
+              </p>
+              <div className="onboarding-skill-options">
+                {GRAPH_BLOCK_BEHAVIOR_OPTIONS.map((option) => (
+                  <label key={option.value} className="onboarding-skill-option">
+                    <input
+                      type="radio"
+                      name="graphBlockBehavior"
+                      value={option.value}
+                      checked={graphBlockBehavior === option.value}
+                      onChange={(event) => {
+                        setGraphBlockBehavior(event.target.value)
+                        setGraphBlockBehaviorError('')
+                      }}
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              {graphBlockBehaviorError && (
+                <p className="onboarding-skill-error">{graphBlockBehaviorError}</p>
+              )}
+            </div>
+
             <div className="field">
-              <label htmlFor="profileName">Nome del tester</label>
+              <label htmlFor="profileName">Nome utente</label>
               <input
                 id="profileName"
                 name="profileName"
@@ -181,7 +283,7 @@ function Profile({ onSave, onDelete }) {
     <section className="profile">
       <header className="profile-head">
         <span className="eyebrow">Profilo</span>
-        <h1 className="page-title">Imposta il tuo nome</h1>
+        <h1 className="page-title">Il tuo profilo</h1>
       </header>
 
       <form className="profile-form" onSubmit={handleSubmit}>

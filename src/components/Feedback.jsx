@@ -56,7 +56,7 @@ function Feedback({ testerId }) {
 
       <form className="feedback-form" onSubmit={handleSubmit}>
         <div className="field">
-          <label htmlFor="rating">Quanto ti sei sentito guidato durante ogni esercizio?</label>
+          <label htmlFor="rating">Quanto ti sei sentito guidato durante ogni step?</label>
           <div className="rating-options">
             {[1, 2, 3, 4, 5].map((value) => (
               <label key={value} className={`rating-pill${rating === String(value) ? ' is-active' : ''}`}>
@@ -75,7 +75,7 @@ function Feedback({ testerId }) {
         </div>
 
         <div className="field">
-          <label htmlFor="feedbackText">C'è un esercizio in particolare, qualunque cosa che secondo te non è stata chiara? Esprimi un parere sincero</label>
+          <label htmlFor="feedbackText">C'è uno step in particolare, qualunque cosa che secondo te non è stata chiara? Esprimi un parere sincero</label>
           <textarea
             id="feedbackText"
             name="feedbackText"

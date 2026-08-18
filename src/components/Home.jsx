@@ -1,17 +1,19 @@
+import { Fragment } from 'react'
+
 const HERO_CARDS = [
   {
     step: '1',
-    title: 'Esercizio sul Trend',
+    title: 'Step sul Trend',
     description: 'Capisci se il prezzo si sta muovendo in una direzione chiara oppure no.',
   },
   {
     step: '2',
-    title: 'Esercizio sulle Zone',
+    title: 'Step sulle Zone',
     description: 'Osserva dove il prezzo si è fermato o ha reagito in passato.',
   },
   {
     step: '3',
-    title: 'Esercizio sul Trigger e il Rischio',
+    title: 'Step sul Trigger e il Rischio',
     description: 'Capisci quando entrare e quanto rischiare.',
   },
 ]
@@ -42,7 +44,21 @@ const STRUCTURE_CARDS = [
   },
 ]
 
-function Home({ onStartExercises }) {
+function renderHomeObjectiveTextWithBold(text) {
+  const source = String(text ?? '')
+  const parts = source.split(/(\*\*[\s\S]+?\*\*)/g)
+
+  return parts.map((part, index) => {
+    const match = part.match(/^\*\*([\s\S]+)\*\*$/)
+    if (match) {
+      return <strong key={`home-objective-bold-${index}`}>{match[1]}</strong>
+    }
+
+    return <Fragment key={`home-objective-text-${index}`}>{part}</Fragment>
+  })
+}
+
+function Home({ onStartIntro, onStartExercises }) {
   return (
     <div className="home">
       <section className="hero hero-home">
@@ -50,12 +66,23 @@ function Home({ onStartExercises }) {
         <div className="hero-grid">
           <div className="hero-main">
             <h1 className="home-title">
-              Inizia ad applicare <span className="gradient-text">i concetti sul grafico</span>
+              Inizia a capire  <span className="gradient-text">cosa guardare</span>
             </h1>
             <p className="lead hero-lead">
-              <strong>Ogni giorno hai 3 esercizi.</strong> <strong>Ogni esercizio:</strong>•📉Grafico reale •⌚7-10min.
+              <strong></strong> 
             </p>
-            <h2 className="daily-goal-title">Obiettivo giornaliero</h2>
+
+            <div className="home-intro-entry" aria-label="Accesso Parte introduttiva">
+              <h2 className="home-intro-entry-title">Non sai da dove iniziare?</h2>
+              <p className="home-intro-entry-copy">
+                Qui avrai 3 step per avere le basi pratiche necessarie. 
+              </p>
+              <button type="button" className="btn btn-primary btn-primary--intro" onClick={onStartIntro}>
+                Inizia da qui
+              </button>
+            </div>
+ 
+            <h2 className="daily-goal-title">Ogni giorno • 3 step <strong> •⌚meno di 5 min ogni step.</strong>   Obiettivo giornaliero:</h2>
             <div className="hero-highlights" aria-label="Punti chiave del percorso">
               {HERO_CARDS.map((card) => (
                 <div key={card.title} className="hero-highlight">
@@ -77,17 +104,15 @@ function Home({ onStartExercises }) {
           </div>
 
           <aside className="weekly-goal-card" aria-labelledby="weekly-goal-title">
-            <h2 id="weekly-goal-title">OBIETTIVO – Cosa alleni</h2>
+            <h2 id="weekly-goal-title">OBIETTIVO </h2>
             <p>
-              Ogni giorno ti allenerai a ragionare direttamente sul grafico attraverso tre esercizi:
+              {renderHomeObjectiveTextWithBold(`Gli step **allenano un modo di ragionare da utilizzare su grafici e tipi di operatività diversi**`)}
             </p>
-            <ul className="weekly-goal-list">
-              <li>Riconoscere i trend e i cambi di struttura.</li>
-              <li>Individuare le zone in cui il prezzo ha reagito.</li>
-              <li>Riconoscere i possibili punti di entrata (Trigger) e dove posizionare lo Stop Loss.</li>
-            </ul>
-            <p className="weekly-goal-note">
-              Questa versione non è definitiva: è un primo test per capire quale metodo di apprendimento risulta più efficace.
+            <p>
+              {renderHomeObjectiveTextWithBold(`**3 step per avere le basi pratiche necessarie**`)}
+            </p>
+            <p>
+              {renderHomeObjectiveTextWithBold(`**Con quanto capitale iniziare?**Allenati in simulazione. Poi come riferimento, 100–300 €.`)}
             </p>
           </aside>
         </div>
@@ -95,9 +120,9 @@ function Home({ onStartExercises }) {
 
       <section className="home-structure">
         <div className="structure-head">
-          <h2>La struttura di ogni esercizio</h2>
+          <h2>Ogni step:</h2>
           <p className="muted">
-            Ogni esercizio è un percorso guidato, progressivo e strutturato in <strong>3 fasi</strong>:
+            Ogni step è un percorso guidato, progressivo e strutturato in <strong>3 fasi</strong>:
           </p>
         </div>
         <div className="structure-grid">

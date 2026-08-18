@@ -9,6 +9,28 @@ const TEST_STORAGE_KEYS = {
 const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL
 
+function normalizeExerciseKey(value) {
+  if (typeof value === 'number') return value
+  if (typeof value !== 'string') return value
+
+  const trimmed = value.trim()
+  if (!trimmed) return ''
+  if (/^0[a-c]$/i.test(trimmed)) return trimmed.toUpperCase()
+
+  const parsed = Number.parseInt(trimmed, 10)
+  return Number.isNaN(parsed) ? trimmed : parsed
+}
+
+function toRispostaSheetPayload(risposta) {
+  return {
+    tester_id: risposta.tester_id,
+    esercizio_id: normalizeExerciseKey(risposta.esercizio_id),
+    risposta_scelta: risposta.risposta_scelta,
+    risposta_corretta: Boolean(risposta.risposta_corretta),
+    timestamp: risposta.timestamp,
+  }
+}
+
 function postToAppsScript(action, payload) {
   if (!isBrowser) return
   if (!APPS_SCRIPT_URL) {
@@ -46,19 +68,29 @@ function postToAppsScript(action, payload) {
     })
 }
 
-export function saveTesterRemote({ tester_id }) {
+export function saveTesterRemote({ tester_id, filtro, comportamento_blocco_grafico, timestamp }) {
   if (!isBrowser || !tester_id) return
-  postToAppsScript('tester', { tester_id })
+  postToAppsScript('tester', {
+    tester_id,
+    filtro: filtro || '',
+    comportamento_blocco_grafico: comportamento_blocco_grafico || '',
+    timestamp: timestamp || new Date().toISOString(),
+  })
 }
 
 export function upsertRispostaRemote(risposta) {
   if (!isBrowser || !risposta?.tester_id) return
-  postToAppsScript('risposta', risposta)
+  postToAppsScript('risposta', toRispostaSheetPayload(risposta))
 }
 
 export function updateRispostaDifficultyRemote({ tester_id, esercizio_id, difficolta_percepita, cosa_non_chiaro }) {
   if (!isBrowser || !tester_id) return
-  postToAppsScript('risposta_difficolta', { tester_id, esercizio_id, difficolta_percepita, cosa_non_chiaro })
+  postToAppsScript('risposta_difficolta', {
+    tester_id,
+    esercizio_id: normalizeExerciseKey(esercizio_id),
+    difficolta_percepita,
+    cosa_non_chiaro: cosa_non_chiaro || '',
+  })
 }
 
 export function upsertValutazioneRemote(valutazionePayload) {
@@ -128,22 +160,41 @@ export function getValutazioni() {
   return valutazioni.filter((valutazione) => valutazione?.tester_id === testerId)
 }
 
-export function saveRisposta({ esercizio_id, risposta_scelta, risposta_corretta, motivazione_utente }) {
+export function saveRisposta({ esercizio_id, risposta_scelta, risposta_corretta }) {
   const testerId = getTesterId()
-  const parsedExerciseId = Number.parseInt(esercizio_id, 10)
+  const normalizedExerciseKey = normalizeExerciseKey(esercizio_id)
+  const timestamp = new Date().toISOString()
+  const risposte = getAllRisposte()
+  const preservedRisposta = [...risposte]
+    .reverse()
+    .find(
+      (existing) =>
+        existing.tester_id === testerId &&
+        normalizeExerciseKey(existing.esercizio_id) === normalizedExerciseKey,
+    ) || null
   const risposta = {
+    ...(preservedRisposta || {}),
     tester_id: testerId,
-    esercizio_id: Number.isNaN(parsedExerciseId) ? 0 : parsedExerciseId,
+    esercizio_id: normalizedExerciseKey,
+    esercizio: String(normalizedExerciseKey),
     risposta_scelta,
+    risposta: risposta_scelta,
     risposta_corretta,
-    motivazione_utente: motivazione_utente || '',
-    timestamp: new Date().toISOString(),
-    cosa_non_chiaro: '',
+    corretta: Boolean(risposta_corretta),
+    timestamp,
+    difficolta_percepita: preservedRisposta?.difficolta_percepita ?? null,
+    cosa_non_chiaro: preservedRisposta?.cosa_non_chiaro || '',
   }
 
-  const risposte = getAllRisposte()
-  risposte.push(risposta)
-  writeJsonArray(TEST_STORAGE_KEYS.risposte, risposte)
+  const nextRisposte = risposte.filter(
+    (existing) =>
+      !(
+        existing.tester_id === testerId &&
+        normalizeExerciseKey(existing.esercizio_id) === normalizedExerciseKey
+      ),
+  )
+  nextRisposte.push(risposta)
+  writeJsonArray(TEST_STORAGE_KEYS.risposte, nextRisposte)
   upsertRispostaRemote(risposta)
 
   // eslint-disable-next-line no-console
@@ -155,27 +206,43 @@ export function updateRispostaWithDifficulty({ testerId, esercizio_id, difficolt
   
   try {
     const risposte = getAllRisposte()
+    const normalizedExerciseKey = normalizeExerciseKey(esercizio_id)
     const existingIndex = risposte.findIndex(
-      risposta => risposta.tester_id === testerId && risposta.esercizio_id === esercizio_id
+      (risposta) => risposta.tester_id === testerId && risposta.esercizio_id === normalizedExerciseKey,
     )
     
     if (existingIndex >= 0) {
       // Update existing response with difficulty rating (preserve completion timestamp)
-      risposte[existingIndex].difficolta_percepita = difficolta_percepita
-      risposte[existingIndex].cosa_non_chiaro = cosa_non_chiaro || ''
+      const parsedDifficulty = Number.parseInt(String(difficolta_percepita), 10)
+      const hasValidDifficulty = !Number.isNaN(parsedDifficulty)
+      if (hasValidDifficulty) {
+        risposte[existingIndex].difficolta_percepita = parsedDifficulty
+      }
+
+      const trimmedCosaNonChiaro =
+        typeof cosa_non_chiaro === 'string' ? cosa_non_chiaro.trim() : ''
+      if (trimmedCosaNonChiaro) {
+        risposte[existingIndex].cosa_non_chiaro = trimmedCosaNonChiaro
+      }
+
+      const finalDifficulty = risposte[existingIndex].difficolta_percepita
+      const finalCosaNonChiaro = risposte[existingIndex].cosa_non_chiaro || ''
+      risposte[existingIndex].esercizio = String(risposte[existingIndex].esercizio_id)
+      risposte[existingIndex].risposta = risposte[existingIndex].risposta_scelta
+      risposte[existingIndex].corretta = Boolean(risposte[existingIndex].risposta_corretta)
       
       writeJsonArray(TEST_STORAGE_KEYS.risposte, risposte)
       updateRispostaDifficultyRemote({
         tester_id: testerId,
-        esercizio_id,
-        difficolta_percepita,
-        cosa_non_chiaro: cosa_non_chiaro || '',
+        esercizio_id: normalizedExerciseKey,
+        difficolta_percepita: finalDifficulty,
+        cosa_non_chiaro: finalCosaNonChiaro,
       })
       const titoloEsercizio = `Giorno ${risposte[existingIndex].giorno ?? '-'} - Domanda ${esercizio_id}`
-      const testoCosaNonEChiaro = (cosa_non_chiaro ?? '').trim()
+      const testoCosaNonEChiaro = finalCosaNonChiaro
       console.log('=== Feedback esercizio ===')
       console.log(`Esercizio: ${titoloEsercizio}`)
-      console.log(`Difficoltà percepita: ${difficolta_percepita}`)
+      console.log(`Difficoltà percepita: ${finalDifficulty}`)
       console.log('Cosa non è chiaro:')
       console.log(`"${testoCosaNonEChiaro}"`)
       console.log('==========================')
@@ -188,17 +255,14 @@ export function updateRispostaWithDifficulty({ testerId, esercizio_id, difficolt
   }
 }
 
-export function saveValutazione({ giorno, valutazione, feedback_testo, esercizio_completato }) {
+export function saveValutazione({ valutazione, feedback_testo }) {
   const testerId = getTesterId()
-  const parsedDay = Number.parseInt(giorno, 10)
   const parsedValutazione = Number.parseInt(valutazione, 10)
   const valutazionePayload = {
     tester_id: testerId,
-    giorno: Number.isNaN(parsedDay) ? 0 : parsedDay,
     valutazione: Number.isNaN(parsedValutazione) ? 0 : parsedValutazione,
     feedback_testo: feedback_testo ?? '',
     timestamp: new Date().toISOString(),
-    esercizio_completato: Boolean(esercizio_completato),
   }
 
   const valutazioni = getAllValutazioni()

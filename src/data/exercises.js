@@ -1,68 +1,69 @@
-export const EXERCISES = [
+const EXERCISE_ITEMS = [
   {
     id: 'day1-ex1',
     day: 1,
-    title: 'Esercizio 1 — Individua le direzioni principali',
+    title: 'Step 1 — Quando cambia il trend?',
     block: 'Trend / contesto',
     description: 'Individua le direzioni principali osservando la sequenza di massimi e minimi.',
-    imageBefore: '/Grafici/Es_1_Trend_H1_Gold.PNG',
-    imageAfter: '/Grafici/Es1_Trend_Feedback.PNG',
+    imageBefore: '/Grafici_2/domanda_trend_giorno_1.PNG',
+    imageAfter: '/Grafici_2/risposta_trend_giorno_1.PNG',
     chartMeta: {
-      source: 'TradingView',
-      timeframe: '1H',
-      instrument: 'Gold Spot / U.S. Dollar',
+      source: 'Grafico qualitativo',
+      timeframe: '',
+      instrument: '',
     },
-    question: `In questo primo esercizio faremo un’analisi qualitativa. Più avanti entreremo nel dettaglio dei cambi di struttura (cambi di trend) e di come vengono confermati.
+    question: `
+Osserva il grafico **da sinistra verso destra. Nella prima parte il mercato costruisce una chiara struttura rialzista.**
 
-👉🏻Domanda: in modo qualitativo, quali trend noti in questo grafico?
+👀 Questa volta concentrati soprattutto sui minimi che compongono il trend rialzista.
 
-•🧐Osserva i massimi:
-i massimi stanno diventando progressivamente più alti oppure più bassi?
+ Alcuni sono semplici oscillazioni interne, mentre altri rappresentano le impalcature della struttura rialzista: sono i minimi che, una volta formati, costruiscono nuovi massimi.
 
-•🧐 Osserva i minimi:
-anche i minimi seguono la stessa direzione dei massimi?
+Chiediti:
 
-•❗ Cerca una sequenza:
-un singolo massimo o minimo non basta.
-Osserva se più massimi e minimi consecutivi costruiscono una struttura coerente.
+• **I minimi principali stanno continuando a formarsi progressivamente più in alto?**
 
-🔁 Conferma la nuova struttura: non fermarti al primo movimento. Verifica che anche i massimi e i minimi successivi continuino nella nuova direzione.
+• **Quali minimi stanno realmente sostenendo la struttura rialzista? Cerca l'ultimo minimo (della struttura rialzista)da cui si è formato un nuovo massimo: è questo il minimo da considerare.**
 
-Solo allora puoi considerare la nuova struttura sufficientemente chiara.`,
+• **Da quest'ultimo minimo, immagina una linea orizzontale. In quale punto il prezzo rompe e chiude al di sotto di questa linea? **
+
+
+•**Obiettivo**: individua il punto in cui avviene la rottura di questa linea (livello di rottura), indica un'invalidazione della struttura ribassista, quindi il passaggio da rialzista a ribassista.
+
+👉 **Domanda**: osservando i punti 1, 2 e 3, in quale punto viene invalidata la struttura rialzista e cambia la direzione, da rialzista a ribassista?`,
     answers: [
-      { key: 'A', text: 'C’è solo un trend rialzista.' },
-      { key: 'B', text: 'È presente una fase di congestione e poi un trend rialzista.' },
-      { key: 'C', text: 'Trend rialzista, poi ribassista e infine rialzista.' },
+      { key: 'A', text: 'Punto 1' },
+      { key: 'B', text: 'Punto 2' },
+      { key: 'C', text: 'Punto 3' },
     ],
     correctAnswer: 'C',
-    feedback: `🟩La risposta corretta è la C: nel grafico si possono riconoscere tre strutture direzionali, evidenziate dalle due frecce verdi e dalla freccia rossa.
+    feedback: `🟩 **Risposta corretta: Punto 3.**
 
-Zona 1 – Struttura rialzista 📈
 
-Dalla prima freccia verde iniziano a susseguirsi massimi e minimi progressivamente più alti.
+📈 Il mercato sta costruendo un trend rialzista perché i suoi minimi strutturali principali si formano progressivamente più in alto. Finché continuano a essere rispettati, la struttura rialzista rimane valida.
 
-I compratori riescono quindi a spingere il prezzo verso livelli sempre superiori e la struttura assume una direzione rialzista.
+👀 Ma non tutti i minimi hanno la stessa importanza.
 
-Zona 2 – Passaggio a una struttura ribassista 📉
+•**Dai punti 1 e 2 (minimi), il prezzo riparte verso l'alto, ma NON crea nuovi massimi più alti rispetto ai precedenti.** La struttura rialzista però non è ancora invalidata.
 
-In corrispondenza della freccia rossa, la precedente sequenza rialzista smette di proseguire.
+•👀**Per trovare il punto di invalidazione della struttura rialzista:**
 
-Da quel punto iniziano a formarsi massimi e minimi progressivamente più bassi, segnalando che i venditori hanno preso il controllo e che la struttura è diventata ribassista.
+individua **l'ultimo minimo strutturale della fase rialzista**: è il minimo da cui il prezzo crea l'ultimo nuovo massimo.
 
-🧐 Durante questa zona compare anche un rialzo molto evidente. Quel movimento, però, non è sufficiente da solo per confermare un nuovo trend rialzista: dopo il massimo il prezzo torna infatti a scendere e forma ancora un minimo più basso.
+•🎯 **Arriviamo al Punto 3.**
 
-Questo mostra perché non bisogna considerare ogni movimento contrario come un cambio di trend già confermato.
+Da quel minimo immaginiamo una linea orizzontale (livello di rottura): è il livello che non deve essere rotto affinchè la struttura resti rialzista.
 
-Zona 3 – Ritorno a una struttura rialzista 📈
+Nel Punto 3 il prezzo rompe questo livello, cioè una candela chiude al di sotto del suo livello, e accade qualcosa di diverso:
 
-Dalla seconda freccia verde il ragionamento è speculare.
+- viene meno l'ultimo minimo che sosteneva la struttura rialzista;
 
-La sequenza ribassista perde continuità e iniziano nuovamente a costruirsi massimi e minimi progressivamente più alti.
+- la sequenza di minimi crescenti viene invalidata;
 
-I compratori tornano quindi a prevalere e si sviluppa una nuova struttura rialzista.
+- i compratori non riescono più a mantenere la precedente struttura;
 
-La cosa importante è quindi seguire nel tempo il modo in cui si costruiscono i massimi e i minimi e verificare se la nuova direzione continua per più movimenti consecutivi.
 
+•🔄 **Al Punto 3 la struttura rialzista viene invalidata, per iniziare poi la struttura ribassista.**
 `,
     takeaway:
       'Per riconoscere una direzione non basta guardare una singola candela o un singolo movimento. Devi osservare la sequenza: massimi e minimi crescenti indicano una struttura rialzista, mentre massimi e minimi decrescenti indicano una struttura ribassista.',
@@ -70,438 +71,263 @@ La cosa importante è quindi seguire nel tempo il modo in cui si costruiscono i 
   {
     id: 'day1-ex2',
     day: 1,
-    title: 'Esercizio 2 — Individua la zona di reazione',
+    title: 'Step 2 — Zone per cercare un trade long',
     block: 'Zone importanti',
     description: 'Trova le zone chiave dove il prezzo ha reagito in passato.',
-    imageBefore: '/Grafici/GOLD_H1_DOMANDA_ZONE_1.PNG',
-    imageAfter: '/Grafici/GOLD_H1_SOLUZIONE_ZONE_1.PNG',
+    imageBefore: '/Grafici_2/domanda_zone_giorno_1.PNG',
+    imageAfter: '/Grafici_2/risposta_zone_giorno_1.PNG',
     chartMeta: {
-      source: 'TradingView',
-      timeframe: '1H',
-      instrument: 'Gold Spot / U.S. Dollar',
+      source: 'Grafico qualitativo',
+      timeframe: '',
+      instrument: '',
     },
-    question: ` Il grafico mostra lo stesso mercato dell’esercizio precedente (Esercizio 1), sempre sul timeframe 1H, ma con uno zoom su una parte.
+    question: `**Qui analizzi lo stesso grafico di Step 1.**
+    
+    Osserva il grafico **da sinistra verso destra.** Nella prima parte il mercato si muove in **trend rialzista. **
+    
+    💡**Cos’è concretamente una zona?**
 
-Prima di rispondere, prova a riflettere su queste domande:
+È un’area di prezzo individuata a partire dagli **estremi di una candela: in verticale comprende il range tra il suo massimo e il suo minimo.**
+Sul grafico la **estendiamo poi verso destra, cioè nel tempo, per osservare cosa succede se il prezzo torna in quel range.**
 
-* Osservando le 3 zone, da quale nasce il movimento che genera nuovi massimi?
-* Quel movimento riesce anche a superare i massimi precedenti?🔎 nota bene il massimo indicato dal pallino (1).
-* Che cosa ti fa pensare che una zona possa continuare ad attirare l’interesse dei compratori se il prezzo dovesse tornarci?
 
-Dopo aver selezionato la risposta, ti chiederemo di spiegare brevemente il tuo ragionamento.
+In poche parole: la zona conserva il range di prezzi di quella candela e lo proietta in avanti nel grafico.
 
-👉🏻Domanda:
+   👀 **Obiettivo: capire su quali minimi abbia senso cercare una possibile zona interessante.**
 
-Secondo te, in quale delle zone indicate è più sensato cercare una possibile ripresa del trend rialzista?`,
+   💡 **Una zona diventa interessante per un possibile trade long, quando si trova intorno a un minimo da cui si creano nuovi massimi più alti, continuando la struttura rialzista.**
+
+Per riconoscerla:
+
+• da quel minimo il prezzo ha costruito un nuovo massimo pù alto del precedente?
+
+• la struttura continua con massimi e minimi sempre più alti?
+
+• oppure la struttura rialzista è già stata invalidata?
+
+👉 **Domanda**: osservando le zone 1, 2, 3 e 4, quali sono le zone corrette in cui avrebbe senso cercare trade long?`,
     answers: [
-      { key: 'A', text: 'Zona A' },
-      { key: 'B', text: 'Zona B' },
-      { key: 'C', text: 'Zona C' },  
+      { key: 'A', text: 'Zone 1 e 3' },
+      { key: 'B', text: 'Zona 2 e 3' },
+      { key: 'C', text: 'Zona 1 e 4' },  
+      { key: 'D', text: 'Zona 2 e 4' }, 
     ],
-    correctAnswer: 'B',
-    feedback: `
-🟩La risposta corretta è la Zona B. 
+    correctAnswer: 'A',
+    feedback: `🟩 **Risposta corretta: Zone 1 e 3.**
+    
+•**Principio semplice:**
 
-Per individuare una zona valida bisogna verificare che presenti almeno una di queste caratteristiche:
+👀 In un trend rialzista, una **zona può diventare interessante per cercare un possibile trade long quando si trova intorno a un minimo da cui il prezzo riparte e continua la struttura rialzista, costruendo un nuovo massimo più alto, rispetto al precedente.**
 
-* la zona rappresenta un punto di continuazione del trend in corso, in questo caso rialzista;
-* la zona rappresenta un punto di cambio strutturale del trend, in questo caso da ribassista a rialzista.
 
-Studiamo ora ogni zona.
+•Zona 1 — corretta
 
-Zona A
+Da questo minimo il prezzo riparte verso l’alto e costruisce un nuovo massimo più alto. La struttura rialzista continua: per questo la Zona 1 è coerente con la ricerca di un possibile trade long.
 
-Osserva 👀: il massimo locale precedente è indicato dalla seconda candela partendo da sinistra, contrassegnata dal pallino colorato (1).
+•Zona 2 — errata
 
-🧐Ora chiediti: dal minimo A viene generato un massimo che, con la chiusura di una candela sopra il livello, supera il massimo (1)?
+Il prezzo prova a ripartire da questo minimo, ma ** non riesce a superare il massimo precedente.** Successivamente scende e costruisce un minimo più basso (🔴)
 
-Possiamo notare che la zona A non soddisfa questa condizione: il massimo generato dopo il minimo A rimane infatti più basso rispetto al massimo (1).
+📌 Vogliamo vedere che da quella zona il prezzo riesca effettivamente a proseguire la struttura rialzista.
 
-La zona A, quindi, non può essere considerata una zona valida.
+•Zona 3 — corretta
 
-Zona C
+Da questo minimo il prezzo riparte e costruisce un nuovo massimo più alto, continuando la struttura rialzista. Anche la Zona 3 è quindi coerente.
 
-La zona C non può essere considerata valida, perché non rappresenta né un punto di continuazione del trend né un punto in cui avviene un cambio strutturale.
+•Zona 4 — errata
 
-Zona B
+**Attenzione❗: la precedente struttura rialzista è già stata invalidata in 🔵 ( 🔵 è il punto 3 trovato nel Step 1), la zona 4 è dopo 🔵, quindi siamo già nel trend ribassista.**
 
-La zona B è quella corretta.
+Da questo minimo il prezzo non riesce a costruire un nuovo massimo più alto e successivamente torna a scendere.
 
-Rappresenta il minimo dal quale ha origine il cambio strutturale da trend ribassista a trend rialzista.
 
-Il cambio di struttura viene confermato quando una candela chiude al di sopra del massimo indicato da (1).`,
+
+
+`,
   },
   {
     id: 'day1-ex3',
     day: 1,
-    title: 'Esercizio 3 — Trova il punto d’ingresso',
+    title: 'Step 3 — Dove entrare nella zona dello step 2',
     block: 'Trigger / Rischio',
     description: 'Valuta le condizioni che invalidano lo scenario e il rischio residuo.',
-    imageBefore: '/Grafici/GOLD_TRIGGER_1_DOMANDA.PNG',
-    imageAfter: '/Grafici/GOLD_TRIGGER_1_SOLUZIONE.PNG',
+    imageBefore: '/Grafici_2/domanda_trigger_giorno_1.PNG',
+    imageAfter: '/Grafici_2/risposta_trigger_giorno_1.PNG',
     chartMeta: {
-      source: 'TradingView',
-      timeframe: '1 min',
-      instrument: 'Gold Spot / U.S. Dollar',
+      source: 'Grafico qualitativo',
+      timeframe: '',
+      instrument: '',
     },
-    question: `Nell’esercizio precedente, Esercizio 2, hai individuato come corretta la zona B.
+    question: `**Nello Step 2 abbiamo individuato la Zona 1 come un’area interessante** per cercare un possibile trade long.
 
-Prima di rispondere, prova a riflettere su queste due domande:
+Ora passiamo a un **time frame inferiore** per cercare un possibile punto di ingresso.
 
-* 🧐Perché, secondo te, in questo esercizio analizziamo proprio la zona B individuata nell’esercizio precedente?
-* Come noterai dal badge sopra al grafico, il timeframe è passato da 1 H a 1 min. Per quale motivo, secondo te, osserviamo un timeframe inferiore?
+📌 Il contesto di partenza è questo:
 
-Dopo aver selezionato la risposta, ti chiederemo di spiegare brevemente il tuo ragionamento.
+• da Step 2: sul time frame superiore la Zona 1 si trova su un minimo che sostiene una struttura rialzista;
 
-🔎In questo esercizio, la conferma che cerchiamo è la rottura della struttura ribassista.
-👉🏻Domanda: osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend rialzista?`,
+•sul **timeframe inferiore**, come noterai sul grafico qua sopra, è presente una **struttura ribassista.**
+
+• **Obiettivo: sul timeframe inferiore (grafico qua rappresentato), cerchiamo il punto di conferma della ripresa del trend rialzista, osservato sul timeframe superiore: il possibile ingresso long** (trigger)
+
+
+👀 Prima di rispondere, **chiediti**:
+
+• nota bene: è presente un trend ribassista da sinistra verso destra. Il prezzo sta ancora formando massimi e minimi decrescenti?
+
+• quale massimo mantiene valida la struttura ribassista? Cioè: qual'è l'ultimo massimo della struttura ribassista?
+
+• da quell'ultimo massimo immagina un livello orizzontale. In quale punto il prezzo rompe quel livello? Questa rottura rappresenta il punto di conferma del cambio di struttura da ribassista a rialzista.
+
+👉 **Domanda:** osservando i punti 1, 2 e 3, qual è il punto in cui conviene entrare long?`,
     answers: [
-      { key: 'A', text: 'Candela 3 ' },
-      { key: 'B', text: 'Candela 1' },
-      { key: 'C', text: 'Candela 2' },
-      { key: 'D', text: 'Candela 4' },
-    ],
-    correctAnswer: 'A',
-    feedback: `🟩La risposta corretta è la Candela 3.
-    
-    Nell’esercizio precedente abbiamo individuato come corretta la zona B. 
-    
-    🧐Perchè questa zona B?
-    
-    In questo esercizio ci concentriamo proprio su questa zona, perché è qui che il prezzo torna dopo essersi allontanato (questo movimento viene chiamato ritracciamento), dandoci così la possibilità di cercare un punto di ingresso.
-
-Sul timeframe 1 H abbiamo individuato il contesto generale del mercato e una zona in cui il trend rialzista potrebbe riprendere. Tuttavia, il solo fatto che il prezzo arrivi in quella zona non è sufficiente per entrare.
-
-🔎Per questo motivo scendiamo su un timeframe più dettagliato:
-
-in questo caso 1 minuto. Lo scopo non è trovare un nuovo trend, ma osservare cosa succede all’interno della zona B e cercare una conferma che il mercato stia davvero riprendendo il trend rialzista visto sul timeframe 1 H.
-
-Osservando il grafico, notiamo che il prezzo continua inizialmente a costruire una struttura ribassista. Fino a quel momento non abbiamo ancora elementi sufficienti per dire che i compratori abbiano ripreso il controllo del mercato.
-
-🧐A questo punto chiediti:
-
-“Quale livello deve superare il prezzo per dimostrarci che la struttura ribassista è terminata?”
-
-1- Individua l’ultimo massimo che tiene in piedi la struttura ribassista.
-
-2- Questo massimo individua il livello di rottura, è proprio la linea arancione. 
-
-3- Finché il prezzo non riesce a superare questo livello, il mercato continua la struttura ribassista.
-
-💡Quando il prezzo supera quel livello, come avviene sulla Candela 3, il mercato ci mostra che la precedente struttura ribassista non è più valida e che i compratori stanno iniziando a riprendere il controllo. Questa è la conferma che stavamo cercando e ci indica che il trend rialzista osservato sul timeframe 1 H potrebbe riprendere.
-
-Per questo motivo la Candela 3 rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend rialzista.`,
-  },
-  {
-    id: 'day2-ex1',
-    day: 2,
-    title: 'Esercizio 4 — Inizio e conferma di un trend ribassista',
-    block: 'Trend / contesto',
-    description: 'Placeholder in attesa dei contenuti specifici del giorno 2.',
-    imageBefore: '/Grafici/EURUSD_DAILY_DOMANDA_TREND_2.PNG',
-    imageAfter: '/Grafici/EURUSD_DAILY_SOLUZIONE_TREND_2.PNG',
-    chartMeta: {
-      source: 'TradingView',
-      timeframe: '1 Day',
-      instrument: 'EUR/USD',
-    },
-    question:
-      `Osserva il trend rialzista da sinistra verso destra. Noterai che poi inizia un trend ribassista. Individua l’ultimo minimo della struttura rialzista che precede quella ribassista. Quel minimo individua il livello (linea orizzontale) di rottura. Che vuol dire? che una candela che chiude sotto a questo livello indica l'inizio del trend ribassista.
-      
-      👉🏻Domanda: secondo te, qual è la candela numerata dove inizia il trend ribassista e qual è la candela numerata in cui questo trend ribassista viene confermato?`,
-    answers: [
-      { key: 'A', text: 'Il trend ribassista inizia alla candela 1 e viene confermato alla candela 3.' },
-      { key: 'B', text: 'Il trend ribassista inizia alla candela 3 e viene confermato alla candela 4.' },
-      { key: 'C', text: 'Il trend ribassista inizia alla candela 2 e viene confermato alla candela 4.' },
-    ],
+      { key: 'A', text: 'Punto 1 ' },
+      { key: 'B', text: 'Punto 2' },
+      { key: 'C', text: 'Punto 3' },
+     ],
     correctAnswer: 'C',
-    feedback: `🟩 Risposta corretta:
-                 * Candela 2 = primo segnale di possibile inversione.
-                 * Candela 4 = conferma della nuova struttura ribassista.
+    feedback: `🟩 **Risposta corretta: Punto 3.**
 
-🔎Osserva:  L’ultimo minimo della struttura rialzista che precede quella ribassista è proprio indicato dal pallino 🟡. Quel minimo individua un livello (immagina una linea orizzontale da 🟡 verso destra) di rottura = possibile cambio di trend da rialzista a ribassista. A questo punto si cerca di capire quale candela chiude sotto a questo livello: è proprio la candela 2. La candela 2 indica l'inizio del trend ribassista. Fino a quel momento il mercato aveva costruito una struttura rialzista; da questa candela, invece, inizia a formarsi una sequenza di massimi e minimi decrescenti, indicando che i venditori stanno iniziando a prendere il controllo.
+**Sul time frame superiore avevamo individuato la Zona 1** come un’area in cui cercare un possibile long.
 
-•🧐Presta attenzione: questo rappresenta però solo un primo segnale, non una conferma definitiva del nuovo trend.
+ •**Obiettivo: ora sul timeframe inferiore, cerchiamo una conferma della ripresa del trend rialzista, osservato sul timeframe superiore.**
 
-•Minimo A: la conferma arriva nella Candela 4, quando il prezzo rompe e chiude al di sotto del minimo relativo A.
+ **Notiamo che il prezzo sta ancora formando una struttura ribassista.**
 
-Quel minimo rappresentava infatti l’ultimo livello che manteneva ancora valida la precedente struttura rialzista. Finché il prezzo rimane sopra quel livello, esiste sempre la possibilità che il trend rialzista riprenda.
+•Punto 1 — troppo presto
 
-•Quando invece il mercato rompe e chiude sotto quel minimo, dimostra che i compratori non sono più riusciti a difendere la struttura rialzista e che i venditori hanno preso il controllo del mercato. È proprio questa rottura che conferma il nuovo trend ribassista.
+Al Punto 1 il prezzo sta ancora scendendo e continua a formare massimi e minimi decrescenti.
 
+La struttura ribassista è ancora valida: entrare qui significherebbe anticipare il possibile cambio di direzione, senza una conferma.
 
+•Punto 2 — non basta
 
-`,
-  },
-  {
-    id: 'day2-ex2',
-    day: 2,
-    title: 'Esercizio 5 — Due zone in un trend ribassista',
-    block: 'Zone importanti',
-    description: 'Placeholder in attesa dei contenuti specifici del giorno 2.',
-    imageBefore: '/Grafici/EURUSD_DAILY_DOMANDA_ZONE_2.PNG',
-    imageAfter: '/Grafici/EURUSD_DAILY_SOLUZIONE_ZONE_2.PNG',
-    chartMeta: {
-      source: 'TradingView',
-      timeframe: '1 Day',
-      instrument: 'EUR/USD',
-    },
-    question: `
+Al Punto 2 il prezzo supera la linea orizzontale creata da un massimo. Ma quel massimo non è l’ultimo massimo della struttura ribassista.
 
-Osservazione qualitativa: come noterai, la parte destra del grafico è caratterizzata da un evidente trend ribassista.
+Il ribasso sul time frame inferiore non è quindi ancora invalidato.
 
-Prova a riflettere su questo aspetto:
+•Punto 3 — conferma
 
-📉 Continuazione del trend ribassista
+Al Punto 3 il prezzo rompe verso l'alto **il livello creato dall’ultimo massimo della struttura ribassista (indicato con 🔴).**
 
-Per ciascun massimo chiediti:
-
-
-* qual è l’ultimo minimo precedente a ciascuna zona (A, B, C, D) che stai osservando?
-* una candela chiude sotto il livello individuato da quel minimo?
-
-Solo se tutte queste condizioni sono soddisfatte, quella zona rappresenta una continuazione del trend ribassista.
-
-👉🏻Domanda: riesci a individuare 2 zone che rappresentano una continuazione del trend ribassista?
-
-`,
-    answers: [
-      { key: 'A', text: 'Zone A e D' },
-      { key: 'B', text: 'Zone B e C' },
-      { key: 'C', text: 'Zone B e D' },
-    ],
-    correctAnswer: 'C',
-    feedback: `🟩Risposta corretta: Zone B e D. Perchè?
-
-Passo 1 – 📉 Osserva il trend ribassista
-
-Concentrati solo sulla parte destra del grafico, dove è già presente un evidente trend ribassista.
-
-In questo esercizio devi individuare quale massimo dà origine alla continuazione del trend ribassista.
-
-⸻
-
-Passo 2 – 🔎 Analizza le zone
-
-Osserva i massimi indicati.
-
-Chiediti:
-
-🤔 Questo massimo è l’ultimo massimo relativo (non assoluto) prima della ripresa del movimento ribassista?
-
-Se la risposta è no, quella zona non può essere quella corretta.
-
-⸻
-
-Passo 3 – Zona A e Zona C
-
-La Zona A appartiene ancora alla precedente struttura rialzista e da quel massimo (A)non viene rotto nessun minimo.
-
-Per questo motivo non rappresenta un massimo da cui ha origine la continuazione del trend ribassista.
-
-Osserva ora la Zona C.
-
-Dopo la Zona C, il prezzo forma ancora un altro piccolo massimo relativo (Zona D) prima di riprendere il ribasso.
-
-📶 È quindi la Zona D a rappresentare l’ultimo massimo.
-
-Ora applica il procedimento:
-
-* individua l’ultimo minimo precedente al massimo D;
-* traccia mentalmente un livello orizzontale da quel minimo;
-* osserva il movimento del prezzo;
-* una candela chiude sotto quel livello (accettazione della rottura).
-
-Questa sequenza conferma che il ribasso prosegue a partire dall’ultimo massimo, che è proprio il massimo D 😉, motivo per cui la Zona C non può essere la risposta corretta, ma è la D.
-
-⸻
-
-Passo 4 – Zona B
-
-Applica ora lo stesso procedimento alla Zona B.
-
-🤔 È l’ultimo massimo prima della continuazione del trend ribassista?
-
-In questo caso, sì.
-
-Ora ragiona allo stesso modo:
-
-* individua l’ultimo minimo precedente al massimo B;
-* traccia mentalmente un livello orizzontale da quel minimo;
-* una candela chiude sotto quel livello (accettazione della rottura).
-
-Questa sequenza conferma che il ribasso prosegue proprio a partire dalla Zona B.
-
-Per questo motivo la Zona B è la risposta corretta, perché rappresenta l’ultimo massimo da cui prende avvio la continuazione del trend ribassista.
-
-⸻`,
-  },
-  {
-    id: 'day2-ex3',
-    day: 2,
-    title: 'Esercizio 6 — Punto d’ ingresso nella zona analizzata',
-    block: 'Trigger / Rischio',
-    description: 'Placeholder in attesa dei contenuti specifici del giorno 2.',
-    imageBefore: '/Grafici/EURUSD_H1_DOMANDA_TRIGGER_2.PNG',
-    imageAfter: '/Grafici/EURUSD_H1_SOLUZIONE_TRIGGER_2.PNG',
-    chartMeta: {
-      source: 'TradingView',
-      timeframe: '1 H',
-      instrument: 'EUR/USD',
-    },
-    question: `Nell’esercizio precedente (Esercizio 5) hai individuato come corrette le zone B e D.
-
-Prima di rispondere, prova a riflettere su queste due domande:
-
-* Perché, secondo te, in questo esercizio analizziamo solo la zona D e non anche la zona B?
-* Come noterai dal badge sopra al grafico, il timeframe è passato da 1 Day a 1 H. Per quale motivo, secondo te, osserviamo un timeframe inferiore?
-
-Dopo aver selezionato la risposta, ti chiederemo di spiegare brevemente il tuo ragionamento.
-
-🔎Ricordi l'esercizio 3? Lì hai visto la stessa rottura strutturale, ma in direzione rialzista. Qui si applica lo stesso criterio al contrario. In questo esercizio, la conferma che cerchiamo è la rottura della struttura rialzista sul timeframe H1.
-
-👉🏻Domanda: osservando il grafico, quale candela numerata rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista?`,
-    answers: [
-      { key: 'A', text: 'Candela 1' },
-      { key: 'B', text: 'Candela 2' },
-      { key: 'C', text: 'Candela 3' },
-      { key: 'D', text: 'Candela 4' },
-    ],
-    correctAnswer: 'B',
-    feedback: `🟩Risposta corretta: Candela 2. 
-   
-  ___  Piccola parentesi: 🧐Perchè la zona D?
+•🎯 Quindi il Punto 3 è il trigger dell’esercizio: **è la conferma della ripresa del trend rialzista, che era stato osservato su timeframe superiore.**
     
-     Perché è l’unica delle due zone in cui il prezzo torna dopo essersi allontanato (questo movimento viene chiamato ritracciamento), dandoci così la possibilità di cercare un punto di ingresso.
-___
-
-🔎Sul timeframe Daily abbiamo individuato il contesto generale del mercato e una zona in cui il trend ribassista potrebbe riprendere. Tuttavia, il solo fatto che il prezzo arrivi in quella zona non è sufficiente per entrare.
-
-Per questo motivo scendiamo su un timeframe più dettagliato, in questo caso 1 H. Lo scopo non è trovare un nuovo trend, ma osservare cosa succede all’interno della zona D e 🔁 cercare una conferma che il mercato stia davvero riprendendo il trend ribassista visto sul Daily.
-
- Osservando il grafico H1, notiamo che il massimo indicato dal pallino 🟡, individua l’ultimo massimo della struttura rialzista. A questo punto dobbiamo chiederci:
-
-💡Ecco lo stesso ragionamento (al contrario) dell'esercizio 3: 
-
-1. 🧐“Da quale minimo è partito questo nuovo massimo? Questo minimo tiene in piedi ancora la struttura rialzista.
-
-2. Quel minimo corrisponde al punto da cui parte la linea arancione.
-
-Linea arancione = livello di rottura: finchè quel livello rimane intatto, il mercato continua a mostrare una struttura rialzista sul timeframe H1.
-
-3.🎯Quando il prezzo rompe quel livello, come avviene sulla Candela 2, la struttura rialzista viene invalidata e il mercato ci fornisce la conferma che stavamo cercando: 🔁il trend ribassista osservato sul Daily potrebbe riprendere.
-
-Per questo motivo la Candela 2 rappresenta il punto di ingresso con la conferma più chiara della ripresa del trend ribassista.
-
-❗❗Ma perchè non è la Candela 4? 
-
-È normale pensare che la Candela 4 sia una conferma migliore, perché il ribasso è ormai evidente. In realtà la conferma arriva già con la Candela 2, quando viene invalidata la struttura rialzista. Le candele successive mostrano solo la continuazione dello stesso movimento. Aspettare sempre un’ulteriore conferma può portare a un blocco operativo, mentre entrare troppo tardi significa spesso avere un punto di ingresso meno favorevole.`,
+   `,
   },
   {
     id: 'day3-ex1',
     day: 3,
-    title: 'Esercizio 7 — Passaggio dal trend ribassista al trend rialzista',
+    title: 'Esercizio 7 — Quante volte la struttura diventa ribassista?',
     block: 'Trend / contesto',
-    description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
-    imageBefore: '/Grafici/GBPUSD_H4_DOMANDA_TREND_3.PNG',
-    imageAfter: '/Grafici/GBPUSD_H4_SOLUZIONE_TREND_3.PNG',
+    description: 'Placeholder in attesa dei contenuti specifici del giorno 2.',
+    imageBefore: '/Grafici_2/trend_domanda_2.jpeg',
+    imageAfter: '/Grafici_2/trend_risposta_2_AGGIUNTA.JPG',
     chartMeta: {
       source: 'TradingView',
-      timeframe: '4 H',
-      instrument: 'GBP/USD',
+      timeframe: '1 H',
+      instrument: 'Gold Spot / USD',
     },
-    question: `
+    question:
+      ` Ora lavoriamo su un **grafico reale**, quindi troverai più oscillazioni rispetto agli esempi precedenti. Per facilitare la lettura, la struttura principale è già stata disegnata sul grafico.
 
+•👀 Concentrati sui **minimi che sostengono realmente il trend rialzista:** **sono quelli dai quali il mercato è riuscito successivamente a creare nuovi massimi rispetto ai precedenti.**
 
-* Obiettivo: cercare il punto (candela) di conferma del cambio di struttura: da trend ribassista a trend rialzista.
-Osserva a sinistra, è presente un evidente trend ribassista.
-🧐Ma dove finisce questo trend ribassista? é il punto che stiamo cercando. 
+**🧐Rifletti bene**: perché un minimo venga confermato come minimo strutturale rialzista, il prezzo deve successivamente creare un nuovo massimo, con **una candela che chiude sopra il livello del massimo precedente.**
 
-1. Chiediti:qual è l’ultimo massimo appartenente a questo trend ribassista? 
+•**Obiettivo:** individuare in quali punti la struttura passa da rialzista a ribassista.
 
-Devi quindi individuare l’ultimo massimo appartenente alla precedente struttura ribassista che abbia generato un nuovo minimo.
+**Chiediti:**
 
-2. Individua il livello di rottura: partendo da quel massimo, traccia mentalmente un linea (livello) orizzontale.
+• **quali minimi sostengono la struttura rialzista? Per ciascuno verifica: il massimo creato chiude davvero sopra il livello del massimo precedente? Se non accade, quel minimo non diventa un nuovo riferimento strutturale rialzista.**
 
-3. Quale candela chiude al di sopra di questa linea orizzontale? Cerca la chiusura sopra questo livello.
+• **da questi minimi immagina una linea orizzontale, esiste una candela che la supera, con chiusura al di sotto?**
 
-La candela che chiude sopra questo livello è il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
- 
-👉🏻Domanda: individua la candela dalla quale viene confermato l’inizio del trend rialzista, ossia il punto di conferma del cambio di struttura da trend ribassista a trend rialzista.
-`,
+• ** quante volte si ha un passaggio da struttura rialzista a ribassista?**
+
+👉 **Domanda:** osservando l’intero grafico, in quanti punti la struttura diventa realmente ribassista, anche solo temporaneamente?`,
     answers: [
-      { key: 'A', text: 'Candela 1' },
-      { key: 'B', text: 'Candela 2' },
-      { key: 'C', text: 'Candela 3' },
-      { key: 'D', text: 'Candela 4' },
+      { key: 'A', text: '1 volta' },
+      { key: 'B', text: '2 volte' },
+      { key: 'C', text: '3 volte' },
+      { key: 'D', text: 'Nessuna volta' },
     ],
-    correctAnswer: 'C',
-    feedback: `🟩Risposta corretta: Candela 3. Perchè?
+    correctAnswer: 'A',
+    feedback: `🟩**Risposta corretta: 1 volta.**
 
- 
+Il grafico contiene numerosi ribassi, ma questo non significa che il trend diventi ribassista ogni volta.
 
-Osserva la parte sinistra del grafico.
+•Nella prima parte, il **minimo 🔴 che sostiene la struttura rialzista.**
 
-🧐 1. È presente un evidente trend ribassista, caratterizzato da una successione di massimi e minimi decrescenti.
+**Da quel punto il mercato genera un nuovo massimo più alto del precedente.** Le oscillazioni successive producono altri minimi, 
 
-👀 2. Individua l’ultimo massimo appartenente a questa struttura ribassista, che abbia generato un nuovo minimo.
+ma nessuno di questi genera a sua volta un nuovo massimo: per questo non diventano nuovi minimi strutturali dominanti.
 
-È proprio questo il massimo da prendere come riferimento.
+_______
 
-⸻
+•**Ma il Massimo 2?**
 
- 🎯 3. Il livello di rottura
+**Per far sì che il minimo (🟡), che genera il massimo 2, sia un nuovo minimo strutturale rialzista, è necessario che il massimo 2 ( una candela), chiuda sopra la linea celeste del massimo 1. **
 
-Traccia mentalmente una linea orizzontale da quel massimo.
 
-Segui poi il movimento del prezzo verso destra.
+•**Ma qual è il livello del massimo 1?**
 
-Ora individua la candela che chiude sopra questo livello.
+È l’estremo più alto raggiunto dalla candela (ombra superiore), cioè la punta della wick, **evidenziata dalla linea celeste.**
 
-Osserva bene 👀: la conferma arriva solo quando una candela chiude sopra quel livello (linea orizzontale).
 
-Questa chiusura indica che il mercato ha accettato la rottura: accettazione della rottura.
+ In questo caso possiamo vedere che non accade.
 
-⸻
 
-👉🏻 4. Individua la candela
 
-La candela numero 3 è la prima candela che chiude sopra il livello stabilito dall’ultimo massimo della precedente struttura ribassista (terzo pallino colorato).
+Sopra il massimo 1 possono attivarsi nuovi acquisti, ma la pressione dei venditori riesce a riportare il prezzo sotto il livello: questa è una **presa di liquidità.**
 
-Da quel momento il cambio di struttura viene confermato e il mercato passa da trend ribassista a trend rialzista.
+**Conseguenza:**
 
+
+Non essendoci una chiusura della candela sopra la linea celeste, il **massimo 2 non viene confermato come nuovo massimo**, di conseguenza il **minimo da cui è partito (🟡) non diventa un nuovo minimo strutturale rialzista.**
+_______
+
+**Finché il livello (linea arancione) stabilito dal minimo 🔴 rimane intatto, la struttura rialzista non viene invalidata.** 
+
+•Al **punto A il mercato riparte e conferma nuovamente la direzione rialzista.**
+
+•Più avanti troviamo invece il **minimo 🔵**. Questo minimo è diverso: **da lì il prezzo riesce effettivamente a costruire nuovi massimi e diventa quindi un nuovo riferimento strutturale.**
+
+🎯 **Successivamente il prezzo rompe il livello di quel minimo e chiude al di sotto del suo livello: la struttura rialzista viene invalidata e diventa temporaneamente ribassista.**
+
+Il ribasso non dura a lungo: al **punto B il mercato recupera il livello strutturale superiore e torna rialzista.**
 `,
   },
   {
     id: 'day3-ex2',
     day: 3,
-    title: 'Esercizio 8 — Zona che non genera continuazione del trend o cambio strutturale',
+    title: 'Esercizio 8 — Quale zona non è valida?',
     block: 'Zone importanti',
-    description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
-    imageBefore: '/Grafici/GBPUSD_H4_DOMANDA_ZONE_3.PNG',
-    imageAfter: '/Grafici/GBPUSD_H4_SOLUZIONE_ZONE_3.PNG',
+    description: 'Placeholder in attesa dei contenuti specifici del giorno 2.',
+    imageBefore: '/Grafici_2/zone_domanda_2.jpeg',
+    imageAfter: '/Grafici_2/zone_risposta_2.jpeg',
     chartMeta: {
       source: 'TradingView',
-      timeframe: '4 H',
-      instrument: 'GBP/USD',
+      timeframe: '1 H',
+      instrument: 'Gold Spot / USD',
     },
-    question: `🧐Spunto di partenza: osserva la parte estrema sinistra del grafico, c'è un breve trend rialzista, e, da un certo punto in poi, inizia il trend ribassista. Per questo esercizio non importa che osservi la parte destra del grafico (dalla zona 4 in poi). 
-    
-- PARTE ESTREMA SINISTRA - prova a riflettere su questo:
-👀Trova la zona numerata in cui avviene il cambio di struttura da trend rialzista a ribassista nella parte estrema sinistra del grafico.
+    question: `
 
-* Riflessione 1. Cambio strutturale del trend: da rialzista a ribassista. Individua la zona oltre la quale i venditori riprendono il controllo rispetto al precedente trend rialzista.
+•**Obiettivo:**confronta le 4 zone (minimi) segnate sul grafico e individua quale non può essere considerata un minimo strutturale **confermato**.
 
-Un piccolo aiuto🔎:
+•👀 Osserva cosa succede dopo ciascuna zona.
 
-- Nel trend rialzista, individua l’ultimo minimo che appartiene alla struttura (rialzista). Tracciando una linea orizzontale da quel minimo ottieni un livello importante: una candela che chiude sotto a questo livello conferma il cambio di struttura a ribassista.
+Ricordati ciò che abbiamo detto negli esercizi precedenti, una zona (in questo caso un minimo) diventa importante quando da quel punto il mercato fa qualche cosa…ricordi?
 
+**Chiediti:**
 
--INIZIO DEL TREND RIBASSISTA-
+•** da quali zone è partito un movimento capace di generare nuovi massimi?**
 
-* Riflessione 2. Per ciascuna zona numerata chiediti: qual è il minimo oltre il quale i venditori riprendono il controllo rispetto ai compratori, facendo proseguire il movimento ribassista?
---------
-👉🏻Domanda finale: c’è una zona fra 1, 2, 3 e 4 che NON genera né un cambio strutturale da trend rialzista a ribassista (parte estrema sinistra), né una continuazione del trend ribassista, quale?
+•** quale minimo ha realmente sostenuto la continuazione del trend?**
+
+•** c’è una zona che, per ora, non ha ancora prodotto questa conferma?**
+
+👉 **Domanda: **quale delle quattro zone indicate non può essere ancora considerata un minimo strutturale **confermato**?
+ 
 
 `,
     answers: [
@@ -510,110 +336,308 @@ Un piccolo aiuto🔎:
       { key: 'C', text: 'Zona 3' },
       { key: 'D', text: 'Zona 4' },
     ],
-    correctAnswer: 'A',
-    feedback: `🟩Risposta corretta: Zona 1. Perchè?
-    * Zona 1
+    correctAnswer: 'D',
+    feedback: `
+🟩 **Risposta corretta: Zona 4.**
 
-La zona 1 appartiene ancora alla precedente struttura rialzista. Da questo punto in poi i compratori non riescono più a creare un nuovo massimo significativo e iniziano progressivamente a perdere il controllo del mercato.
+Per capire quale zona sia errata, non basta osservare dove il prezzo ha semplicemente reagito. 
 
-🔎1. Tuttavia questa zona non rappresenta ancora una continuazione del trend ribassista, perché il trend ribassista non è ancora iniziato.
+Dobbiamo verificare cosa è successo dopo quel minimo.
 
-🔁2. Inoltre, questa zona non rappresenta nemmeno il punto in cui avviene il cambio di struttura da rialzista a ribassista.
+•**Le Zone 1, 2 e 3 sono valide** perché, partendo da quei minimi, il mercato è riuscito successivamente a costruire **nuovi massimi più alti rispetto ai precedenti**. Questo ci mostra che quei punti hanno realmente sostenuto la struttura rialzista e possono quindi essere considerati minimi portanti.
 
-Per individuare un vero cambio di struttura (parte sinistra estrema del grafico: da rialzista a ribassista) dobbiamo infatti individuare l’ultimo minimo appartenente alla precedente struttura rialzista.
+•La **Zona 4**, invece, è diversa.
 
-È proprio quel minimo a rappresentare il livello strutturale più importante: quando una candela chiude al di sotto di quel livello, i venditori prendono il controllo del mercato e il cambio di struttura viene confermato. 
+Al momento mostrato nel grafico **non ha ancora creato un massimo più alto del precedente**. 
 
-Per questo motivo, la zona 1 non rappresenta ancora il punto in cui avviene il cambio di struttura. È invece la Zona 2 a rappresentare la zona valida da cui ha origine il cambio di struttura da trend rialzista a ribassista.
+Per questo motivo non possiamo ancora sapere se quel minimo avrà davvero un ruolo strutturale oppure se rappresenterà soltanto una reazione temporanea.
 
- 👀Perché non è il minimo indicato dalla freccia rossa?
+•👀 **Se in futuro** il mercato partirà dalla Zona 4 e riuscirà a superare il massimo precedente, allora quel minimo potrà diventare un nuovo riferimento valido.
 
-Per individuare un cambio di struttura (parte sinistra estrema del grafico: da rialzista a ribassista)bisogna considerare l’ultimo minimo, ❗ della precedente struttura rialzista.
+📌 Per ora, però, la** Zona 4 non è ancora confermata.**
 
-Il minimo indicato dalla freccia rossa non soddisfa questa condizione: si forma prima che una candela chiuda al di sotto del livello stabilito dal minimo della precedente struttura rialzista. 🔎 Inoltre il massimo successivo (Zona 2) non riesce più a superare il massimo precedente (Zona 1), ma si ferma più in basso, mostrando che i compratori stanno perdendo il controllo del mercato.
-
-* Zona 3
-
-Osserviamo ora la zona 3.
-
-A questo punto il trend è già diventato ribassista.
-
-Dopo il rimbalzo sembra che i compratori stiano provando a riprendere il controllo del mercato. Tuttavia il tentativo fallisce: i venditori tornano a prevalere e il prezzo rompe il livello individuato dal minimo precedente (linea arancione orizzontale).
-
-La conferma arriva quando una candela chiude al di sotto di quel livello. Questa chiusura è fondamentale perché indica che il mercato ha accettato la rottura e che i venditori hanno ripreso il controllo.
-
-👉 La zona 3 rappresenta quindi una continuazione del trend ribassista.
-
-In altre parole, è la zona oltre la quale i venditori tornano a prevalere e il movimento ribassista prosegue.
-
-* Zona 4
-
-Anche la zona 4 segue lo stesso principio.
-
-Dopo un nuovo tentativo dei compratori di far risalire il prezzo, i venditori tornano a prevalere.
-
-Anche in questo caso il prezzo rompe il livello individuato dal minimo precedente (linea arancione orizzontale).
-
-Osserva bene 👀: la conferma arriva quando una candela chiude al di sotto di quel livello, segnalando che il mercato ha accettato la rottura e che i venditori hanno ripreso il controllo.
-
-👉 Anche la zona 4 rappresenta quindi una continuazione del trend ribassista.`,
+`,
   },
   {
     id: 'day3-ex3',
     day: 3,
-    title: 'Esercizio 9 — Stop Loss e ingresso',
+    title: 'Esercizio 9 — Qual è il trigger corretto su M1?',
     block: 'Trigger / Rischio',
-    description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
-    imageBefore: '/Grafici/GBPUSD_M15_APERTA_TRIGGER_STOPLOSS_3.PNG',
-    imageAfter: '/Grafici/GBPUSD_M15_SOLUZIONE_TRIGGER_STOPLOSS_3.PNG',
+    description: 'Placeholder in attesa dei contenuti specifici del giorno 2.',
+    imageBefore: '/Grafici_2/trigger_domanda_2.jpeg',
+    imageAfter: '/Grafici_2/trigger_risposta_2.jpeg',
     chartMeta: {
       source: 'TradingView',
-      timeframe: '15 min',
-      instrument: 'GBP/USD',
+      timeframe: '1 min',
+      instrument: 'Gold Spot / USD',
     },
-    question: `
+    question: `**Riepilogo Step 7-8: **Negli esercizi precedenti abbiamo individuato sul time frame H1 la Zona 1 come un’area coerente con il trend rialzista.
 
-👀Nel precedente esercizio (8) abbiamo individuato un trend rialzista su H4. In questo esercizio analizziamo una parte diversa dello stesso grafico e la zona A.
+•**Ora scendiamo su M1** e osserviamo cosa accade quando il prezzo entra nella zona. 
 
-In questo grafico siamo su timeframe m15 (15 minuti) per individuare il trigger di entrata.
+• **Obiettivo: sul timeframe inferiore, cerchiamo una conferma della ripresa del trend rialzista, osservato sul timeframe superiore: il possibile ingresso long** (trigger)
 
-Rifletti:
+👀 **Prima di cercare il trigger.**
+La zona indica dove iniziare a cercare una possibile reazione, ma il trigger non deve necessariamente trovarsi al suo interno. Il prezzo può entrare nella zona e poi uscirne verso l’alto.
+Quello che devi verificare è che prima del trigger la zona non sia già stata invalidata: ossia non ci sia una candela che chiuda sotto al limite **inferiore della zona**.
 
-* SL: ripensa al ragionamento sulle zone del precedente esercizio 8, un trend resta valido finché il prezzo non rompe i livelli che ne sostengono la struttura
-* Ingresso: quale punto conferma che il trend rialzista si stia riconfermando anche su m15? Da qui usa lo stesso ragionamento dei precedenti esercizi...qual è l'ultimo massimo del trend ribassista (che anticipa quello rialzista)?
+**Chiediti**:
 
-👉🏻Domanda:
+• **qual è l’ultimo massimo che sostiene realmente la struttura ribassista?**
 
-Perché l’ingresso e lo stop loss sono posizionati dove indicato sul grafico?`,
-    feedback: `Qui siamo su m15, Zona A. 
-    
-    •ENTRATA: dobbiamo trovare un trigger. 
-    
-    🧐 cosa significa trovare un trigger di entrata? Significa trovare il punto oltre cui si riconferma il trend rialzista anche su m15. 
-    
-    📉 Osserva il trend da sinistra verso destra, si nota un trend ribassista. 
-    
-    Qual è l'ultimo massimo di questo trend ribassista?  Si vede bene che l'ultimo massimo è individuato da (1). Questo massimo identifica proprio un livello di rottura (la nostra linea orizzontale verde).
-    
-    A questo punto basta vedere quale candela chiude al di sopra di questo livello (accettazione della rottura). 🎯Ecco il nostro punto di entrata! 
-  
-    ___
+• **quel massimo ha prodotto nuovi minimi?**
+
+• **quale candela riesce a rompere il livello creato dall\'ultimo massimo (con chiusura della candela sopra il livello)?**
+
+• prima del punto di trigger individuato, almeno una **candela ha chiuso sotto il limite inferiore della zona?**
+
+👉** Domanda:** quale delle candele indicate rappresenta il trigger più corretto per cercare un ingresso long?
 
 
-      •STOPLOSS: 
+`,
+    answers: [
+      { key: 'A', text: 'Candela 2' },
+      { key: 'B', text: 'Candela 1' },
+      { key: 'C', text: 'Candela 3' },
       
-      🔎Ricorda il concetto visto negli esercizi precedenti, un trend resta valido finché il prezzo non rompe i livelli che ne sostengono la struttura. 
+    ],
+    correctAnswer: 'B',
+    feedback: `🟩 **Risposta corretta: Candela 1.**
+
+•**Ricorda:**Sul time frame superiore abbiamo già individuato la Zona 1 come area in cui cercare possibili operazioni long.
+
+•Scendendo su M1, però, vediamo che il prezzo entra nella zona mantenendo ancora una struttura ribassista.
+
+Per entrare non basta quindi osservare una semplice reazione dentro alla Zona 1: dobbiamo aspettare che questa **struttura ribassista venga realmente invalidata.** 
+
+•👀 **Il livello evidenziato dalla linea arancione corrisponde all’ultimo massimo strutturale del ribasso su M1.**
+
+È un massimo importante perché, dopo essersi formato, il prezzo ha continuato a scendere creando nuovi** minimi** (🔴). Finché quel massimo non viene superato, la struttura ribassista rimane valida.
+
+•**🎯 La Candela 1 è la prima che rompe e chiude sopra questo livello.** 
+
+**In quel momento il precedente trend ribassista su M1 viene invalidato, è una conferma di un possibile trend rialzista.**
+
+•**il setup è valido? **: in questo caso, prima del punto di trigger individuato (Candela 1), nessuna candela ha chiuso sotto il limite inferiore della zona, quindi la Zona non è stata invalidata. Questo ci conferma che il setup per l'ingresso può essere utilizzato.
+
+•Abbiamo quindi il ciò che stavamo cercando:
+
+- Il trigger corretto è quindi la Candela 1: la prima conferma strutturale del riallineamento tra time frame inferiore e superiore.
+
+- il prezzo non supera il limite inferiore della zona, quindi non viene invalidato il setup per un possibile ingresso;
+
+
+Le Candele 2 e 3 arrivano invece **quando il cambio strutturale è già avvenuto.**
+
+
+🛡️ **Stop Loss: il punto più logico per posizionarlo è sotto la Zona 1, perché quella zona sostiene la struttura rialzista del time frame superiore. Se il prezzo la rompesse al ribasso, verrebbe meno il motivo principale per mantenere aperta l’operazione long.**`,
+  },
+  {
+    id: 'day2-ex1',
+    day: 2,
+    title: 'Esercizio 4 — Quali minimi generano una continuazione del trend? ',
+    block: 'Trend / contesto',
+    description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
+    imageBefore: '/Grafici_2/domanda_trend_3.jpeg',
+    imageAfter: '/Grafici_2/risposta_trend_3.png',
+    chartMeta: {
+      source: 'TradingView',
+      timeframe: '1 H',
+      instrument: '',
+    },
+    question: `In questo esempio teorico il mercato si trova in trend rialzista.
     
-    Un trend rialzista, quindi, rimane tale finché vengono rispettati i minimi principali; 
+    •**Obiettivo:** capire quali minimi possono essere considerati realmente strutturali e quindi punti da cui parte una continuazione del trend.
+
+    **👀Importante: il livello del massimo precedente corrisponde al punto più alto raggiunto dal prezzo, cioè all’estremo della sua ombra (wick).**
+
+• Fai particolare attenzione a un dettaglio: non basta che il prezzo superi momentaneamente un massimo precedente con l’ombra della candela. Per confermare la continuazione vogliamo vedere che **una candela chiuda sopra il livello del massimo precedente**.
+
+Nei punti **a e b è rappresentata proprio l’ombra di una candela**: osserva quindi con attenzione cosa viene realmente superato e cosa invece viene confermato in chiusura.
+
+👉 **Domanda:** quali tra i minimi 1, 2, 3 e 4 rappresentano correttamente punti da cui parte una continuazione del trend rialzista?
+
+
+
+`,
+    answers: [
+      { key: 'A', text: 'Minimi 1 e 4' },
+      { key: 'B', text: 'Minimi 2 e 3' },
+      { key: 'C', text: 'Minimi 1, 2 e 3' },
     
-    Un trend ribassista resta valido finché non vengono superati i massimi principali.
+    ],
+    correctAnswer: 'B',
+    feedback: `🟩 Risposta corretta: Minimi 2 e 3.
 
-📈Per questo motivo, in un’operazione rialzista, può avere senso posizionare lo stop loss sotto una zona importante che sostiene il trend del time frame superiore, come nell’esempio mostrato in figura. 
+    • Osserva: i cerchi 🟡 indicano i punti in cui la chiusura viene confermata sopra il livello del massimo precedente.
+
+•Per riconoscere un minimo strutturale non basta vedere il prezzo reagire verso l’alto:
+
+dobbiamo verificare se il movimento successivo riesce realmente a superare e chiudere sopra il livello del massimo precedente.
+
+•Il **Minimo 1** può sembrare un minimo strutturale perché nel punto “a” il prezzo supera momentaneamente il livello del massimo precedente.
+
+Notiamo però che a superarlo è l’ombra a della candela: il corpo non chiude sopra quel livello. Quindi il **Minimo 1 non è un minimo strutturale rialzista**.
+
+•Dal **Minimo 2**, invece, il prezzo riparte creando un nuovo massimo: qui la candela chiude sopra il livello del massimo precedente. 
+
+Questo conferma che il **minimo 2 ha sostenuto una vera continuazione del trend rialzista**.
+
+•Lo stesso accade con il **Minimo 3**: il movimento successivo supera con chiusura il livello del massimo strutturale precedente, rendendo anche questo minimo valido.
+
+•Il **Minimo 4** invece non viene confermato:
+
+il movimento che parte da quel minimo non riesce a superare il livello del massimo precedente, né con la wick né con una chiusura. Successivamente si forma un nuovo minimo e sarà il movimento partito da quest’ultimo a superare il livello; per questo sarebbe quel nuovo minimo a diventare strutturale, non il Minimo 4.
+
+`,
+  },
+  {
+    id: 'day2-ex2',
+    day: 2,
+    title: 'Esercizio 5 — Quali sono le zone di conferma di una struttura rialzista?',
+    block: 'Zone importanti',
+    description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
+    imageBefore: '/Grafici_2/domanda_zone_3.jpeg',
+    imageAfter: '/Grafici_2/risposta_zone_3.png',
+    chartMeta: {
+      source: 'TradingView',
+      timeframe: '1 H',
+      instrument: '',
+    },
+    question: `Riprendiamo la stessa struttura teorica dell’esercizio precedente. 
+    
+    Questa volta devi individuare le **zone da prendere in considerazione per cercare conferme della continuazione del trend rialzista.**
+ 
+👀 **Quando una zona diventa interessante per un trade long?:** una zona è valida solo se nasce da un minimo da cui il mercato riesce poi a generare un nuovo massimo più alto. **In più, perchè questo nuovo massimo venga confermato, una candela deve chiudere sopra il livello del massimo precedente.**
+
+**Non basta che il prezzo superi quel livello con la sola ombra della candela (wick). Per confermare la continuazione rialzista serve una chiusura del corpo della candela oltre quel livello.**
+
+👉 **Domanda:** quali tra le zone 1, 2, 3, 4 e 5 possono essere considerate valide per cercare trade rialzisti?
 
 
-Lo stop viene quindi collocato nel punto in cui viene meno il motivo principale per cui l’operazione era stata aperta.`,
+`,
+    answers: [
+      { key: 'A', text: 'Zone 2, 3, 5' },
+      { key: 'B', text: 'Zone 1, 3, 4' },
+      { key: 'C', text: 'Zone 2, 4, 5' },
+    
+    ],
+    correctAnswer: 'A',
+    feedback: `🟩 Risposta corretta: Zone 2, 3 e 5.
+
+    • Osserva: i cerchi 🟡 indicano i punti in cui la chiusura viene confermata sopra il livello del massimo precedente.
+
+Per considerare valida una zona long, dobbiamo verificare cosa succede dopo il  minimo da cui nasce la zona in questione, il prezzo deve creare un nuovo massimo e una candela, deve chiudere sopra il livello del massimo precedente. 
+
+**Solo così quel minimo diventa un vero supporto della struttura rialzista.**
+
+La **Zona 1: il ragionamento è lo stesso dell’esercizio precedente:** dal minimo 1 il mercato reagisce, ma il livello del massimo precedente viene rotto solo dall’ombra della candela. Nessuna candela chiude sopra il livello del massimo precedente, quindi **non abbiamo una continuazione confermata.**
+
+La **Zona 2: dal minimo 2 parte un movimento che crea un nuovo massimo e una candela chiude sopra il livello del massimo precedente.**
+
+Anche la **Zona 3 è valida per lo stesso motivo:** il mercato riparte da lì e conferma la continuazione rialzista con una chiusura oltre il livello del massimo precedente.
+
+La **Zona 4 non è valida:** come accadeva nel punto “b” dell’esercizio precedente, **non riesce a superare il massimo precedente **.
+
+Infine la **Zona 5 è valida**, perché da quel minimo nasce un movimento che supera il livello del massimo precedente con una chiusura sopra, confermando il minimo.
+
+`,
+  },
+  {
+    id: 'day2-ex3',
+    day: 2,
+    title: 'Esercizio 6 — Esiste un trigger valido?',
+    block: 'Trigger / Rischio',
+    description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
+    imageBefore: '/Grafici_2/domanda_trigger_3.jpeg',
+    imageAfter: '/Grafici_2/risposta_trigger_3.png',
+    chartMeta: {
+      source: 'TradingView',
+      timeframe: '5 min',
+      instrument: '',
+    },
+    question: `**Riepilogo Step 4-5:**Sul time frame H1 abbiamo individuato una zona rialzista. 
+    
+    **Ora passiamo al time frame M5** .
+
+**Obiettivo:** su M5 cerchiamo una conferma di una ripresa del trend rialzista, osservato sul timeframe superiore H1: la conferma si ha quando, da un trend ribassista, una candela su M5 rompe e chiude sopra il livello dell’ultimo massimo strutturale ribassista.
+
+
+👀** Prima di cercare il trigger:**
+
+**Il prezzo può entrare nella zona e poi uscirne verso l’alto: questo non invalida la zona.**
+
+**❗Quello che devi verificare è che, prima del trigger, la zona non sia già stata invalidata: cioè almeno una candela non chiuda sotto il suo limite inferiore.**
+
+Chiediti:
+
+• vogliamo trovare il punto in cui una struttura ribassista viene invalidata, questo ci da conferma di un possibile inizio di trend rialzista. qual è l\'ultimo massimo della struttura ribassista? 
+
+• il livello individuato da quest\'ultimo massimo, viene superato da una candela con chiusura al di sopra?
+
+• prima di questa rottura del livello, cioè il possibile trigger, esiste almeno una candela **chiude sotto il limite inferiore della zona?** In quel caso allora la **zona è invalidata e non possiamo considerare il trigger valido.**
+
+
+
+
+👉 **Domanda:** quale candela rappresenta un trigger valido per entrare long?
+
+
+`, 
+ answers: [
+      { key: 'A', text: 'Candela 1' },
+      { key: 'B', text: 'Candela 2' },
+      { key: 'C', text: 'Candela 3' },
+      { key: 'D', text: 'Candela 4' },
+      { key: 'E', text: 'Nessuna' },
+    ],
+    correctAnswer: 'E',
+    feedback: `🟩 Risposta corretta: Nessuna.
+
+    A prima vista alcune delle candele indicate possono sembrare buone conferme, perché successivamente il prezzo rompe dei massimi strutturali su M5.
+
+Ma prima di valutare il trigger dobbiamo controllare il contesto: la zona rialzista individuata su H1 è ancora valida?
+
+Osservando il grafico, prima che arrivi la conferma su M5 compare una candela che chiude sotto il limite inferiore della zona H1. Nel criterio che stiamo usando, questa chiusura invalida la zona.
+
+Da quel momento viene meno il motivo per cui stavamo cercando un long in quell’area.
+
+Il Punto 1, se osservassimo soltanto M5, soddisferebbe il criterio della conferma rialzista perché arriva una rottura con chiusura sopra il livello del massimo strutturale precedente. 
+
+**Ma questa conferma arriva dopo l’invalidazione della zona H1, quindi non può più essere utilizzata per questo setup.**
+
+**Anche se nei punti 1, 2 e 4 il prezzo mostra successivamente delle conferme rialziste su M5, non possiamo più usarle per entrare long: prima del Punto 1 una candela aveva già chiuso sotto il limite inferiore della zona H1, invalidando il setup. Da quel momento, le conferme successive su M5 non appartengono più a quella zona.**
+
+
+Il **Punto 3, invece, non è ancora una conferma rialzista: il prezzo non ha ancora rotto e chiuso sopra il livello dell’ultimo massimo strutturale della discesa.**
+`,
   },
 ]
+
+const STEP_ID_PATTERN = /^day(\d+)-ex(\d+)$/
+
+function getExerciseSortIndex(exercise) {
+  const id = String(exercise?.id || '')
+  const match = id.match(STEP_ID_PATTERN)
+  if (!match) return Number.MAX_SAFE_INTEGER
+
+  const day = Number.parseInt(match[1], 10)
+  const exerciseInDay = Number.parseInt(match[2], 10)
+  if (Number.isNaN(day) || Number.isNaN(exerciseInDay)) return Number.MAX_SAFE_INTEGER
+
+  return (day - 1) * 3 + exerciseInDay
+}
+
+export const EXERCISES = [...EXERCISE_ITEMS].sort((first, second) => {
+  const firstIndex = getExerciseSortIndex(first)
+  const secondIndex = getExerciseSortIndex(second)
+
+  if (firstIndex !== secondIndex) {
+    return firstIndex - secondIndex
+  }
+
+  return String(first?.id || '').localeCompare(String(second?.id || ''))
+})
 
 export const EXERCISE_DAYS = [1, 2, 3]
 

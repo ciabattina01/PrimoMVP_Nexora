@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import {
   EXERCISE_DAYS,
   getExerciseById,
@@ -22,22 +22,139 @@ function formatExerciseTitle(exercise) {
   const exerciseNumber = getExerciseNumber(exercise)
   const title = exercise.title || ''
   
-  // If title already starts with "Esercizio [numero]", return it as-is
-  if (title.match(/^Esercizio\s+\d+/)) {
+  // If title already starts with "Step [numero]", return it as-is
+  if (title.match(/^Step\s+\d+/)) {
     return title
   }
+
+  // If title starts with "Esercizio [numero]", convert it to step naming
+  if (title.match(/^Esercizio\s+\d+/)) {
+    return title.replace(/^Esercizio\s+/, 'Step ')
+  }
   
-  // Otherwise, add the "Esercizio [numero] —" prefix
-  return `Esercizio ${exerciseNumber} — ${title}`
+  // Otherwise, add the "Step [numero] —" prefix
+  return `Step ${exerciseNumber} — ${title}`
 }
 
 const DAY_SCENARIO_LABELS = {
-  1: 'Gold Spot / U.S. Dollar',
-  2: 'EUR/USD',
+  1: 'Grafici qualitativi',
+  2: 'Gold Spot / USD',
   3: 'GBP/USD',
 }
 
+const DAILY_OBJECTIVES = {
+  1: {
+    title: '🎯 Obiettivo di oggi — Giorno 1: DOVE INIZIARE A GUARDARE',
+    lines: ['Impara da dove iniziare quando apri un grafico - 📉 Grafici qualitativi'],
+    divider: `useremo questi colori:
+Arancio = candela ribassista = Apertura > Chiusura
+Grigio = candela rialzista = Apertura < Chiusura`
+  },
+  2: {
+    title: '🎯 Obiettivo di oggi — Giorno 2:SELEZIONARE CIO` CHE MERITA ATTENZIONE',
+    lines: [
+      'Seleziona ciò che conta davvero sul grafico',
+      '📉 Grafico qualitativi',
+    ],
+    divider: '⸻',
+  },
+  3: {
+    title: '🎯 Obiettivo di oggi — Giorno 3:PRENDI UNA DECISIONE MOTIVATA',
+    lines: [
+      'Prendi una decisione motivata.',
+      '📉 Grafico statico reale',
+    ],
+  },
+}
+
+const GENERAL_OBJECTIVES = [
+  {
+    title: '📈 Fai correttamente almeno 1 step sul Trend',
+    steps: [1, 4, 7],
+  },
+  {
+    title: '📍 Fai correttamente almeno 1 step sulle Zone',
+    steps: [2, 5, 8],
+  },
+  {
+    title: '🛡️ Fai correttamente almeno 1 step su Trigger/Rischio',
+    steps: [3, 6, 9],
+  },
+]
+
+function getGeneralObjectiveSummary(correctSteps) {
+  if (!correctSteps.length) {
+    return 'Nessuno step ancora completato correttamente'
+  }
+
+  if (correctSteps.length === 1) {
+    return `🎉Hai capito lo step ${correctSteps[0]}`
+  }
+
+  return `🎉Hai capito gli step ${correctSteps.join(', ')}`
+}
+
+function formatStepList(stepNumbers) {
+  if (stepNumbers.length <= 1) {
+    return String(stepNumbers[0] || '')
+  }
+
+  if (stepNumbers.length === 2) {
+    return `${stepNumbers[0]} e ${stepNumbers[1]}`
+  }
+
+  const initialSteps = stepNumbers.slice(0, -1).join(', ')
+  const lastStep = stepNumbers[stepNumbers.length - 1]
+  return `${initialSteps} e ${lastStep}`
+}
+
+function buildDayCompletionFeedback(day, risposteByExercise) {
+  const dayExercises = getExercisesForDay(day)
+  const incorrectSteps = dayExercises
+    .map((exercise, index) => {
+      const exerciseNumber = getExerciseNumber(exercise)
+      const risposta = risposteByExercise.get(exerciseNumber)
+      return Boolean(risposta?.risposta_corretta) ? null : index + 1
+    })
+    .filter((step) => step != null)
+
+  if (!incorrectSteps.length) {
+    return '3 step su 3 corretti — stai iniziando a capire come prendere una decisione sul grafico!'
+  }
+
+  if (incorrectSteps.length === 1) {
+    return `Hai sbagliato lo Step ${incorrectSteps[0]}. In Ragionamenti chiave puoi rivedere il ragionamento.`
+  }
+
+  return `Hai sbagliato gli Step ${formatStepList(incorrectSteps)}. In Ragionamenti chiave puoi rivedere i ragionamenti.`
+}
+
+const DAY_COMPLETION_MESSAGES = {
+  1: {
+    title: '🎉 Hai completato il Giorno 1!',
+    lines: [
+      'Ottimo lavoro!',
+      '⏱️ Torna domani per il Giorno 2. Bastano meno di 5 minuti. 💪🏻',
+    ],
+  },
+  2: {
+    title: '🎉 Hai completato il Giorno 2!',
+    lines: [
+      'Ottimo lavoro! Hai concluso i tre step di oggi.',
+      '⏱️ Torna domani per il Giorno 3. Bastano meno di 5 minuti. 💪🏻',
+    ],
+  },
+  3: {
+    title: '🎉 Hai completato tutto il percorso!',
+    lines: [
+      'Grazie per aver partecipato al test.',
+      'Il tuo feedback sarà molto importante per migliorare il secondo prototipo.',
+    ],
+  },
+}
+
 const FREE_RESPONSE_ANSWER = 'RISPOSTA_LIBERA'
+const STEP7_ZOOM_IMAGE_PATH = '/Grafici_2/zoom_step4.png'
 
 function buildRichTextBlocks(text) {
   const lines = String(text || '').split('\n')
@@ -83,6 +200,20 @@ function buildRichTextBlocks(text) {
   return blocks
 }
 
+function renderTextWithBold(text) {
+  const source = String(text ?? '')
+  const parts = source.split(/(\*\*[\s\S]+?\*\*)/g)
+
+  return parts.map((part, index) => {
+    const match = part.match(/^\*\*([\s\S]+)\*\*$/)
+    if (match) {
+      return <strong key={`exercise-bold-${index}`}>{match[1]}</strong>
+    }
+
+    return <Fragment key={`exercise-text-${index}`}>{part}</Fragment>
+  })
+}
+
 function renderRichText(text) {
   const blocks = buildRichTextBlocks(text)
   return blocks.map((block, index) => {
@@ -90,14 +221,60 @@ function renderRichText(text) {
       return (
         <ul key={`ul-${index}`} className="exercise-rich-list">
           {block.items.map((item, itemIndex) => (
-            <li key={`li-${index}-${itemIndex}`}>{item}</li>
+            <li key={`li-${index}-${itemIndex}`}>{renderTextWithBold(item)}</li>
           ))}
         </ul>
       )
     }
 
-    return <p key={`p-${index}`}>{block.text}</p>
+    return <p key={`p-${index}`}>{renderTextWithBold(block.text)}</p>
   })
+}
+
+function splitStep7ZoomFeedbackSection(text) {
+  const source = String(text ?? '')
+  const lines = source.split('\n')
+  const markerLineIndex = lines.findIndex((line) => /Ma\s+il\s+Massimo\s+2\?/i.test(line))
+
+  if (markerLineIndex < 0) {
+    return null
+  }
+
+  const isSeparatorLine = (line) => /^_{3,}$/.test(String(line).trim())
+
+  let topSeparatorLineIndex = -1
+  for (let index = markerLineIndex - 1; index >= 0; index -= 1) {
+    if (isSeparatorLine(lines[index])) {
+      topSeparatorLineIndex = index
+      break
+    }
+  }
+
+  let bottomSeparatorLineIndex = -1
+  for (let index = markerLineIndex + 1; index < lines.length; index += 1) {
+    if (isSeparatorLine(lines[index])) {
+      bottomSeparatorLineIndex = index
+      break
+    }
+  }
+
+  if (topSeparatorLineIndex < 0 || bottomSeparatorLineIndex < 0) {
+    return null
+  }
+
+  const before = lines.slice(0, markerLineIndex).join('\n')
+  const focus = lines.slice(markerLineIndex, bottomSeparatorLineIndex).join('\n')
+  const after = lines.slice(bottomSeparatorLineIndex).join('\n')
+
+  if (!focus.trim()) {
+    return null
+  }
+
+  return {
+    before,
+    focus,
+    after,
+  }
 }
 
 function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
@@ -105,27 +282,36 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   const [selectedExerciseId, setSelectedExerciseId] = useState(null)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [pendingAnswer, setPendingAnswer] = useState(null)
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [isReviewMode, setIsReviewMode] = useState(false)
   const [hasInteractedWithDays, setHasInteractedWithDays] = useState(false)
   const [openDays, setOpenDays] = useState(new Set([1]))
   const [difficultyRating, setDifficultyRating] = useState(null)
   const [difficultyFeedbackText, setDifficultyFeedbackText] = useState('')
-  const [difficultyFeedbackError, setDifficultyFeedbackError] = useState('')
+  const [difficultySelectionMessage, setDifficultySelectionMessage] = useState('')
   const [difficultySaved, setDifficultySaved] = useState(false)
-  const [showDifficultyToast, setShowDifficultyToast] = useState(false)
-  const [difficultyToastMessage, setDifficultyToastMessage] = useState('')
-  const [showDifficultyFeedbackPrompt, setShowDifficultyFeedbackPrompt] = useState(false)
-  const difficultyFeedbackTextareaRef = useRef(null)
+  const [isDifficultyFeedbackLocked, setIsDifficultyFeedbackLocked] = useState(false)
+  const [isSavingAndClosingDay, setIsSavingAndClosingDay] = useState(false)
+  const [pendingCompletionDay, setPendingCompletionDay] = useState(null)
+  const [completedDayScreen, setCompletedDayScreen] = useState(null)
   const savedRisposte = useMemo(
     () => getRisposte(),
-    [selectedExerciseId, selectedAnswer, pendingAnswer, showConfirmModal, isReviewMode],
+    [selectedExerciseId, selectedAnswer, pendingAnswer, isReviewMode],
   )
 
-  const selectedExercise = useMemo(
-    () => (selectedExerciseId ? getExerciseById(selectedExerciseId) : null),
-    [selectedExerciseId],
-  )
+  const selectedExercise = useMemo(() => {
+    if (!selectedExerciseId) {
+      return null
+    }
+
+    return getExerciseById(selectedExerciseId)
+  }, [selectedExerciseId])
+  const step7ZoomFeedbackSection = useMemo(() => {
+    if (!selectedExercise || selectedExercise.id !== 'day3-ex1') {
+      return null
+    }
+
+    return splitStep7ZoomFeedbackSection(selectedExercise.feedback)
+  }, [selectedExercise])
 
   const risposteByExercise = useMemo(() => {
     const map = new Map()
@@ -144,6 +330,21 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   )
   const day1Status = dayStatuses.find((status) => status.day === 1)
   const day2Status = dayStatuses.find((status) => status.day === 2)
+  const currentObjectiveDay = useMemo(() => {
+    const unlockedDays = EXERCISE_DAYS.filter((day) => {
+      if (day === 1) return true
+      const status = dayStatuses.find((item) => item.day === day)
+      return Boolean(status?.isUnlocked)
+    })
+
+    if (!unlockedDays.length) {
+      return activeDay ?? 1
+    }
+
+    return unlockedDays[unlockedDays.length - 1]
+  }, [activeDay, dayStatuses])
+
+  const currentObjective = DAILY_OBJECTIVES[currentObjectiveDay] || DAILY_OBJECTIVES[1]
 
   useEffect(() => {
     if (selectedExerciseId || hasInteractedWithDays) {
@@ -180,8 +381,9 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     setSelectedExerciseId(exerciseId)
     setSelectedAnswer(null)
     setPendingAnswer(null)
-    setShowConfirmModal(false)
     setIsReviewMode(false)
+    setPendingCompletionDay(null)
+    setDifficultySelectionMessage('')
   }
 
   const handleReviewExercise = (exerciseId) => {
@@ -192,14 +394,14 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     setSelectedExerciseId(exerciseId)
     setSelectedAnswer(risposta?.risposta_scelta || null)
     setPendingAnswer(null)
-    setShowConfirmModal(false)
     setIsReviewMode(true)
+    setPendingCompletionDay(null)
+    setDifficultySelectionMessage('')
   }
 
   const handleAnswerSelect = (answerKey) => {
     if (!selectedExercise || isReviewMode || selectedAnswer) return
     setPendingAnswer(answerKey)
-    setShowConfirmModal(true)
   }
 
   const handleConfirmAnswer = () => {
@@ -216,7 +418,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       esercizio_id: numericExerciseId,
       risposta_scelta: submittedAnswer,
       risposta_corretta: isCorrect,
-      motivazione_utente: '',
     })
 
     const updatedRisposte = [...savedRisposte]
@@ -224,7 +425,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       esercizio_id: numericExerciseId,
       risposta_scelta: submittedAnswer,
       risposta_corretta: isCorrect,
-      motivazione_utente: '',
       timestamp: new Date().toISOString(),
     }
     const existingIndex = updatedRisposte.findIndex((r) => r.esercizio_id === numericExerciseId)
@@ -241,38 +441,39 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       }
     })
 
+    const selectedDayExercises = getExercisesForDay(selectedExercise.day)
+    const completedBefore = selectedDayExercises.filter((exercise) => {
+      const exerciseNumber = getExerciseNumber(exercise)
+      return risposteByExercise.has(exerciseNumber)
+    }).length
+    const completedAfter = selectedDayExercises.filter((exercise) => {
+      const exerciseNumber = getExerciseNumber(exercise)
+      return updatedMap.has(exerciseNumber)
+    }).length
+    const hasJustCompletedDay = completedBefore < selectedDayExercises.length && completedAfter === selectedDayExercises.length
+    setPendingCompletionDay(hasJustCompletedDay ? selectedExercise.day : null)
+
     if (isDayComplete(updatedMap, day1Exercises)) {
       markDay1Completion()
     }
 
     setSelectedAnswer(submittedAnswer)
     setPendingAnswer(null)
-    setShowConfirmModal(false)
-  }
-
-  const handleCancelConfirmation = () => {
-    setPendingAnswer(null)
-    setShowConfirmModal(false)
   }
 
   const handleDifficultySelect = (value) => {
     if (!selectedExercise || !testerId) return
-    
+    if (isDifficultyFeedbackLocked) return
+
     setDifficultyRating(value)
     setDifficultySaved(false)
-    setDifficultyFeedbackError('')
-    setShowDifficultyToast(false)
-    setShowDifficultyFeedbackPrompt(true)
+    setDifficultySelectionMessage('')
   }
 
-  const persistDifficultyFeedback = () => {
-    if (!selectedAnswer || !testerId || !selectedExercise || difficultyRating == null) return false
-
-    const normalizedFeedback = difficultyFeedbackText.trim()
-    if (!normalizedFeedback) {
-      setDifficultyFeedbackError('Questo campo è obbligatorio.')
-      return false
-    }
+  const persistDifficultyFeedback = (ratingOverride = null) => {
+    if (isDifficultyFeedbackLocked) return false
+    const ratingToSave = ratingOverride ?? difficultyRating
+    if (!selectedAnswer || !testerId || !selectedExercise || ratingToSave == null) return false
 
     const exerciseNumber = getExerciseNumber(selectedExercise)
     const day = selectedExercise.day
@@ -280,8 +481,8 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       testerId,
       giorno: day,
       esercizio_id: exerciseNumber,
-      difficolta_percepita: difficultyRating,
-      cosa_non_chiaro: normalizedFeedback,
+      difficolta_percepita: ratingToSave,
+      cosa_non_chiaro: difficultyFeedbackText.trim(),
     }
 
     saveDifficultyRating(difficultyFeedbackPayload)
@@ -294,63 +495,26 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     return true
   }
 
-  const handleConfirmDifficultyFeedback = () => {
-    const isPersisted = persistDifficultyFeedback()
-    if (!isPersisted) {
-      setShowDifficultyToast(true)
-      setDifficultyToastMessage('Scrivi cosa ti ha creato più difficoltà prima di proseguire.')
-      return
-    }
-
-    setShowDifficultyFeedbackPrompt(false)
-    setShowDifficultyToast(false)
-    setDifficultyToastMessage('')
+  const scrollToDifficultyRating = () => {
+    setTimeout(() => {
+      const difficultyForm = document.querySelector('.exercise-difficulty-rating')
+      if (difficultyForm) {
+        difficultyForm.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      }
+    }, 100)
   }
 
   const handleReturnToProgram = () => {
-    // If exercise is completed but difficulty not selected, show validation message
-    if (selectedAnswer && !difficultyRating && !difficultySaved) {
-      setDifficultyToastMessage('Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.')
-      setShowDifficultyToast(true)
-      // Auto-scroll to difficulty form
-      setTimeout(() => {
-        const difficultyForm = document.querySelector('.exercise-difficulty-rating')
-        if (difficultyForm) {
-          difficultyForm.scrollIntoView({ behavior: 'smooth', block: 'center' })
-        }
-      }, 100)
-      // Hide toast after 3 seconds
-      setTimeout(() => {
-        setShowDifficultyToast(false)
-      }, 3000)
+    if (selectedAnswer && difficultyRating == null) {
+      setDifficultySelectionMessage('Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.')
+      scrollToDifficultyRating()
       return
     }
 
-    if (selectedAnswer && !difficultyFeedbackText.trim()) {
-      setDifficultyFeedbackError('Questo campo è obbligatorio.')
-      setDifficultyToastMessage('Scrivi cosa ti ha creato più difficoltà prima di proseguire.')
-      setShowDifficultyToast(true)
-      setShowDifficultyFeedbackPrompt(true)
-      setTimeout(() => {
-        const feedbackField = document.querySelector('.exercise-difficulty-feedback textarea')
-        if (feedbackField) {
-          feedbackField.scrollIntoView({ behavior: 'smooth', block: 'center' })
-          feedbackField.focus()
-        }
-      }, 100)
-      setTimeout(() => {
-        setShowDifficultyToast(false)
-      }, 3000)
-      return
+    if (selectedAnswer && testerId && selectedExercise) {
+      persistDifficultyFeedback()
     }
 
-    if (selectedAnswer && testerId && selectedExercise && !difficultySaved) {
-      const isPersisted = persistDifficultyFeedback()
-      if (!isPersisted) {
-        return
-      }
-    }
-    
     const returnDay = selectedExercise?.day ?? activeDay ?? 1
     setActiveDay(returnDay)
     setOpenDays((prev) => {
@@ -364,78 +528,180 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     setSelectedExerciseId(null)
     setSelectedAnswer(null)
     setPendingAnswer(null)
-    setShowConfirmModal(false)
     setIsReviewMode(false)
-    setDifficultyFeedbackError('')
-    setShowDifficultyFeedbackPrompt(false)
+    setPendingCompletionDay(null)
+    setDifficultySelectionMessage('')
     if (onReturnToProgram) {
       onReturnToProgram()
     }
   }
 
-  useEffect(() => {
-    if (!showDifficultyFeedbackPrompt) return
+  const handleSaveAndCloseDay = async () => {
+    if (!selectedExercise || !testerId || !selectedAnswer || difficultyRating == null) return
+    if (!pendingCompletionDay || pendingCompletionDay !== selectedExercise.day) return
+    if (isSavingAndClosingDay) return
 
-    const timeoutId = window.setTimeout(() => {
-      difficultyFeedbackTextareaRef.current?.focus()
-    }, 30)
+    setIsSavingAndClosingDay(true)
+    try {
+      const hasPersisted = await Promise.resolve(persistDifficultyFeedback())
+      if (!hasPersisted) return
 
-    return () => window.clearTimeout(timeoutId)
-  }, [showDifficultyFeedbackPrompt])
+      setCompletedDayScreen(pendingCompletionDay)
+      setPendingCompletionDay(null)
+
+      const returnDay = selectedExercise.day
+      setActiveDay(returnDay)
+      setOpenDays((prev) => {
+        const next = new Set(prev)
+        next.add(returnDay)
+        return next
+      })
+      setHasInteractedWithDays(true)
+      setSelectedExerciseId(null)
+      setSelectedAnswer(null)
+      setPendingAnswer(null)
+      setIsReviewMode(false)
+      setDifficultySelectionMessage('')
+    } finally {
+      setIsSavingAndClosingDay(false)
+    }
+  }
+
+  const handleCloseDayCompletionScreen = () => {
+    setCompletedDayScreen(null)
+  }
+
+  const handleGoToNextStep = () => {
+    if (!selectedExercise) return
+
+    if (difficultyRating == null) {
+      setDifficultySelectionMessage('Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.')
+      scrollToDifficultyRating()
+      return
+    }
+
+    if (testerId) {
+      persistDifficultyFeedback()
+    }
+
+    const dayExercises = getExercisesForDay(selectedExercise.day)
+    const currentIndex = dayExercises.findIndex((exercise) => exercise.id === selectedExercise.id)
+    if (currentIndex < 0) return
+
+    const nextExercise = dayExercises[currentIndex + 1]
+    if (!nextExercise) return
+
+    const nextExerciseNumber = getExerciseNumber(nextExercise)
+    const hasConfirmedNextExercise = Boolean(
+      risposteByExercise.get(nextExerciseNumber)?.risposta_scelta,
+    )
+
+    if (hasConfirmedNextExercise) {
+      handleReviewExercise(nextExercise.id)
+      return
+    }
+
+    handleStartExercise(nextExercise.id)
+  }
 
   // Reset and load difficulty rating when exercise changes
   useEffect(() => {
     if (selectedExercise && testerId) {
       const exerciseNumber = getExerciseNumber(selectedExercise)
+      const savedRisposta = risposteByExercise.get(exerciseNumber)
       const existingRating = getDifficultyRatingForExercise(testerId, exerciseNumber)
-      
-      if (existingRating) {
-        setDifficultyRating(existingRating.difficolta_percepita)
-        const savedFeedback = existingRating.cosa_non_chiaro || ''
+
+      const rispostaDifficulty = Number.parseInt(String(savedRisposta?.difficolta_percepita), 10)
+      const ratingDifficulty = Number.parseInt(String(existingRating?.difficolta_percepita), 10)
+      const hasSavedDifficulty = !Number.isNaN(rispostaDifficulty) || !Number.isNaN(ratingDifficulty)
+      const savedDifficulty = !Number.isNaN(rispostaDifficulty)
+        ? rispostaDifficulty
+        : (!Number.isNaN(ratingDifficulty) ? ratingDifficulty : null)
+      const savedFeedback = typeof savedRisposta?.cosa_non_chiaro === 'string'
+        ? savedRisposta.cosa_non_chiaro
+        : (existingRating?.cosa_non_chiaro || '')
+
+      if (hasSavedDifficulty) {
+        setDifficultyRating(savedDifficulty)
         setDifficultyFeedbackText(savedFeedback)
-        setDifficultySaved(Boolean(savedFeedback.trim()))
+        setDifficultySaved(true)
+        setIsDifficultyFeedbackLocked(true)
       } else {
         setDifficultyRating(null)
         setDifficultyFeedbackText('')
         setDifficultySaved(false)
+        setIsDifficultyFeedbackLocked(false)
       }
-      // Reset toast when changing exercises
-      setShowDifficultyToast(false)
-      setDifficultyFeedbackError('')
-      setDifficultyToastMessage('')
-      setShowDifficultyFeedbackPrompt(false)
+      setDifficultySelectionMessage('')
     } else {
       setDifficultyRating(null)
       setDifficultyFeedbackText('')
       setDifficultySaved(false)
-      setShowDifficultyToast(false)
-      setDifficultyFeedbackError('')
-      setDifficultyToastMessage('')
-      setShowDifficultyFeedbackPrompt(false)
+      setIsDifficultyFeedbackLocked(false)
+      setDifficultySelectionMessage('')
     }
-  }, [selectedExercise, testerId])
+  }, [selectedExercise, testerId, risposteByExercise])
+
+  if (completedDayScreen) {
+    const completionCopy = DAY_COMPLETION_MESSAGES[completedDayScreen] || DAY_COMPLETION_MESSAGES[1]
+    const completionFeedback = buildDayCompletionFeedback(completedDayScreen, risposteByExercise)
+
+    return (
+      <section className="exercises">
+        <div className="exercise-day-completion">
+          <h2>{completionCopy.title}</h2>
+          {completionCopy.lines.map((line) => (
+            <p key={line}>{line}</p>
+          ))}
+          <p className="exercise-day-completion__feedback">{completionFeedback}</p>
+          <div className="exercise-day-completion__actions">
+            <button type="button" className="btn" onClick={handleCloseDayCompletionScreen}>
+              Torna al programma
+            </button>
+            {onNavigateToProgress && (
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => onNavigateToProgress(completedDayScreen)}
+              >
+                Rivedi i ragionamenti
+              </button>
+            )}
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   if (selectedExercise) {
     const initialImage = selectedExercise.imageBefore ?? selectedExercise.image ?? null
     const explainedImage = selectedExercise.imageAfter ?? selectedExercise.explanationImage ?? null
+    const selectedDayExercises = getExercisesForDay(selectedExercise.day)
+    const selectedExerciseIndex = selectedDayExercises.findIndex(
+      (exercise) => exercise.id === selectedExercise.id,
+    )
+    const nextExerciseInDay =
+      selectedExerciseIndex >= 0 ? selectedDayExercises[selectedExerciseIndex + 1] : null
     const isFreeResponseExercise = !selectedExercise.answers?.length
     const hasAnswered = Boolean(selectedAnswer)
     const answerButtonDisabled = hasAnswered || isReviewMode
     const isAnswerCorrect = hasAnswered && (isFreeResponseExercise || selectedAnswer === selectedExercise.correctAnswer)
-    const feedbackCopy = hasAnswered && selectedExercise.feedback
-      ? selectedExercise.feedback
-      : 'Il feedback comparirà dopo la risposta.'
+    const canContinue = hasAnswered && difficultyRating != null
+    const canGoToNextStep = canContinue && Boolean(nextExerciseInDay)
+    const canSaveAndCloseDay = canContinue && pendingCompletionDay === selectedExercise.day
     const feedbackClass = `exercise-feedback${hasAnswered ? (isAnswerCorrect ? ' is-correct' : ' is-incorrect') : ''}`
 
     return (
       <section className="exercises">
-        <button type="button" className="btn btn-outline back-to-program" onClick={handleReturnToProgram}>
-          ← Torna al programma di oggi
-        </button>
+        {!canSaveAndCloseDay && (
+          <button type="button" className="btn btn-outline back-to-program" onClick={handleReturnToProgram}>
+            ← Torna al programma di oggi
+          </button>
+        )}
 
         <div className="exercise-detail" aria-live="polite">
           <div className="exercise-detail-head">
-            <span className="exercise-detail-day">Giorno {selectedExercise.day}</span>
+            <span className="exercise-detail-day">{`Giorno ${selectedExercise.day}`}</span>
             <h1 className="page-title">{formatExerciseTitle(selectedExercise)}</h1>
             <span className="exercise-detail-block">{selectedExercise.block}</span>
           </div>
@@ -475,24 +741,38 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                 <button
                   type="button"
                   className="btn btn-action"
-                  onClick={() => setShowConfirmModal(true)}
+                  onClick={handleConfirmAnswer}
                   disabled={answerButtonDisabled}
                 >
                   Conferma e confronta
                 </button>
               ) : (
-                selectedExercise.answers.map((answer) => (
-                  <button
-                    key={answer.key}
-                    type="button"
-                    className={`answer-option${(selectedAnswer === answer.key || pendingAnswer === answer.key) ? ' is-selected' : ''}`}
-                    onClick={() => handleAnswerSelect(answer.key)}
-                    disabled={answerButtonDisabled}
-                  >
-                    <span className="answer-key">{answer.key}.</span>
-                    <span className="answer-text">{answer.text}</span>
-                  </button>
-                ))
+                <>
+                  {selectedExercise.answers.map((answer) => (
+                    <button
+                      key={answer.key}
+                      type="button"
+                      className={`answer-option${(selectedAnswer === answer.key || pendingAnswer === answer.key) ? ' is-selected' : ''}`}
+                      onClick={() => handleAnswerSelect(answer.key)}
+                      disabled={answerButtonDisabled}
+                    >
+                      <span className="answer-key">{answer.key}.</span>
+                      <span className="answer-text">{answer.text}</span>
+                    </button>
+                  ))}
+                  {!hasAnswered && (
+                    <div className="exercise-detail-actions">
+                      <button
+                        type="button"
+                        className="btn btn-action"
+                        onClick={handleConfirmAnswer}
+                        disabled={!pendingAnswer || isReviewMode}
+                      >
+                        Conferma e confronta
+                      </button>
+                    </div>
+                  )}
+                </>
               )}
             </div>
           </div>
@@ -521,19 +801,39 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
             </div>
           )}
 
-          <div className={feedbackClass}>
-            <h3>Ragionamento guidato</h3>
-            {renderRichText(feedbackCopy)}
-          </div>
+          {hasAnswered && (
+            <div className={feedbackClass}>
+              <h3>Ragionamento guidato</h3>
+              {selectedExercise.id === 'day3-ex1' && step7ZoomFeedbackSection ? (
+                <>
+                  {renderRichText(step7ZoomFeedbackSection.before)}
+                  <div className="exercise-zoom-es4-layout">
+                    <div className="exercise-zoom-es4-copy">{renderRichText(step7ZoomFeedbackSection.focus)}</div>
+                    <div className="exercise-zoom-es4-visual">
+                      <img
+                        src={STEP7_ZOOM_IMAGE_PATH}
+                        alt="Zoom di approfondimento sul confronto tra Massimo 1 e Massimo 2"
+                        className="exercise-zoom-es4-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  {renderRichText(step7ZoomFeedbackSection.after)}
+                </>
+              ) : (
+                renderRichText(selectedExercise.feedback)
+              )}
+            </div>
+          )}
 
           {hasAnswered && (
             <div className="exercise-difficulty-rating">
-              <h4>Quanto hai capito dopo la spiegazione?</h4>
+              <h4>Questo esercizio per me</h4>
               <div className="difficulty-scale">
                 <div className="scale-labels">
-                  <span className="scale-label scale-label-left">Non mi è chiaro</span>
-                  <span className="scale-label scale-label-center">Niente di nuovo</span>
-                  <span className="scale-label scale-label-right">Ho capito cose nuove</span>
+                  <span className="scale-label scale-label-left">Troppo facile</span>
+                  <span className="scale-label scale-label-center">Per me ok</span>
+                  <span className="scale-label scale-label-right">Troppo difficile</span>
                 </div>
                 <div className="scale-buttons">
                   {[1, 2, 3, 4, 5, 6, 7].map((value) => (
@@ -542,75 +842,58 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                       type="button"
                       className={`difficulty-btn ${difficultyRating === value ? 'is-selected' : ''}`}
                       onClick={() => handleDifficultySelect(value)}
-                      disabled={difficultySaved}
+                      disabled={isDifficultyFeedbackLocked || (isReviewMode && difficultySaved)}
                     >
                       {value}
                     </button>
                   ))}
                 </div>
               </div>
-              {difficultySaved && (
-                <p className="difficulty-saved">Risposta salvata</p>
-              )}
+              {difficultySelectionMessage && <p className="exercise-confirm-modal__error">{difficultySelectionMessage}</p>}
+              <div className="exercise-difficulty-feedback">
+                <h4>C'è qualcosa che ti è rimasto poco chiaro? (facoltativo)</h4>
+                <textarea
+                  className="exercise-confirm-modal__textarea"
+                  placeholder="Scrivi qui eventuali osservazioni"
+                  value={difficultyFeedbackText}
+                  onChange={(e) => {
+                    if (isDifficultyFeedbackLocked) return
+                    setDifficultyFeedbackText(e.target.value)
+                    if (difficultySaved) {
+                      setDifficultySaved(false)
+                    }
+                  }}
+                  readOnly={isDifficultyFeedbackLocked}
+                  disabled={isDifficultyFeedbackLocked}
+                  rows={5}
+                />
+              </div>
             </div>
           )}
 
-          {hasAnswered && difficultyRating != null && showDifficultyFeedbackPrompt && (
-            <div className="exercise-confirm-modal__backdrop" role="presentation">
-              <div className="exercise-confirm-modal exercise-difficulty-feedback-modal" role="dialog" aria-modal="true" aria-labelledby="difficulty-feedback-title">
-                <h3 id="difficulty-feedback-title">🧐1-Cosa non hai capito della spiegazione? 🔎2-(rispondi solo una volta)Ti orienti già da solo o spesso non sai cosa guardare sul grafico? </h3>
-                <div className="exercise-difficulty-feedback">
-                  <textarea
-                    ref={difficultyFeedbackTextareaRef}
-                    className={`exercise-confirm-modal__textarea ${difficultyFeedbackError ? 'has-error' : ''}`}
-                    placeholder="1-Cosa non hai capito? 2- Ti orienti già da solo o spesso non sai cosa guardare sul grafico?"
-                    value={difficultyFeedbackText}
-                    onChange={(e) => {
-                      setDifficultyFeedbackText(e.target.value)
-                      setDifficultyFeedbackError('')
-                      if (difficultySaved) {
-                        setDifficultySaved(false)
-                      }
-                    }}
-                    rows={7}
-                  />
-                  {difficultyFeedbackError && (
-                    <p className="exercise-confirm-modal__error">{difficultyFeedbackError}</p>
+          {canContinue && (
+            <div className="exercise-detail-actions">
+              {canSaveAndCloseDay ? (
+                <button
+                  type="button"
+                  className="btn btn-action"
+                  onClick={handleSaveAndCloseDay}
+                  disabled={isSavingAndClosingDay}
+                >
+                  {isSavingAndClosingDay ? 'Salvataggio...' : 'Salva e chiudi il giorno'}
+                </button>
+              ) : (
+                <>
+                  {canGoToNextStep && (
+                    <button type="button" className="btn btn-action" onClick={handleGoToNextStep}>
+                      Vai al prossimo ➡️
+                    </button>
                   )}
-                </div>
-                <div className="exercise-confirm-modal__actions">
-                  <button type="button" className="btn" onClick={handleConfirmDifficultyFeedback}>
-                    Salva feedback
+                  <button type="button" className="btn" onClick={handleReturnToProgram}>
+                    Torna al programma
                   </button>
-                </div>
-              </div>
-            </div>
-          )}
-          {showDifficultyToast && (
-            <div className="difficulty-toast">
-              <p>{difficultyToastMessage || 'Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.'}</p>
-            </div>
-          )}
-          <div className="exercise-detail-actions">
-            <button type="button" className="btn" onClick={handleReturnToProgram}>
-              Torna al programma
-            </button>
-          </div>
-
-          {showConfirmModal && (
-            <div className="exercise-confirm-modal__backdrop" role="presentation">
-              <div className="exercise-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-answer-title">
-                <h3 id="confirm-answer-title">Confermi?</h3>
-
-                <div className="exercise-confirm-modal__actions">
-                  <button type="button" className="btn btn-outline" onClick={handleCancelConfirmation}>
-                    Voglio pensare ancora
-                  </button>
-                  <button type="button" className="btn" onClick={handleConfirmAnswer}>
-                    Conferma e confronta
-                  </button>
-                </div>
-              </div>
+                </>
+              )}
             </div>
           )}
         </div>
@@ -618,26 +901,40 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     )
   }
 
-  const activeDayExercises = getExercisesForDay(activeDay ?? 1)
-  const activeDaySummary = dayStatuses.find((status) => status.day === (activeDay ?? 1))
-  const activeDayProgressValue = activeDaySummary
-    ? `${activeDaySummary.completedCount}/${activeDayExercises.length} esercizi completati`
-    : `0/${activeDayExercises.length} esercizi completati`
-
   return (
     <section className="exercises">
       <header className="exercise-head">
         <span className="eyebrow">Esercitati</span>
-        <h1 className="page-title">Segui l'ordine dei 3 esercizi giornalieri</h1>
+        <h1 className="page-title">Segui l'ordine dei 3 step</h1>
       </header>
 
-      <div className="exercise-progress" aria-live="polite">
-        <div className="exercise-progress-head">
-          <span className="exercise-progress-title">Oggi</span>
-          <span className="exercise-progress-value">{activeDayProgressValue}</span>
+      <div className="exercise-goals-grid">
+        <div className="exercise-progress" aria-live="polite">
+          <p className="exercise-goal-title">{currentObjective.title}</p>
+          {currentObjective.lines.map((line) => (
+            <p key={line} className="exercise-goal-line">{line}</p>
+          ))}
+          {currentObjective.divider && (
+            <p className="exercise-goal-divider">{currentObjective.divider}</p>
+          )}
         </div>
-        <div className="exercise-progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-          <span className="exercise-progress-fill" style={{ width: '0%' }} />
+
+        <div className="exercise-progress exercise-progress-general">
+          <p className="exercise-goal-title">🎯 Obiettivi generali</p>
+          {GENERAL_OBJECTIVES.map((objective) => {
+            const correctSteps = objective.steps.filter((stepNumber) => {
+              const risposta = risposteByExercise.get(stepNumber)
+              return Boolean(risposta?.risposta_corretta)
+            })
+            const objectiveSummary = getGeneralObjectiveSummary(correctSteps)
+
+            return (
+              <div key={objective.title} className="exercise-general-objective-item">
+                <p className="exercise-goal-line">{objective.title}</p>
+                <p className="exercise-goal-line exercise-goal-line-secondary">{objectiveSummary}</p>
+              </div>
+            )
+          })}
         </div>
       </div>
 
@@ -659,7 +956,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
             ? `Giorno ${day} – Scenario: ${scenarioLabel}`
             : `Giorno ${day}`
           const lockCopy = status?.isBlockedByDate
-            ? 'Disponibile dal giorno successivo.'
+            ? 'Disponibile da domani⏰'
             : 'Termina prima il giorno precedente.'
 
           return (
@@ -704,9 +1001,9 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                             <div className="exercise-body">
                               <h2>{formatExerciseTitle(exercise)}</h2>
                               <div className="exercise-meta" aria-label="Dettagli didattici">
-                                <span className="exercise-meta-item">📉 Grafico reale ({chartMeta.source})</span>
-                                <span className="exercise-meta-item">🕐 Timeframe: {chartMeta.timeframe}</span>
-                                <span className="exercise-meta-item"> Asset: {chartMeta.instrument}</span>
+                                <span className="exercise-meta-item">📉 {chartMeta.source}</span>
+                                <span className="exercise-meta-item"> {chartMeta.timeframe}</span>
+                                <span className="exercise-meta-item"> {chartMeta.instrument}</span>
                               </div>
                             </div>
                           </div>
@@ -724,12 +1021,12 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                                 className="btn btn-outline"
                                 onClick={() => onNavigateToProgress(exercise.day)}
                               >
-                                Vai a Progressi
+                               Ragionamenti chiave
                               </button>
                             )}
                             {!testerId && (
                               <span className="exercise-hint">
-                                Salva il profilo per abilitare il tracciamento quando gli esercizi saranno attivi.
+                                Salva il profilo per abilitare il tracciamento quando gli step saranno attivi.
                               </span>
                             )}
                           </div>
@@ -760,7 +1057,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                     <>
                       <div className="exercise-day-summary-card">
                         <span className="exercise-day-summary-score">{`${status?.correctCount ?? 0}/${dayExercises.length} corretti`}</span>
-                        <span className="exercise-day-summary-copy">Vai a Progressi per rivedere i ragionamenti</span>
+                        <span className="exercise-day-summary-copy">Ragionamenti chiave</span>
                       </div>
                       <div className="exercise-day-summary-actions">
                         <button type="button" className="btn btn-review" onClick={() => toggleDay(day)}>
@@ -768,7 +1065,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                         </button>
                         {onNavigateToProgress && (
                           <button type="button" className="btn btn-outline" onClick={() => onNavigateToProgress()}>
-                            Progressi
+                           Ragionamenti chiave
                           </button>
                         )}
                       </div>
@@ -777,7 +1074,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                     <>
                       <div className="exercise-day-summary-card">
                         <span className="exercise-day-summary-score">{`${status?.correctCount ?? 0}/${dayExercises.length} corretti`}</span>
-                        <span className="exercise-day-summary-copy">Vai a Progressi per rivedere i ragionamenti</span>
+                        <span className="exercise-day-summary-copy">Ragionamenti chiave</span>
                       </div>
                       <div className="exercise-day-summary-actions">
                         <button type="button" className="btn btn-outline" onClick={() => toggleDay(day)}>
@@ -785,7 +1082,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
                         </button>
                         {onNavigateToProgress && (
                           <button type="button" className="btn btn-outline" onClick={() => onNavigateToProgress()}>
-                            Progressi
+                            Ragionamenti chiave
                           </button>
                         )}
                       </div>

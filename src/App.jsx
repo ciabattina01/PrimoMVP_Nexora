@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Layout from './components/Layout'
 import Home from './components/Home'
+import IntroExercises from './components/IntroExercises'
 import Exercises from './components/Exercises'
 import Feedback from './components/Feedback'
 import Profile from './components/Profile'
@@ -114,7 +115,14 @@ function App() {
   const renderPage = () => {
     switch (activePage) {
       case 'home':
-        return <Home onStartExercises={() => navigateTo('exercises')} />
+        return (
+          <Home
+            onStartIntro={() => navigateTo('intro-exercises')}
+            onStartExercises={() => navigateTo('exercises')}
+          />
+        )
+      case 'intro-exercises':
+        return <IntroExercises />
       case 'exercises':
         return (
           <Exercises
