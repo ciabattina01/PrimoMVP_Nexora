@@ -61,32 +61,28 @@ cioè i massimi da cui si creano **nuovi minimi più bassi dei precedenti.**
   **5-Cosa puoi fare in una piattaforma come TradingView?** 👉 Nell'immagine: 3 ambienti.
     
       📊 **Osservare e analizzare:**
-Su una piattaforma grafica come TradingView puoi vedere il prezzo e disegnare un’entrata, uno Stop Loss o un Take Profit sul grafico, ma non significa aver aperto realmente un’operazione.
+Su una piattaforma grafica come TradingView puoi vedere il prezzo e disegnare un’entrata o un livello, ma non stai operando realmente.
 
  **Fare pratica in simulazione**
 Con un ambiente di paper trading/simulazione puoi invece provare ad aprire e chiudere operazioni utilizzando **denaro virtuale.** 
+Ad esempio, puoi utilizzare il Paper Trading di TradingView o un **conto demo** su una piattaforma di trading.
 
       **🏦 E quando vuoi operare realmente: il Broker**
-
-      Il broker è l’intermediario che ti permette di accedere al mercato con un conto di trading.
+      Il broker è una **società finanziaria che fa da intermediario fra te e il mercato**, permettendoti di accedere al mercato con un conto di trading. 
 Quando invii un ordine di acquisto o vendita, il broker ne gestisce l’esecuzione.
-
-Operare realmente significa che:
-1. apri un conto presso un broker e utilizzi capitale reale;
-2. attraverso una piattaforma invii un ordine di acquisto o vendita: se viene eseguito, hai una posizione reale e il suo risultato influirà sul saldo del conto.
 
       **6-Come puoi analizzare il mercato?** due modi di interpretare il mercato.
       🌐 **Analisi fondamentale** → guarda cosa può influenzare il mercato: economia, tassi d’interesse, inflazione, notizie ecc.
 📈 **Analisi tecnica** → guarda direttamente ciò che il prezzo sta facendo sul grafico: direzione, livelli e struttura.
 
-**Nei prossimi esercizi useremo soprattutto la seconda: imparerai a osservare un grafico e prendere una decisione passo dopo passo.**
+**Nei prossimi esercizi useremo soprattutto la seconda: imparerai a osservare un grafico e prendere una decisione.**
 
    **7 - Quanto può durare un'operazione?**
    
-Scalping: operazioni molto brevi, di pochi minuti.
-Intraday: operazioni aperte e chiuse nella stessa giornata.
-Swing: operazioni che possono durare più giorni.
-
+**Scalping:** operazioni molto brevi, di pochi minuti.
+**Intraday:** operazioni aperte e chiuse nella stessa giornata.
+**Swing:** operazioni mantenute per più giorni, a volte ancche settimane.
+**Position trading:** operazioni mantenute per settimane o mesi.
 **Il ragionamento sul grafico può essere utilizzato in tipi di operatività diversi:**cambiano soprattutto i tempi, i timeframe utilizzati e la gestione dell’operazione.
       `,
   },
@@ -97,14 +93,14 @@ Swing: operazioni che possono durare più giorni.
     block: 'Candele e prezzi · Quantità e rischio',
     question:
       ` **1 - Come interpretare le candele e il timeframe?**👉 Nell'immagine: candele e timeframe.
+     
       **Corpo della candela = parte colorata compresa tra Apertura e Chiusura**.
-
       Massimo = punto più alto raggiunto dalla candela  |  Minimo = punto più basso raggiunto dalla candela
       I tratti sottili sopra e sotto il corpo della candela rappresentano le **ombre (Wick)**.
 
       **Esempio con timeframe M5:** 
       alle 10:00 inizia una nuova candela; nei 5 minuti successivi il prezzo può salire e scendere e la candela può cambiare colore. Alle 10:05 la candela si chiude: se il prezzo è sopra quello di apertura è rialzista, se è sotto è ribassista.
-Il colore finale indica quindi quale pressione ha prevalso in quei 5 minuti: compratrice se la candela chiude rialzista, venditrice se chiude ribassista.
+Il colore finale indica quindi quale pressione ha prevalso in quei 5 minuti: **compratrice se la candela chiude rialzista (verde nell'immagine), venditrice se chiude ribassista (rossa nell'immagine).**
 
       **Come si sceglie il giusto timeframe?**⏰
   Non esiste un timeframe migliore in assoluto: dipende da cosa vuoi osservare.
@@ -115,9 +111,8 @@ Serve per capire l’andamento e il contesto generale.
 **Timeframe inferiore → “zoom” sul prezzo**
 Mostra lo stesso mercato in intervalli di tempo più brevi: permette di cercare una possibile conferma per l’ingresso.
 
-Un modo pratico:
-Come riferimento iniziale, puoi scendere a un timeframe circa **4–6 volte più breve.**
-Per esempio:
+Un modo pratico come riferimento iniziale:
+Puoi scendere a un timeframe circa **4–6 volte più breve.**
 **H4 → H1**
 **H1 → M15**
 
@@ -131,10 +126,10 @@ Per esempio:
 
      **Ask-Bid= Spread.** Generalmente **Ask > Bid**.
 
-    ** In pratica, lo spread è il divario tra compratori e venditori: **il prezzo a cui puoi comprare è leggermente diverso da quello a cui puoi vendere. Questa differenza rappresenta un piccolo **costo quando entri in un’operazione.**
+    ** Lo spread è il divario tra il prezzo a cui puoi comprare e quello a cui puoi vendere.** Questa differenza rappresenta un piccolo **costo quando entri in un’operazione.**
 
       🛍️**3 - Quanto è facile trovare compratori e venditori? liquidità.**
-Quando invii un ordine, deve esserci una controparte dall’altra parte dello scambio: **più è facile trovarla a prezzi vicini a quello corrente, maggiore è la liquidità.**
+Quando invii un ordine, deve esserci una controparte dall’altra parte dello scambio: **più è facile trovarla a prezzi vicini a quelli attuali, maggiore è la liquidità.**
 Quindi in un mercato ad alta liquidità è più semplice entrare e uscire da un’operazione e gli spread tendono a essere più contenuti.
 
 **Esempio:** vuoi vendere un asset che in quel momento viene scambiato intorno a 10 €.
@@ -163,6 +158,9 @@ La quantità non si sceglie a caso: **più avanti vedremo come collegarla al ris
 
 **6 - Ma se 0,01 lotti sono già 1.000 €, significa che devo avere 1.000 € sul conto? la Leva**
 Non necessariamente. Con la leva, il broker richiede **solo una parte del valore della posizione, chiamata margine**.
+Broker/strumento → leva disponibile
+Tu → scegli la dimensione della posizione
+Piattaforma → calcola il margine
 
 Esempio semplice: se operi su una posizione da 1.000 € con una leva 10:1, il margine richiesto sarebbe circa 100 €.
 Ma attenzione: stai comunque operando su 1.000 €, non su 100 €. Per questo la leva può amplificare anche le perdite.

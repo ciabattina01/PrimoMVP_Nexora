@@ -2693,7 +2693,7 @@
 .intro-leverage-image {
   display: block;
   width: 100%;
-  max-width: 480px;
+  max-width: 3000px;
   height: auto;
   object-fit: contain;
   border-radius: 12px;
@@ -2843,7 +2843,7 @@
 .intro-trend-image {
   display: block;
   width: 100%;
-  max-width: 300px;
+  max-width: 650px;
   height: auto;
   object-fit: contain;
   border-radius: 12px;

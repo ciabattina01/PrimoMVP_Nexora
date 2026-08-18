@@ -79,8 +79,20 @@ function splitIntroStepATrendSection(feedbackText) {
     return null
   }
 
+  const trendBody = afterHeading.slice(0, nextSectionMatch.index)
+  const trendSectionPattern = /(?:^|\n)\s*(\*\*[^\n]*?:\s*\*\*[\s\S]*?)(?=(?:\n\s*\*\*[^\n]*?:\s*\*\*)|$)/g
+  const trendSections = Array.from(trendBody.matchAll(trendSectionPattern))
+    .map((match) => String(match[1] ?? '').trim())
+    .filter(Boolean)
+
+  if (trendSections.length < 2) {
+    return null
+  }
+
   return {
     beforeTrend,
+    trendUpSection: trendSections[0],
+    trendDownSection: trendSections[1],
     afterTrend: nextSectionMatch[1],
   }
 }
@@ -933,8 +945,7 @@ function IntroExercises() {
                     <div className="intro-trend-row">
                       <div className="intro-trend-copy">
                         <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(`**Trend rialzista:** massimi e minimi si formano progressivamente più in alto.
-Ciò che fa da "impalcatura" al trend sono i **minimi strutturali:** i minimi da cui parte il movimento che crea nuovi massimi più alti dei precedenti.`)}
+                          {renderIntroTextWithBold(stepATrendFeedback.trendUpSection)}
                         </p>
                       </div>
                       <div className="intro-trend-visual">
@@ -949,8 +960,7 @@ Ciò che fa da "impalcatura" al trend sono i **minimi strutturali:** i minimi da
                     <div className="intro-trend-row">
                       <div className="intro-trend-copy">
                         <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(`**Trend ribassista:** massimi e minimi si formano progressivamente più in basso.
-Ciò che fa da "impalcatura" al trend sono i **massimi strutturali:** i massimi da cui parte il movimento che crea nuovi minimi più bassi dei precedenti.`)}
+                          {renderIntroTextWithBold(stepATrendFeedback.trendDownSection)}
                         </p>
                       </div>
                       <div className="intro-trend-visual">

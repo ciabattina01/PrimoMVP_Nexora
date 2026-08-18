@@ -156,7 +156,7 @@ function Profile({ onSave, onDelete }) {
           <div className="onboarding-hero">
             <h1 className="onboarding-title">
               <span></span>
-              <span className="gradient-text">Il primo prototipo di Percep</span>
+              <span className="gradient-text"> Prototipo Test di Percep</span>
             </h1>
             <p className="lead">
               <strong></strong>.
