@@ -602,7 +602,7 @@ function IntroExercises() {
       <section className="exercises intro-exercises">
         <div className="exercise-day-completion intro-completion-card">
           <h2>🎉 Hai completato i tre step "Inizia da qui"!</h2>
-          <p>Ora conosci .</p>
+          <p></p>
           <p>Ora puoi continuare con il percorso principale in Esercitati.</p>
           <div className="exercise-day-completion__actions">
             <button type="button" className="btn" onClick={() => setShowFinalScreen(false)}>
