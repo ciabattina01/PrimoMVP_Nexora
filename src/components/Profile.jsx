@@ -159,7 +159,7 @@ function Profile({ onSave, onDelete }) {
               <span className="gradient-text">Il primo prototipo di Percep</span>
             </h1>
             <p className="lead">
-              <strong>Questo è un test per validare il metodo di apprendimento</strong>.
+              <strong></strong>.
             </p>
           </div>
 
@@ -183,18 +183,18 @@ function Profile({ onSave, onDelete }) {
             <h4>COME SI SVOLGE IL TEST:</h4>
             <div className="onboarding-test-details">
               <div className="onboarding-test-item">
-                <span>• Durata: <strong>3 giorni · 9 step</strong></span>
+                <span>2 percorsi:</span>
               </div>
               <div className="onboarding-test-item">
-                <span>• Percorso "Da dove iniziare": <strong>con 3 step per avere le basi pratiche</strong></span>
+                <span>• Percorso"Da dove iniziare": <strong> 3 step per avere le basi pratiche</strong></span>
               </div>
               <div className="onboarding-test-item">
                 <span>
-                  • Percorso "Capire cosa guardare sul grafico":<strong>con 9 step</strong>.
+                  • Percorso "Capire cosa guardare sul grafico":<strong> 9 step</strong>
                 </span>
               </div>
               <div className="onboarding-test-item">
-                <span>• 💻Consigliato: <strong>usa un computer per visualizzare meglio i grafici</strong></span>
+                <span>• 💻 <strong>Usa un computer per visualizzare meglio i grafici</strong></span>
               </div>
             </div>
           </div>
