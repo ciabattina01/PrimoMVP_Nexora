@@ -905,7 +905,7 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     <section className="exercises">
       <header className="exercise-head">
         <span className="eyebrow">Esercitati</span>
-        <h1 className="page-title">Segui l'ordine dei 3 step</h1>
+        <h1 className="page-title">Capire cosa guardare sul grafico</h1>
       </header>
 
       <div className="exercise-goals-grid">

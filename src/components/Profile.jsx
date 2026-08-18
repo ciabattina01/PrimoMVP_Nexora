@@ -166,13 +166,13 @@ function Profile({ onSave, onDelete }) {
           <div className="onboarding-info" aria-label="Informazioni sul test">
             <div className="onboarding-info-item">
               <span className="onboarding-info-dot" aria-hidden="true" />
-              <span>Focus su <strong>comprensione</strong>, non sul profitto</span>
+              <span>Gli step <strong>allenano un modo di ragionare da utilizzare su grafici e tipi di operatività diversi</strong></span>
             </div>
             <div className="onboarding-info-item">
               <span className="onboarding-info-dot" aria-hidden="true" />
               <span>
                 Pensato per:{' '}
-                <strong>chi è alle prime armi</strong>
+                <strong>chi parte da 0</strong>
               </span>
             </div>
           </div>
@@ -186,11 +186,11 @@ function Profile({ onSave, onDelete }) {
                 <span>• Durata: <strong>3 giorni · 9 step</strong></span>
               </div>
               <div className="onboarding-test-item">
-                <span>• Accesso attuale: <strong>2 step facoltativi per iniziare da 0 + percorso con 9 step</strong></span>
+                <span>• Percorso "Da dove iniziare": <strong>con 3 step per avere le basi pratiche</strong></span>
               </div>
               <div className="onboarding-test-item">
                 <span>
-                  • Formato del test:<strong>grafici statici reali</strong>.
+                  • Percorso "Capire cosa guardare":<strong>con 9 step</strong>.
                 </span>
               </div>
               <div className="onboarding-test-item">
