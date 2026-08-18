@@ -166,7 +166,7 @@ function Profile({ onSave, onDelete }) {
           <div className="onboarding-info" aria-label="Informazioni sul test">
             <div className="onboarding-info-item">
               <span className="onboarding-info-dot" aria-hidden="true" />
-              <span>Gli step <strong>allenano un modo di ragionare da utilizzare su grafici e tipi di operatività diversi</strong></span>
+              <span>Gli step <strong>allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi</strong></span>
             </div>
             <div className="onboarding-info-item">
               <span className="onboarding-info-dot" aria-hidden="true" />
@@ -190,7 +190,7 @@ function Profile({ onSave, onDelete }) {
               </div>
               <div className="onboarding-test-item">
                 <span>
-                  • Percorso "Capire cosa guardare":<strong>con 9 step</strong>.
+                  • Percorso "Capire cosa guardare sul grafico":<strong>con 9 step</strong>.
                 </span>
               </div>
               <div className="onboarding-test-item">
@@ -201,7 +201,7 @@ function Profile({ onSave, onDelete }) {
 
           <form className="profile-form onboarding-form" onSubmit={handleSubmit}>
             <p className="muted onboarding-form-note">
-              <strong>Non è la versione definitiva. Prima di sviluppare tutte le funzionalità, verifichiamo che il metodo di apprendimento sia efficace.</strong>
+              <strong>Non è la versione definitiva. Verifichiamo prima che il metodo di apprendimento sia efficace.</strong>
              
             </p>
 
@@ -231,7 +231,7 @@ function Profile({ onSave, onDelete }) {
 
             <div className="onboarding-skill-card" role="group" aria-labelledby="graph-block-behavior-title">
               <p id="graph-block-behavior-title" className="onboarding-skill-title">
-                Quando sei davanti a un grafico, non sai bene cosa guardare e ti blocchi, cosa fai più spesso?
+                Quando non sai cosa guardare sul grafico, cosa fai dopo?
               </p>
               <div className="onboarding-skill-options">
                 {GRAPH_BLOCK_BEHAVIOR_OPTIONS.map((option) => (
