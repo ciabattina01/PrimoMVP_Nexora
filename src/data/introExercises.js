@@ -48,6 +48,7 @@ Sono semplicemente due modi diversi per indicare lo stesso concetto.
 Trend = direzione prevalente del prezzo.
 Struttura = il modo in cui massimi e minimi si susseguono sul grafico e ci aiutano a riconoscere quella direzione.
 
+Importante: non devi memorizzare tutti i termini, lo stesso concetto può avere diversi termini.
 **Come riconoscere un trend rialzista/ribassista?**
 
 **Trend rialzista:** i minimi e i massimi si formano progressivamente più in alto.
@@ -157,13 +158,24 @@ Esempio: in EUR/USD, l’euro è la valuta base. Aprire una posizione da 0,01 lo
 La quantità non si sceglie a caso: **più avanti vedremo come collegarla al rischio e allo Stop Loss.**
 
 **6 - Ma se 0,01 lotti sono già 1.000 €, significa che devo avere 1.000 € sul conto? la Leva**
-Non necessariamente. Con la leva, il broker richiede **solo una parte del valore della posizione, chiamata margine**.
-Broker/strumento → leva disponibile
-Tu → scegli la dimensione della posizione
-Piattaforma → calcola il margine
+•Non necessariamente. Supponiamo che hai **500 € di capitale sul conto.**
 
-Esempio semplice: se operi su una posizione da 1.000 € con una leva 10:1, il margine richiesto sarebbe circa 100 €.
-Ma attenzione: stai comunque operando su 1.000 €, non su 100 €. Per questo la leva può amplificare anche le perdite.
+La **leva disponibile dipende dal broker** e dallo strumento, quindi non la scegli te.
+•**Tu → scegli la dimensione della posizione indicando i lotti.** Per esempio, su EUR/USD **0,01 lotti = 1.000 EUR di posizione.**
+Esposizione totale =1000 € significa che stai controllando una posizione sul mercato del valore di 1.000 €.
+
+•A quel punto la **piattaforma calcola il Margine richiesto**: è la **parte del capitale che viene “riservata” per mantenere aperta quella posizione.** Non viene spesa, ma finché l’operazione è aperta non è disponibile come margine libero.
+
+•**Leva 10:1 significa: per ogni 1 € di margine puoi controllare 10 € di posizione.**
+
+•**→ Margine = dimensione della posizione / leva**
+1000 € / 10 = 100 € → **Margine richiesto: 100€**
+Ma stai comunque operando su 1.000 €, non su 100 €: per questo la leva amplifica l’effetto dei movimenti del prezzo.
+
+• Guarda l'immagine a destra: il risultato si calcola sulla **posizione**.
+Posizione 1.000 € → **esempio movimento ±1%** → **risultato ±10 €**
+Conto 500 € →** 490 € se perdi / 510 € se guadagni.**
+
 🔎**Unità di Pip**
 Indica di **quanto si è mosso il prezzo di una coppia Forex.**
 

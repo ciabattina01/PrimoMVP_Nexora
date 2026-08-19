@@ -1074,13 +1074,13 @@ function IntroExercises() {
             {renderIntroTextWithBold('**• Gli step allenano un modo di ragionare da utilizzare su grafici e tipi di operatività diversi **')}
           </p>
           <p className="exercise-goal-line">
-            {renderIntroTextWithBold(' **•** Questi 3 step danno le **basi**; nello **Step C** segui un **esempio, su un grafico**.')}
+            {renderIntroTextWithBold(' **•** Questi **3 step danno le basi pratiche**; nello **Step C** segui un **esempio su un grafico**.')}
           </p>
           <p className="exercise-goal-line">
             {renderIntroTextWithBold(' **• Con quanto capitale iniziare?**Allenati in **simulazione**. Poi come riferimento,  **100–300 €**.')}
           </p>
             <p className="exercise-goal-line">
-            {renderIntroTextWithBold(' **• Non devi memorizzare tutti i termini tecnici subito.**')}
+            {renderIntroTextWithBold('')}
           </p>
         </div>
       </div>

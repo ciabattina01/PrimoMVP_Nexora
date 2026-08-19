@@ -38,31 +38,31 @@ function formatExerciseTitle(exercise) {
 
 const DAY_SCENARIO_LABELS = {
   1: 'Grafici qualitativi',
-  2: 'Gold Spot / USD',
-  3: 'GBP/USD',
+  2: 'Grafici qualitativi',
+  3: 'Gold Spot / USD',
 }
 
 const DAILY_OBJECTIVES = {
   1: {
     title: '🎯 Obiettivo di oggi — Giorno 1: DOVE INIZIARE A GUARDARE',
-    lines: ['Impara da dove iniziare quando apri un grafico - 📉 Grafici qualitativi'],
-    divider: `useremo questi colori:
-Arancio = candela ribassista = Apertura > Chiusura
-Grigio = candela rialzista = Apertura < Chiusura`
+    lines: ['Gli step allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi '],
+    divider: `📉 Grafici qualitativi`
   },
   2: {
-    title: '🎯 Obiettivo di oggi — Giorno 2:SELEZIONARE CIO` CHE MERITA ATTENZIONE',
+    title: '🎯 Obiettivo di oggi — Giorno 2: SELEZIONARE CIO` CHE CONTA DAVVERO SUL GRAFICO',
     lines: [
-      'Seleziona ciò che conta davvero sul grafico',
-      '📉 Grafico qualitativi',
+      'Gli step allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi',
+      '',
     ],
-    divider: '⸻',
+    divider: '📉 Grafici qualitativi - Domani avrai grafici statici reali',
   },
   3: {
-    title: '🎯 Obiettivo di oggi — Giorno 3:PRENDI UNA DECISIONE MOTIVATA',
+    title: '🎯 Obiettivo di oggi — Giorno 3: PRENDI UNA DECISIONE MOTIVATA',
     lines: [
-      'Prendi una decisione motivata.',
-      '📉 Grafico statico reale',
+      '',
+      `   Useremo questi colori: 
+ Arancio = candela ribassista = Apertura > Chiusura  |
+Grigio = candela rialzista = Apertura < Chiusura ____📉 Grafico statico reale`,
     ],
   },
 }
