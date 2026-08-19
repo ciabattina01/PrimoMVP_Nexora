@@ -571,11 +571,11 @@ Infine la **Zona 5 è valida**, perché da quel minimo nasce un movimento che su
 
 Chiediti:
 
-• vogliamo trovare il punto in cui una struttura ribassista viene invalidata, questo ci da conferma di un possibile inizio di trend rialzista. qual è l\'ultimo massimo della struttura ribassista? 
+• vogliamo trovare il punto in cui la struttura ribassista ritorna rialzista su timeframe inferiore (quello che vedi nel grafico), questo ci da conferma di una possibile continuazione del trend rialzista su timeframe superiore. Qual è l\'ultimo massimo della struttura ribassista?
 
 • il livello individuato da quest\'ultimo massimo, viene superato da una candela con chiusura al di sopra?
 
-• prima di questa rottura del livello, cioè il possibile trigger, esiste almeno una candela **chiude sotto il limite inferiore della zona?** In quel caso allora la **zona è invalidata e non possiamo considerare il trigger valido.**
+• prima di questa rottura del livello, cioè il possibile trigger, esiste almeno una candela **chiude sotto al limite inferiore della zona?** In quel caso allora la **zona è invalidata e non possiamo considerare il trigger valido.**
 
 
 
