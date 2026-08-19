@@ -498,7 +498,7 @@ il movimento che parte da quel minimo non riesce a superare il livello del massi
     block: 'Zone importanti',
     description: 'Placeholder in attesa dei contenuti specifici del giorno 3.',
     imageBefore: '/Grafici_2/domanda_zone_3.jpeg',
-    imageAfter: '/Grafici_2/risposta_zone_3.png',
+    imageAfter: '/Grafici_2/zone_risposta_3.png',
     chartMeta: {
       source: 'TradingView',
       timeframe: '1 H',
