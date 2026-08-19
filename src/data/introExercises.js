@@ -277,11 +277,15 @@ Nel grafico, il 🟡 indica proprio questo punto di conferma: nel nostro esempio
 
 
 **TAKE PROFIT**
-**• ** Rivedi il primo **grafico del timeframe superiore** . Nel nostro esempio è posizionato sul **massimo strutturale creato dal minimo da cui è nata la zona (minimo 1), è proprio il Max 1.**
+**• ** È il livello in cui l’operazione viene chiusa in profitto se il prezzo va nella direzione prevista. 
+
+Rivedi il primo **grafico del timeframe superiore**. Nel nostro esempio è posizionato sul **massimo strutturale creato dal minimo da cui è nata la zona (minimo 1), è proprio il Max 1.**
 Rappresenta il **primo obiettivo logico del movimento rialzista.**
 
 **STOP LOSS**
-**• ** È il livello oltre il quale **l’idea di operazione non viene più considerata valida** e serve a limitare la perdita.** Nel nostro esempio è posizionato **sotto la zona che era stata individuata sul timeframe superiore.**
+**• ** È il livello oltre il quale **l’idea di operazione non viene più considerata valida e serve a limitare la perdita.** 
+
+Nel nostro esempio è posizionato **sotto la zona che era stata individuata sul timeframe superiore.**
 Rappresenta il livello **sotto la quale l’idea di operazione non viene più considerata valida.**
 
 Nei prossimi step vedrai anche un esempio semplice.
