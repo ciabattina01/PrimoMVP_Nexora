@@ -106,7 +106,7 @@ function Home({ onStartIntro, onStartExercises }) {
           <aside className="weekly-goal-card" aria-labelledby="weekly-goal-title">
             <h2 id="weekly-goal-title">OBIETTIVO </h2>
             <p>
-              {renderHomeObjectiveTextWithBold(`Gli step **allenano un modo di ragionare da utilizzare su grafici e tipi di operatività diversi**`)}
+              {renderHomeObjectiveTextWithBold(`Gli step **allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi**`)}
             </p>
             <p>
               {renderHomeObjectiveTextWithBold(`**3 step per avere le basi pratiche necessarie**`)}

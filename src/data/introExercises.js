@@ -42,13 +42,11 @@ Se il movimento è stato a tuo favore hai un profitto; se è stato contrario hai
 Quando la pressione della domanda prevale sull’offerta, il prezzo tende a salire: questo movimento si definisce rialzista.
 Quando invece prevale la pressione dell’offerta, il prezzo tende a scendere: questo movimento si definisce ribassista.
 
-Trend bullish = trend rialzista
-Trend bearish = trend ribassista
-Sono semplicemente due modi diversi per indicare lo stesso concetto.
-Trend = direzione prevalente del prezzo.
-Struttura = il modo in cui massimi e minimi si susseguono sul grafico e ci aiutano a riconoscere quella direzione.
+Trend bullish = trend rialzista | Trend bearish = trend ribassista. Sono semplicemente due modi diversi per indicare lo stesso concetto.
+Trend = direzione prevalente del prezzo. Struttura = il modo in cui massimi e minimi si susseguono sul grafico e ci aiutano a riconoscere quella direzione.
 
 Importante: non devi memorizzare tutti i termini, lo stesso concetto può avere diversi termini.
+
 **Come riconoscere un trend rialzista/ribassista?**
 
 **Trend rialzista:** i minimi e i massimi si formano progressivamente più in alto.
@@ -198,43 +196,43 @@ Il pip è utilizzato soprattutto nel Forex. Su altri strumenti il movimento del 
     block: 'Timeframe superiore · Zona · Trigger · Stop Loss · Take Profit',
     question: ` **COME SI COSTRUISCE UN\'OPERAZIONE RIALZISTA (O LONG)**
 
-**Obiettivo:** Esempio pratico di un\'operazione rialzista: sul timeframe superiore si individua trend e zona; su quello inferiore cerchiamo l\'ingresso e definiamo stop loss e take profit.
+**Obiettivo:** Esempio pratico di un\'operazione **rialzista**: sul timeframe superiore si individua trend e zona; su quello inferiore cerchiamo l\'ingresso e definiamo stop loss e take profit.
 
 ** • Sul timeframe superiore si individua il trend rialzista e le zone**
 
 **1 - Da dove inizia la struttura rialzista?**
 Prima di cercare il trend rialzista, capiamo quando la precedente** struttura ribassista smette di essere valida.**
 
-____Cosa sostiene la struttura ribassista?
+**• **Cosa sostiene la struttura ribassista?
  Abbiamo imparato che ciò che sostiene un trend ribassista sono i** massimi strutturali: i massimi da cui nasce un nuovo minimo più basso rispetto al precedente.**
 
-____Quando un massimo è davvero strutturale (in un trend ribassista)?
+**• **Quando un massimo è davvero strutturale (in un trend ribassista)?
 Non basta che da quel massimo nasca un minimo più basso rispetto al precedente (come il minimo 1), serve che **una candela chiuda al di sotto del livello del minimo precedente.**
 
-Ora sappiamo riconoscere un **massimo strutturale ribassista**. ____
+Ora sappiamo riconoscere un **massimo strutturale ribassista**. 
 
-_____Troviamo l\'inizio del trend rialzista.
+**• ** Troviamo l\'inizio del trend rialzista.
 
 Adesso ci interessa il **riferimento più recente che mantiene valida la struttura ribassista**: **l\'ultimo massimo ribassista** che si è formato (indicato sul grafico).
 
-Tracciamo la linea arancione in orizzontale, cioè il livello di **rottura**: se una candela supera questo livello il trend diventa rialzista.
+Tracciamo la linea arancione in orizzontale, cioè il livello di **rottura: se una candela supera questo livello il trend diventa rialzista.**
 
- ____**🟡 è il punto di conferma: qui il prezzo supera il livello arancione.**
+**🟡 è il punto di conferma: qui il prezzo supera il livello di rottura arancione e conferma l\'inizio di trend rialzista.**
 Non basta che sia l\'ombra a superarla, serve una **chiusura della candela sopra il livello per confermare il cambio trend da ribassista a rialzista.**
 
 **Inizia la nuova struttura rialzista.**
-_____
+
 **2 - Minimi strutturali rialzisti (nel grafico sono i 🔵)**
 
 I ** minimi strutturali sono i minimi da cui nasce un nuovo massimo più alto rispetto al precedente.**
 
-____Quando un minimo è davvero strutturale (in un trend rialzista)? 
+**• **Quando un minimo è davvero strutturale (in un trend rialzista)? 
 Non basta che da quel minimo nasca un massimo più alto rispetto al precedente, **serve che una candela chiuda al di sopra del livello del massimo precedente.**
 
 Sul grafico:
 Il Minimo 2 crea il nuovo Max 2.
 Il **🟢 indica la candela grigia che chiude sopra il livello dal Max 1 precedente: questa chiusura conferma che il minimo 2 🔵 è strutturale rialzista**.
-_____
+
 
 **CONCETTO CHIAVE: specularità**
 ribassista: massimo strutturale → nuovo minimo → chiusura sotto
@@ -242,14 +240,14 @@ rialzista: minimo strutturale→ nuovo massimo → chiusura sopra
 
     **3 - Zona interessante - nasce da un minimo strutturale rialzista (o da un massimo nel caso di struttura ribassista)**
 
-  ____ **A cosa serve**
+**• ** **A cosa serve**
 È l’area in cui, se il prezzo ritorna, iniziamo a osservare se può esserci una **continuazione del movimento rialzista e una possibile conferma per un ingresso Long.**
 
-_____ **Come viene costruita**
+**• ** **Come viene costruita**
 Nel caso di una struttura rialzista, la zona viene rappresentata prendendo il range di prezzo della candela che forma il minimo strutturale, cioè **l’area compresa tra il suo massimo e il suo minimo, e proiettandolo verso destra nel tempo.**
 
  
-____**Quale candela utilizzo?**
+**• ****Quale candela utilizzo?**
 Si utilizza sempre la **candela che forma il minimo strutturale rialzista.**👉🏻
 Se prima di questa candela di minimo è **presente anche una candela ribassista non eccessivamente lunga, la zona può essere ampliata includendo anche quest’ultima.**
 `,
@@ -266,7 +264,7 @@ Se prima di questa candela di minimo è **presente anche una candela ribassista 
 
 **TRIGGER: possibile conferma per l’ingresso.**
 
-**Cerchiamo la conferma di una ripresa di trend rialzista: 
+**• ****Cerchiamo la conferma di una ripresa di trend rialzista: 
 un riallineamento con il trend rialzista osservato sul timeframe superiore. Questo punto rappresenta l'ingresso rialzista (o Long).**
 
 Come abbiamo fatto prima, per trovarla cerchiamo il punto in cui il trend ribassista viene invalidato. Quindi individuiamo** l’ultimo massimo strutturale ribassista**, cioè il riferimento più recente che mantiene valida quella struttura.
@@ -279,16 +277,16 @@ Nel grafico, il 🟡 indica proprio questo punto di conferma: nel nostro esempio
 
 
 **TAKE PROFIT**
- Rivedi il primo **grafico del timeframe superiore** .Spesso viene posizionato sul **massimo strutturale creato dal minimo da cui è nata la zona (minimo 1), è proprio il Max 1.**
+**• ** Rivedi il primo **grafico del timeframe superiore** .Spesso viene posizionato sul **massimo strutturale creato dal minimo da cui è nata la zona (minimo 1), è proprio il Max 1.**
 Rappresenta il primo obiettivo logico del movimento rialzista.
 
 **STOP LOSS**
-Viene posizionato **sotto la zona che era stata individuata sul timeframe superiore.**
+**• **Viene posizionato **sotto la zona che era stata individuata sul timeframe superiore.**
 Rappresenta il livello **sotto la quale l’idea di operazione non viene più considerata valida.**
 
     **7 - Come scegli quanti lotti usare?**
 
-Prima decidi quanto sei disposto a perdere al massimo e individui lo Stop Loss.
+**• **Prima decidi quanto sei disposto a perdere al massimo e individui lo Stop Loss.
 Poi scegli i lotti in modo che, se il prezzo raggiunge lo Stop Loss, la perdita resti entro quel limite.
 
 A parità di rischio:
