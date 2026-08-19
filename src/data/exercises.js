@@ -441,7 +441,7 @@ Le Candele 2 e 3 arrivano invece **quando il cambio strutturale è già avvenuto
     imageBefore: '/Grafici_2/domanda_trend_3.jpeg',
     imageAfter: '/Grafici_2/risposta_trend_3.png',
     chartMeta: {
-      source: 'TradingView',
+      source: 'Grafici qualitativi',
       timeframe: '1 H',
       instrument: '',
     },
@@ -500,7 +500,7 @@ il movimento che parte da quel minimo non riesce a superare il livello del massi
     imageBefore: '/Grafici_2/domanda_zone_3.jpeg',
     imageAfter: '/Grafici_2/zone_risposta_3.png',
     chartMeta: {
-      source: 'TradingView',
+      source: 'Grafici qualitativi',
       timeframe: '1 H',
       instrument: '',
     },
