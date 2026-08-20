@@ -126,7 +126,7 @@ function Home({ onStartIntro, onStartExercises }) {
             {isCapitalInfoOpen && (
               <>
                 <p>{renderHomeObjectiveTextWithBold('Per iniziare **non serve conoscere già tutta l’analisi tecnica, volumetrica o memorizzare ogni termine.**')}</p>
-                <p>{renderHomeObjectiveTextWithBold(' Serve avere delle** basi chiare e imparare, passo dopo passo, a leggere il grafico** e poi approfondire ciò che ti serve.')}</p>
+                <p>{renderHomeObjectiveTextWithBold(' Serve prima avere delle** basi chiare e imparare, passo dopo passo, a leggere il grafico** e poi approfondire ciò che ti serve.')}</p>
                 <p>{renderHomeObjectiveTextWithBold('Non esiste una cifra ideale. Se sei all’inizio, la prima cosa non è decidere quanti soldi utilizzare, ma costruire delle basi solide.')}</p>
                 <p>{renderHomeObjectiveTextWithBold('1-Prima impara a **guardare un grafico**.')}</p>
                 <p>{renderHomeObjectiveTextWithBold('2-Poi applica ciò che hai imparato **in simulazione**.')}</p>
