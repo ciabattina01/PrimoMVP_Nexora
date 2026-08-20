@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 const HERO_CARDS = [
   {
@@ -59,6 +59,8 @@ function renderHomeObjectiveTextWithBold(text) {
 }
 
 function Home({ onStartIntro, onStartExercises }) {
+  const [isCapitalInfoOpen, setIsCapitalInfoOpen] = useState(false)
+
   return (
     <div className="home">
       <section className="hero hero-home">
@@ -112,8 +114,25 @@ function Home({ onStartIntro, onStartExercises }) {
               {renderHomeObjectiveTextWithBold(`**3 step per avere le basi pratiche necessarie**`)}
             </p>
             <p>
-              {renderHomeObjectiveTextWithBold(`**Con quanto capitale iniziare?**Allenati in simulazione. Poi come riferimento, 100–300 €.`)}
+              <button
+                type="button"
+                className="btn btn-outline"
+                onClick={() => setIsCapitalInfoOpen((prev) => !prev)}
+                aria-expanded={isCapitalInfoOpen}
+              >
+                Con quanto capitale iniziare?
+              </button>
             </p>
+            {isCapitalInfoOpen && (
+              <>
+                <p>{renderHomeObjectiveTextWithBold('Per iniziare **non serve conoscere già tutta l’analisi tecnica, volumetrica o memorizzare ogni termine.**')}</p>
+                <p>{renderHomeObjectiveTextWithBold(' Serve avere delle** basi chiare e imparare, passo dopo passo, a leggere il grafico** e poi approfondire ciò che ti serve.')}</p>
+                <p>{renderHomeObjectiveTextWithBold('Non esiste una cifra ideale. Se sei all’inizio, la prima cosa non è decidere quanti soldi utilizzare, ma costruire delle basi solide.')}</p>
+                <p>{renderHomeObjectiveTextWithBold('1-Prima impara a **guardare un grafico**.')}</p>
+                <p>{renderHomeObjectiveTextWithBold('2-Poi applica ciò che hai imparato **in simulazione**.')}</p>
+                <p>{renderHomeObjectiveTextWithBold('3-Poi potrai valutare di partire con una cifra che puoi permetterti di perdere, come riferimento indicativo **100-300 €**.')}</p>
+              </>
+            )}
           </aside>
         </div>
       </section>
