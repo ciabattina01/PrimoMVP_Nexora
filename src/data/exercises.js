@@ -596,20 +596,20 @@ Chiediti:
 
     A prima vista alcune delle candele indicate possono sembrare buone conferme, perché successivamente il prezzo rompe dei massimi strutturali su M5.
 
-Ma prima di valutare il trigger dobbiamo controllare il contesto: la zona rialzista individuata su H1 è ancora valida?
+• Prima di valutare il trigger dobbiamo controllare il contesto: la zona rialzista individuata su H1 è ancora valida?
 
 Osservando il grafico, prima che arrivi la conferma su M5 compare una candela che chiude sotto il limite inferiore della zona H1. Nel criterio che stiamo usando, questa chiusura invalida la zona.
 
 Da quel momento viene meno il motivo per cui stavamo cercando un long in quell’area.
 
-Il Punto 1, se osservassimo soltanto M5, soddisferebbe il criterio della conferma rialzista perché arriva una rottura con chiusura sopra il livello del massimo strutturale precedente. 
+• Il Punto 1, se osservassimo soltanto M5, soddisferebbe il criterio della conferma rialzista perché arriva una rottura con chiusura sopra il livello del massimo strutturale precedente. 
 
-**Ma questa conferma arriva dopo l’invalidazione della zona H1, quindi non può più essere utilizzata per questo setup.**
+**Ma questa conferma arriva dopo l’invalidazione della zona H1**, quindi non può più essere utilizzata per questo setup.
 
-**Anche se nei punti 1, 2 e 4 il prezzo mostra successivamente delle conferme rialziste su M5, non possiamo più usarle per entrare long: prima del Punto 1 una candela aveva già chiuso sotto il limite inferiore della zona H1, invalidando il setup. Da quel momento, le conferme successive su M5 non appartengono più a quella zona.**
+• **Anche se nei punti 1, 2 e 4 il prezzo mostra successivamente delle conferme rialziste su M5, non possiamo più usarle per entrare long**: prima del Punto 1 una candela aveva già chiuso sotto il limite inferiore della zona H1, invalidando il setup. Da quel momento, le conferme successive su M5 non appartengono più a quella zona.
 
 
-Il **Punto 3, invece, non è ancora una conferma rialzista: il prezzo non ha ancora rotto e chiuso sopra il livello dell’ultimo massimo strutturale della discesa.**
+Il **Punto 3, invece, non è ancora una conferma rialzista:** il prezzo non ha ancora rotto e chiuso sopra il livello dell’ultimo massimo strutturale della discesa.
 `,
   },
 ]
