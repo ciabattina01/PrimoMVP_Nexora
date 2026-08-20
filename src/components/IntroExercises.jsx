@@ -411,6 +411,11 @@ function IntroExercises() {
   const [completedStepIds, setCompletedStepIds] = useState(() => new Set())
   const [showFinalScreen, setShowFinalScreen] = useState(false)
 
+  const scrollToTopOnStepChange = () => {
+    if (typeof window === 'undefined') return
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+
   const selectedStep = useMemo(
     () => (selectedStepId ? getIntroStepById(selectedStepId) : null),
     [selectedStepId],
@@ -595,6 +600,7 @@ function IntroExercises() {
     if (!nextStep) return
 
     handleOpenStep(nextStep.id)
+    scrollToTopOnStepChange()
   }
 
   if (showFinalScreen) {

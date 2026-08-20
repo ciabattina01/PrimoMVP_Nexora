@@ -504,6 +504,11 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
     }, 100)
   }
 
+  const scrollToTopOnStepChange = () => {
+    if (typeof window === 'undefined') return
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+
   const handleReturnToProgram = () => {
     if (selectedAnswer && difficultyRating == null) {
       setDifficultySelectionMessage('Prima seleziona quanto era facile o difficile per te. Ti serve solo un click.')
@@ -598,10 +603,12 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
 
     if (hasConfirmedNextExercise) {
       handleReviewExercise(nextExercise.id)
+      scrollToTopOnStepChange()
       return
     }
 
     handleStartExercise(nextExercise.id)
+    scrollToTopOnStepChange()
   }
 
   // Reset and load difficulty rating when exercise changes
