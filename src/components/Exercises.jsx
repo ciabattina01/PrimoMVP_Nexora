@@ -280,6 +280,7 @@ function splitStep7ZoomFeedbackSection(text) {
 function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   const [activeDay, setActiveDay] = useState(1)
   const [selectedExerciseId, setSelectedExerciseId] = useState(null)
+  const [isExercisesInfoOpen, setIsExercisesInfoOpen] = useState(false)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
   const [pendingAnswer, setPendingAnswer] = useState(null)
   const [isReviewMode, setIsReviewMode] = useState(false)
@@ -911,8 +912,38 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
   return (
     <section className="exercises">
       <header className="exercise-head">
+        <button
+          type="button"
+          className="btn btn-outline"
+          onClick={() => setIsExercisesInfoOpen((prev) => !prev)}
+          aria-expanded={isExercisesInfoOpen}
+          style={{ alignSelf: 'flex-start', width: 'auto' }}
+        >
+         💡 Non sai cosa guardare sul grafico?
+        </button>
+        {isExercisesInfoOpen && (
+          <div>
+            {renderRichText(`
+
+Gli step servono ad **allenare un modo di ragionare sul grafico**, un passo alla volta.
+
+Il focus non è memorizzare tutti i termini tecnici, ma imparare a farsi le **domande giuste, capire cosa osservare e riconoscere ciò che conta davvero su un grafico.**
+
+Questo modo di ragionare può essere applicato su **timeframe e tipi di operatività diversi.**
+
+Nel percorso partiremo da:
+
+**Giorno 1 e 2 — Grafici semplici e qualitativi**
+
+**Obiettivo:** imparare cosa osservare sul grafico e distinguere le informazioni che contano davvero.
+
+**Giorno 3 — Primo grafico reale**
+
+**Obiettivo:** allenare l’occhio su una situazione più realistica e complessa, applicando però lo stesso ragionamento imparato nei giorni precedenti.`)}
+          </div>
+        )}
         <span className="eyebrow">Esercitati</span>
-        <h1 className="page-title">Capire cosa guardare sul grafico</h1>
+        <h1 className="page-title">Cosa guardare sul grafico</h1>
       </header>
 
       <div className="exercise-goals-grid">
