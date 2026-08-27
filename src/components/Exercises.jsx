@@ -943,7 +943,7 @@ Nel percorso partiremo da:
           </div>
         )}
         <span className="eyebrow">Esercitati</span>
-        <h1 className="page-title">Cosa guardare sul grafico</h1>
+        <h1 className="page-title">Ordine di difficoltà dal Giorno 1 al 3</h1>
       </header>
 
       <div className="exercise-goals-grid">
