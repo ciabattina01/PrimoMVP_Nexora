@@ -192,7 +192,7 @@ Il pip è utilizzato soprattutto nel Forex. Su altri strumenti il movimento del 
   {
     id: 'intro-step-3',
     order: 3,
-    title: 'Step C — Esempio di un’operazione rialzista: grafico reale',
+    title: 'Step C — Conosci già le basi? Inizia da questo esempio',
     block: 'Timeframe superiore · Zona · Trigger · Stop Loss · Take Profit',
     question: ` **COME SI COSTRUISCE UN\'OPERAZIONE RIALZISTA (O LONG)**
 
