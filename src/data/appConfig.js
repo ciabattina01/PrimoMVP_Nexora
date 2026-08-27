@@ -5,7 +5,7 @@ export const NAV_ITEMS = [
   { id: 'progress', label: 'Ragionamenti chiave', icon: 'progress-bars' },
   { id: 'feedback', label: 'Scrivi Feedback', icon: 'feedback' },
   { id: 'profile', label: 'Profilo', icon: 'profile' },
-  { id: 'info-plan', label: '✨In arrivo ...', icon: 'info' },
+  { id: 'info-plan', label: '💡Novità', icon: 'info' },
 ];
 
 export const APP_META = {
