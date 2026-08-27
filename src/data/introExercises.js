@@ -198,7 +198,7 @@ Il pip è utilizzato soprattutto nel Forex. Su altri strumenti il movimento del 
 
 **Obiettivo:** Esempio pratico di un\'operazione **rialzista**: sul timeframe superiore si individua trend e zona; su quello inferiore cerchiamo l\'ingresso e definiamo stop loss e take profit.
 
-** • Sul timeframe superiore si individua il trend rialzista e le zone**
+**Parte 1 - Sul timeframe superiore si individua il trend rialzista e le zone**
 
 **1 - Da dove inizia la struttura rialzista?**
 Prima di cercare il trend rialzista, capiamo quando la precedente** struttura ribassista smette di essere valida.**
@@ -260,7 +260,7 @@ Se prima di questa candela di minimo è **presente anche una candela ribassista 
 
 
 
-    •**Ci spostiamo su un TIMEFRAME INFERIORE**
+    •**Parte 2 - Ci spostiamo su un TIMEFRAME INFERIORE**
 
 **TRIGGER: possibile conferma per l’ingresso.**
 
