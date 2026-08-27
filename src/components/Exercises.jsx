@@ -37,9 +37,9 @@ function formatExerciseTitle(exercise) {
 }
 
 const DAY_SCENARIO_LABELS = {
-  1: 'Grafici qualitativi',
-  2: 'Grafici qualitativi',
-  3: 'Gold Spot / USD',
+  1: ' •⌚meno di 5 min ogni step',
+  2: ' •⌚meno di 5 min ogni step',
+  3: '• Gold Spot / USD •⌚meno di 5 min ogni step',
 }
 
 const DAILY_OBJECTIVES = {
@@ -991,7 +991,7 @@ Nel percorso partiremo da:
           const isNotStarted = !isLocked && status?.completedCount === 0
           const scenarioLabel = DAY_SCENARIO_LABELS[day]
           const dayHeading = scenarioLabel
-            ? `Giorno ${day} – Scenario: ${scenarioLabel}`
+            ? `Giorno ${day}  ${scenarioLabel}`
             : `Giorno ${day}`
           const lockCopy = status?.isBlockedByDate
             ? 'Disponibile da domani⏰'

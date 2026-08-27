@@ -4,17 +4,17 @@ const HERO_CARDS = [
   {
     step: '1',
     title: 'Step sul Trend',
-    description: 'Capisci se il prezzo si sta muovendo in una direzione chiara oppure no.',
+    description: 'Capisci **cosa osservare**: direzione',
   },
   {
     step: '2',
     title: 'Step sulle Zone',
-    description: 'Osserva dove il prezzo si è fermato o ha reagito in passato.',
+    description: 'Capisci **dove osservare**:individua la zona interessante',
   },
   {
     step: '3',
     title: 'Step sul Trigger e il Rischio',
-    description: 'Capisci quando entrare e quanto rischiare.',
+    description: 'Capisci **cosa aspettare prima di valutare l\'ingresso**',
   },
 ]
 
@@ -68,23 +68,23 @@ function Home({ onStartIntro, onStartExercises }) {
         <div className="hero-grid">
           <div className="hero-main">
             <h1 className="home-title">
-              Inizia a capire  <span className="gradient-text">cosa guardare</span>
+              Non sai  <span className="gradient-text">da dove iniziare?</span>
             </h1>
             <p className="lead hero-lead">
               <strong></strong> 
             </p>
 
             <div className="home-intro-entry" aria-label="Accesso Parte introduttiva">
-              <h2 className="home-intro-entry-title">Non sai da dove iniziare?</h2>
+              <h2 className="home-intro-entry-title">1. Inizia dalle basi</h2>
               <p className="home-intro-entry-copy">
-                Qui avrai 3 step per avere le basi pratiche necessarie. 
+                 3 step per avere le basi necessarie. 
               </p>
               <button type="button" className="btn btn-primary btn-primary--intro" onClick={onStartIntro}>
-                Inizia da qui
+               1. Inizia dalle basi
               </button>
             </div>
  
-            <h2 className="daily-goal-title">Ogni giorno • 3 step <strong> •⌚meno di 5 min ogni step.</strong>   Obiettivo giornaliero:</h2>
+            <h2 className="daily-goal-title">2. Esercitati con gli step. Ogni giorno • 3 step <strong> </strong>   Obiettivo giornaliero:</h2>
             <div className="hero-highlights" aria-label="Punti chiave del percorso">
               {HERO_CARDS.map((card) => (
                 <div key={card.title} className="hero-highlight">
@@ -92,7 +92,7 @@ function Home({ onStartIntro, onStartExercises }) {
                   <div className="highlight-text">
                     <span className="highlight-title">{card.title}</span>
                     {card.description ? (
-                      <span className="highlight-desc">{card.description}</span>
+                      <span className="highlight-desc">{renderHomeObjectiveTextWithBold(card.description)}</span>
                     ) : null}
                   </div>
                 </div>
@@ -100,7 +100,7 @@ function Home({ onStartIntro, onStartExercises }) {
             </div>
             <div className="hero-actions">
               <button type="button" className="btn btn-primary btn-primary--soft" onClick={onStartExercises}>
-                Esercitati
+                2. Esercitati
               </button>
             </div>
           </div>
@@ -108,10 +108,13 @@ function Home({ onStartIntro, onStartExercises }) {
           <aside className="weekly-goal-card" aria-labelledby="weekly-goal-title">
             <h2 id="weekly-goal-title">OBIETTIVO </h2>
             <p>
-              {renderHomeObjectiveTextWithBold(`Gli step **allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi**`)}
+              {renderHomeObjectiveTextWithBold(`**3 step per avere le basi necessarie**`)}
             </p>
             <p>
-              {renderHomeObjectiveTextWithBold(`**3 step per avere le basi pratiche necessarie**`)}
+              {renderHomeObjectiveTextWithBold(`Gli step **allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi**`)}
+            </p>
+             <p>
+              {renderHomeObjectiveTextWithBold(`**Prima di pensare con quanto capitale iniziare, serve capire il ragionamento.**`)}
             </p>
             <p>
               <button

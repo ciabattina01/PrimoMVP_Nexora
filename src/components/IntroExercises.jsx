@@ -607,7 +607,7 @@ function IntroExercises() {
     return (
       <section className="exercises intro-exercises">
         <div className="exercise-day-completion intro-completion-card">
-          <h2>🎉 Hai completato i tre step "Inizia da qui"!</h2>
+          <h2>🎉 Hai completato i tre step "Inizia dalle basi"!</h2>
           <p></p>
           <p>Ora puoi continuare con il percorso principale in Esercitati.</p>
           <div className="exercise-day-completion__actions">
@@ -639,7 +639,7 @@ function IntroExercises() {
 
         <div className="exercise-detail" aria-live="polite">
           <div className="exercise-detail-head">
-            <span className="exercise-detail-day">Inizia da qui</span>
+            <span className="exercise-detail-day">Inizia dalle basi</span>
             <h1 className="page-title">{selectedStep.title}</h1>
             <span className="exercise-detail-block">{selectedStep.block}</span>
           </div>
@@ -1069,21 +1069,21 @@ function IntroExercises() {
   return (
     <section className="exercises intro-exercises">
       <header className="exercise-head">
-        <span className="eyebrow">Inizia da qui</span>
-        <h1 className="page-title">Da dove iniziare</h1>
+        <span className="eyebrow">Inizia dalle basi</span>
+        <h1 className="page-title">1. Inizia dalle basi</h1>
       </header>
 
       <div className="exercise-goals-grid intro-goals-grid">
         <div className="exercise-progress" aria-live="polite">
           <p className="exercise-goal-title">🎯 Obiettivo dei tre step — 📶 DA DOVE INIZIARE</p>
           <p className="exercise-goal-line">
-            {renderIntroTextWithBold('**• Gli step allenano un modo di ragionare da utilizzare su grafici e tipi di operatività diversi **')}
+            {renderIntroTextWithBold('**•** Questi **3 step ti danno le basi pratiche per iniziare**; nello **Step C** segui un **esempio su un grafico***')}
           </p>
           <p className="exercise-goal-line">
-            {renderIntroTextWithBold(' **•** Questi **3 step ti danno le basi pratiche per iniziare**; nello **Step C** segui un **esempio su un grafico**.')}
+            {renderIntroTextWithBold(' **•Ogni step - lettura: 5-10 min **')}
           </p>
           <p className="exercise-goal-line">
-            {renderIntroTextWithBold(' **• Con quanto capitale iniziare?**Allenati in **simulazione**. Poi come riferimento,  **100–300 €**.')}
+            {renderIntroTextWithBold(' ')}
           </p>
             <p className="exercise-goal-line">
             {renderIntroTextWithBold('')}
