@@ -109,6 +109,17 @@
   color: #4f7f61;
 }
 
+.brand-link {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: inherit;
+}
+
+.brand-link:is(:hover, :focus-visible) {
+  color: inherit;
+}
+
 .brand-subtitle {
   font-size: 0.9rem;
   color: rgba(79, 127, 97, 0.6);

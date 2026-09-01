@@ -1,5 +1,8 @@
 import { APP_META } from '../data/appConfig'
 
+const INSTAGRAM_URL = 'https://www.instagram.com/percep_progetto'
+const DISCORD_URL = 'https://discord.gg/VVJCRzGXr'
+
 const ICONS = {
   home: (
     <svg viewBox="0 0 24 24" className="icon" aria-hidden="true">
@@ -173,6 +176,21 @@ function resolveIcon(iconKey) {
   return ICONS[iconKey] || ICONS.info
 }
 
+function renderFeedbackBrand(className) {
+  return (
+    <span className={className}>
+      {APP_META.name}{' '}Instagram{' '}
+      <a className="brand-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+        @percep_progetto
+      </a>
+      {' · '}
+      <a className="brand-link" href={DISCORD_URL} target="_blank" rel="noreferrer">
+        Discord
+      </a>
+    </span>
+  )
+}
+
 function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, children }) {
   const renderNavButtons = (variant) =>
     navItems.map((item) => {
@@ -206,7 +224,7 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
               <span className="logo-dot" />
             </div>
             <div className="brand-text">
-              <span className="brand-title">{APP_META.name}</span>
+              {renderFeedbackBrand('brand-title')}
               <span className="brand-subtitle">Prototipo guidato</span>
             </div>
           </div>
@@ -235,7 +253,7 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
       <header className="top-nav-header">
         <div className="top-nav-brand" aria-label="Nexora">
           <span className="top-logo-dot" />
-          <span className="top-brand-text">{APP_META.name}</span>
+          {renderFeedbackBrand('top-brand-text')}
         </div>
         <nav className="top-nav" aria-label="Navigazione principale">
           {renderNavButtons('top')}
