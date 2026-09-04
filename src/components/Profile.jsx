@@ -3,6 +3,8 @@ import { STORAGE_KEYS } from '../data/appConfig'
 import { saveTesterRemote } from '../utils/dataTracking'
 import { trackEvent } from '../utils/tracking'
 
+const USO_TV_STORAGE_KEY = 'uso_TV'
+
 const INITIAL_SKILL_OPTIONS = [
   'Mi oriento da solo.',
   'Ho qualche base ma mi perdo spesso.',
@@ -20,6 +22,21 @@ const GRAPH_BLOCK_BEHAVIOR_OPTIONS = [
     label: 'Continuo comunque e finisco spesso per decidere a sensazione',
   },
   { value: 'Non mi ci rivedo', label: 'Non mi ci rivedo' },
+]
+
+const CHART_READING_PRACTICE_OPTIONS = [
+  {
+    value: 'No, non l’ho ancora fatto da solo',
+    label: 'No, non l’ho ancora fatto da solo',
+  },
+  {
+    value: 'Sì, qualche volta, ma con molta difficoltà',
+    label: 'Sì, qualche volta, ma con molta difficoltà',
+  },
+  {
+    value: 'Sì, lo faccio già autonomamente, anche se spesso ho dubbi sulla mia lettura',
+    label: 'Sì, lo faccio già autonomamente, anche se spesso ho dubbi sulla mia lettura',
+  },
 ]
 
 function readTesterId() {
@@ -69,6 +86,8 @@ function Profile({ onSave, onDelete }) {
   const [initialSkillError, setInitialSkillError] = useState('')
   const [graphBlockBehavior, setGraphBlockBehavior] = useState('')
   const [graphBlockBehaviorError, setGraphBlockBehaviorError] = useState('')
+  const [chartReadingPractice, setChartReadingPractice] = useState('')
+  const [chartReadingPracticeError, setChartReadingPracticeError] = useState('')
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
@@ -101,6 +120,11 @@ function Profile({ onSave, onDelete }) {
         hasOnboardingError = true
       }
 
+      if (!chartReadingPractice) {
+        setChartReadingPracticeError('Seleziona un’opzione prima di continuare.')
+        hasOnboardingError = true
+      }
+
       if (hasOnboardingError) {
         return
       }
@@ -112,15 +136,20 @@ function Profile({ onSave, onDelete }) {
         JSON.stringify({ name: trimmedName, savedAt: new Date().toISOString() }),
       )
       window.localStorage.setItem('nexora_tester_id', trimmedName)
+      if (showOnboarding) {
+        window.localStorage.setItem(USO_TV_STORAGE_KEY, chartReadingPractice || '')
+      }
       console.log('AUTOVALUTAZIONE INIZIALE', {
         tester_id: trimmedName,
         livello_percepito: initialSkillLevel || '',
         comportamento_blocco_grafico: graphBlockBehavior || '',
+        uso_TV: chartReadingPractice || '',
       })
       saveTesterRemote({
         tester_id: trimmedName,
         filtro: initialSkillLevel || '',
         comportamento_blocco_grafico: graphBlockBehavior || '',
+        uso_TV: chartReadingPractice || '',
         timestamp: new Date().toISOString(),
       })
       trackEvent({ type: 'profile_saved', tester_id: trimmedName || null })
@@ -252,6 +281,32 @@ function Profile({ onSave, onDelete }) {
               </div>
               {graphBlockBehaviorError && (
                 <p className="onboarding-skill-error">{graphBlockBehaviorError}</p>
+              )}
+            </div>
+
+            <div className="onboarding-skill-card" role="group" aria-labelledby="chart-reading-practice-title">
+              <p id="chart-reading-practice-title" className="onboarding-skill-title">
+                Quando hai aperto un grafico su TradingView o su un'altra piattaforma per analizzarlo, ti è capitato di segnare autonomamente livelli/zone o struttura e costruire una tua lettura?
+              </p>
+              <div className="onboarding-skill-options">
+                {CHART_READING_PRACTICE_OPTIONS.map((option) => (
+                  <label key={option.value} className="onboarding-skill-option">
+                    <input
+                      type="radio"
+                      name="chartReadingPractice"
+                      value={option.value}
+                      checked={chartReadingPractice === option.value}
+                      onChange={(event) => {
+                        setChartReadingPractice(event.target.value)
+                        setChartReadingPracticeError('')
+                      }}
+                    />
+                    <span>{option.label}</span>
+                  </label>
+                ))}
+              </div>
+              {chartReadingPracticeError && (
+                <p className="onboarding-skill-error">{chartReadingPracticeError}</p>
               )}
             </div>
 
