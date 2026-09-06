@@ -188,14 +188,14 @@ function ArticleTriggerEntry() {
       <article className="article-shell">
         <header className="article-hero">
           <h1 className="article-title">Sai davvero cosa aspettare prima di valutare un ingresso?</h1>
-          <p className="article-kicker">Ragiona su questo scenario pratico.</p>
+          <p className="article-kicker">Ragiona su uno scenario pratico.</p>
           <p>
-            Conoscere la teoria è una cosa. Riconoscere sul grafico quando ci sono davvero le condizioni per
-            iniziare a valutare un ingresso è un’altra. Prima di vedere la spiegazione, prova a ragionare su
+            Conoscere la teoria è una cosa. Collegarla al grafico quando si
+             valuta un ingresso è un’altra. Prova a ragionare su
             questo scenario.
           </p>
           <a href="#scenario-trigger" className="btn btn-outline article-jump-link">
-            Vai allo scenario ↓
+            Inizia lo scenario ↓
           </a>
         </header>
 
@@ -211,7 +211,7 @@ function ArticleTriggerEntry() {
           </div>
 
           <div className="article-reflection-space">
-            <p>Prenditi qualche secondo per riflettere prima di aprire il ragionamento guidato.</p>
+            <p>Prenditi qualche minuto per riflettere prima di aprire il ragionamento guidato.</p>
           </div>
 
           {!showReasoning && (
@@ -242,7 +242,7 @@ function ArticleTriggerEntry() {
           <h2>Conosci la teoria, ma hai difficoltà a collegarla a ciò che vedi sul grafico?</h2>
           <p>Allenati con altri scenari guidati di Percep.</p>
           <a href="https://primo-mvp-nexora.vercel.app/" className="btn btn-action">
-            Prova il percorso gratuito →
+            Continua con altri scenari - gratuito →
           </a>
         </section>
       </article>
