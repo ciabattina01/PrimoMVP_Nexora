@@ -68,13 +68,14 @@ function postToAppsScript(action, payload) {
     })
 }
 
-export function saveTesterRemote({ tester_id, filtro, comportamento_blocco_grafico, uso_TV, timestamp }) {
+export function saveTesterRemote({ tester_id, filtro, comportamento_blocco_grafico, uso_TV, language, timestamp }) {
   if (!isBrowser || !tester_id) return
   postToAppsScript('tester', {
     tester_id,
     filtro: filtro || '',
     comportamento_blocco_grafico: comportamento_blocco_grafico || '',
     uso_TV: uso_TV || '',
+    language: language || '',
     timestamp: timestamp || new Date().toISOString(),
   })
 }

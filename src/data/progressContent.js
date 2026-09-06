@@ -1,3 +1,8 @@
+import {
+  DEFAULT_PROGRESS_CONTENT_EN,
+  PROGRESS_CONTENT_TRANSLATIONS_EN,
+} from '../i18n/translations/progress.en'
+
 export const DEFAULT_PROGRESS_CONTENT = {
   takeAway: 'Placeholder generico — Porta con te (fallback).',
   reflectionQuestions: [
@@ -126,7 +131,19 @@ In una zona rialzista, il prezzo può entrare e poi uscirne verso l’alto; nel 
   },
 }
 
-export function getProgressContentByExercise(exerciseNumber) {
+export function getProgressContentByExercise(exerciseNumber, language = 'it') {
+  if (language === 'en') {
+    const directEn = PROGRESS_CONTENT_TRANSLATIONS_EN[exerciseNumber]
+    if (directEn) return directEn
+
+    const normalizedEn = Number.parseInt(String(exerciseNumber), 10)
+    if (!Number.isNaN(normalizedEn) && PROGRESS_CONTENT_TRANSLATIONS_EN[normalizedEn]) {
+      return PROGRESS_CONTENT_TRANSLATIONS_EN[normalizedEn]
+    }
+
+    return DEFAULT_PROGRESS_CONTENT_EN
+  }
+
   const direct = PROGRESS_CONTENT_BY_EXERCISE[exerciseNumber]
   if (direct) return direct
 

@@ -3,6 +3,8 @@ import { EXERCISE_DAYS, getExercisesForDay } from '../data/exercises'
 import { getProgressContentByExercise } from '../data/progressContent'
 import { getRisposte } from '../utils/dataTracking'
 import { getDayMeta, getExerciseNumber } from '../utils/dayLogic'
+import { useLanguage } from '../i18n/language'
+import { getUiCopy } from '../i18n/uiCopy'
 
 function buildRichTextBlocks(text) {
   const lines = String(text || '').split('\n')
@@ -87,6 +89,10 @@ function renderProgressRichText(text, keyPrefix = 'progress-rich') {
 }
 
 function Progress({ initialOpenDay = null }) {
+  const { language } = useLanguage()
+  const ui = getUiCopy(language)
+  const copy = ui.progress
+
   const [hasInteractedWithDays, setHasInteractedWithDays] = useState(() => initialOpenDay != null)
   const [openDays, setOpenDays] = useState(() => new Set([initialOpenDay || 1]))
   const risposte = useMemo(() => getRisposte(), [])
@@ -132,24 +138,24 @@ function Progress({ initialOpenDay = null }) {
   return (
     <section className="progress">
       <header className="progress-head">
-        <span className="eyebrow">Ragionamenti chiave</span>
-        <h1 className="page-title"></h1>
-        <p className="muted"></p>
+        <span className="eyebrow">{copy.eyebrow}</span>
+        <h1 className="page-title">{copy.title}</h1>
+        <p className="muted">{copy.subtitle}</p>
       </header>
 
       <div className="progress-days-list">
         {EXERCISE_DAYS.map((day) => {
           const status = dayStatuses.find((item) => item.day === day)
-          const dayExercises = getExercisesForDay(day)
+          const dayExercises = getExercisesForDay(day, language)
           const isOpen = openDays.has(day)
           const isCompleted = status?.isCompleted
           const isLocked = day > 1 && !status?.isUnlocked
           const isNotStarted = !isLocked && status?.completedCount === 0
-          const summaryLabel = `${status?.correctCount ?? 0}/${dayExercises.length} corretti`
-          const summarySubtitle = isCompleted ? 'Giorno completato' : 'Rivedi il ragionamento'
+          const summaryLabel = `${status?.correctCount ?? 0}/${dayExercises.length} ${language === 'en' ? 'correct' : 'corretti'}`
+          const summarySubtitle = isCompleted ? copy.dayCompleted : copy.reviewReasoning
           const lockCopy = status?.isBlockedByDate
-            ? 'Disponibile dal giorno successivo.'
-            : 'Termina prima il giorno precedente.'
+            ? copy.lockByDate
+            : copy.lockByPrevious
 
           const toggleDay = () => {
             const newOpenDays = new Set(openDays)
@@ -165,14 +171,14 @@ function Progress({ initialOpenDay = null }) {
           return (
             <section key={day} className={`progress-day-section ${isOpen ? 'is-open' : 'is-collapsed'}`}>
               <header className="progress-day-head">
-                <h2>Giorno {day}</h2>
+                <h2>{copy.day} {day}</h2>
                 {isCompleted && !isLocked && (
                   <button
                     type="button"
                     className={isOpen ? "btn btn-outline btn-sm" : "btn btn-review btn-sm"}
                     onClick={toggleDay}
                   >
-                    {isOpen ? 'Chiudi' : 'Rivedi tutto'}
+                    {isOpen ? copy.close : copy.reviewAll}
                   </button>
                 )}
               </header>
@@ -188,10 +194,10 @@ function Progress({ initialOpenDay = null }) {
                     }
 
                     const isCorrect = Boolean(risposta?.risposta_corretta)
-                    const statusLabel = isCorrect ? 'Completato' : 'Da rivedere'
+                    const statusLabel = isCorrect ? copy.statusDone : copy.statusReview
                     const statusClass = isCorrect ? 'is-complete' : 'is-review'
                     const displayTitle = `Step ${exerciseNumber}`
-                    const consolidationContent = getProgressContentByExercise(exerciseNumber)
+                    const consolidationContent = getProgressContentByExercise(exerciseNumber, language)
 
                     return (
                       <article key={exercise.id} className="progress-exercise">
@@ -206,12 +212,12 @@ function Progress({ initialOpenDay = null }) {
                         {hasAnswered && (
                           <div className="progress-learning progress-consolidation">
                             <div className="progress-consolidation-block">
-                              <h4>📌 Porta con te</h4>
+                              <h4>{copy.takeAwayTitle}</h4>
                               {renderProgressRichText(consolidationContent.takeAway, `${exercise.id}-takeaway`)}
                             </div>
 
                             <div className="progress-consolidation-block">
-                              <h4>🧠 Domande da porti sul prossimo grafico</h4>
+                              <h4>{copy.reflectionTitle}</h4>
                               <ul className="progress-learning-list">
                                 {consolidationContent.reflectionQuestions.map((question, questionIndex) => (
                                   <li key={`${exercise.id}-reflection-${questionIndex}`}>
@@ -222,7 +228,7 @@ function Progress({ initialOpenDay = null }) {
                             </div>
 
                             <div className="progress-consolidation-block">
-                              <h4>🎯 Regola pratica</h4>
+                              <h4>{copy.practicalRuleTitle}</h4>
                               {renderProgressRichText(consolidationContent.practicalRule, `${exercise.id}-rule`)}
                             </div>
                           </div>
@@ -235,13 +241,13 @@ function Progress({ initialOpenDay = null }) {
                 <div className="exercise-day-summary">
                   {isLocked ? (
                     <div className="exercise-day-summary-card">
-                      <span className="exercise-day-summary-score">🔒 Bloccato</span>
+                      <span className="exercise-day-summary-score">{copy.locked}</span>
                       <span className="exercise-day-summary-copy">{lockCopy}</span>
                     </div>
                   ) : isNotStarted ? (
                     <div className="exercise-day-summary-card">
-                      <span className="exercise-day-summary-score">Sbloccato</span>
-                      <span className="exercise-day-summary-copy">Disponibile per iniziare gli step.</span>
+                      <span className="exercise-day-summary-score">{copy.unlocked}</span>
+                      <span className="exercise-day-summary-copy">{copy.availableToStart}</span>
                     </div>
                   ) : (
                     <div className="exercise-day-summary-card">

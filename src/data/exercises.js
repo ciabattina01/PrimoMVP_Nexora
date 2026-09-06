@@ -1,3 +1,5 @@
+import { EXERCISE_TRANSLATIONS_EN } from '../i18n/translations/exercises.en'
+
 const EXERCISE_ITEMS = [
   {
     id: 'day1-ex1',
@@ -649,10 +651,40 @@ export const EXERCISES_BY_DAY = EXERCISES.reduce((acc, exercise) => {
   return acc
 }, {})
 
-export function getExercisesForDay(day) {
-  return EXERCISES_BY_DAY[day] || []
+function localizeExercise(exercise, language) {
+  if (!exercise || language !== 'en') {
+    return exercise
+  }
+
+  const translation = EXERCISE_TRANSLATIONS_EN[exercise.id]
+  if (!translation) {
+    return exercise
+  }
+
+  const localizedAnswers = Array.isArray(exercise.answers)
+    ? exercise.answers.map((answer) => ({
+      ...answer,
+      text: translation.answers?.[answer.key] || answer.text,
+    }))
+    : exercise.answers
+
+  return {
+    ...exercise,
+    ...translation,
+    answers: localizedAnswers,
+    chartMeta: {
+      ...exercise.chartMeta,
+      ...(translation.chartMeta || {}),
+    },
+  }
 }
 
-export function getExerciseById(id) {
-  return EXERCISES.find((exercise) => exercise.id === id) || null
+export function getExercisesForDay(day, language = 'it') {
+  const dayExercises = EXERCISES_BY_DAY[day] || []
+  return dayExercises.map((exercise) => localizeExercise(exercise, language))
+}
+
+export function getExerciseById(id, language = 'it') {
+  const exercise = EXERCISES.find((item) => item.id === id) || null
+  return localizeExercise(exercise, language)
 }

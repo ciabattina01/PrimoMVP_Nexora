@@ -1,3 +1,6 @@
+import { useLanguage } from '../i18n/language'
+import { getUiCopy } from '../i18n/uiCopy'
+
 function renderInfoPlanTextWithBold(text) {
   const source = String(text ?? '')
   const parts = source.split(/(\*\*[\s\S]+?\*\*)/g)
@@ -13,25 +16,29 @@ function renderInfoPlanTextWithBold(text) {
 }
 
 function InfoPlan() {
+  const { language } = useLanguage()
+  const ui = getUiCopy(language)
+  const copy = ui.infoPlan
+
   return (
     <section className="info-plan info-plan--wide">
       <div className="info-plan-card">
-        <span className="info-plan-badge">Hai studiato, ma sul grafico non sai cosa e dove guardare?</span>
+        <span className="info-plan-badge">{copy.badge}</span>
         <h1 className="info-plan-title">
-          Piano Allenati — prova 7 giorni gratis
+          {copy.title}
         </h1>
         <ul className="info-plan-list">
-          <li>{renderInfoPlanTextWithBold('**Teoria e allenamento pratico collegati, direttamente sul grafico - passo dopo passo**')}</li>
-          <li>{renderInfoPlanTextWithBold('**Step illimitati**')}</li>
-          <li>{renderInfoPlanTextWithBold('Percorso passo dopo passo adattato ai tuoi **progressi**')}</li>
+          {copy.items.map((item) => (
+            <li key={item}>{renderInfoPlanTextWithBold(item)}</li>
+          ))}
         </ul>
         <div className="info-plan-divider" aria-hidden="true" />
-        <p className="info-plan-quote">{renderInfoPlanTextWithBold('Per chi ha studiato, ma non sa **cosa e dove guardare sul grafico**')}</p>
+        <p className="info-plan-quote">{renderInfoPlanTextWithBold(copy.quote)}</p>
       </div>
 
       <div className="info-plan-footer">
         <p className="muted">
-       Il prezzo è da definire: lascia la tua email e proponi quanto pagheresti.
+          {copy.footer}
         </p>
         <a
           className="btn btn-info-plan"
@@ -39,7 +46,7 @@ function InfoPlan() {
           target="_blank"
           rel="noreferrer"
         >
-          Lascia l'email - proponi un prezzo
+          {copy.button}
         </a>
       </div>
     </section>

@@ -1,3 +1,5 @@
+import { INTRO_TRANSLATIONS_EN } from '../i18n/translations/intro.en'
+
 export const INTRO_STEPS = [
   {
     id: 'intro-step-1',
@@ -337,6 +339,35 @@ Esempio: conto 1.000 €, rischio massimo 1% = 10 €. Con uno Stop Loss di 20 p
   },
 ]
 
-export function getIntroStepById(stepId) {
-  return INTRO_STEPS.find((step) => step.id === stepId) || null
+function localizeIntroStep(step, language) {
+  if (!step || language !== 'en') {
+    return step
+  }
+
+  const translation = INTRO_TRANSLATIONS_EN[step.id]
+  if (!translation) {
+    return step
+  }
+
+  const localizedAnswers = Array.isArray(step.answers)
+    ? step.answers.map((answer) => ({
+      ...answer,
+      text: translation.answers?.[answer.key] || answer.text,
+    }))
+    : step.answers
+
+  return {
+    ...step,
+    ...translation,
+    answers: localizedAnswers,
+  }
+}
+
+export function getIntroSteps(language = 'it') {
+  return INTRO_STEPS.map((step) => localizeIntroStep(step, language))
+}
+
+export function getIntroStepById(stepId, language = 'it') {
+  const step = INTRO_STEPS.find((item) => item.id === stepId) || null
+  return localizeIntroStep(step, language)
 }

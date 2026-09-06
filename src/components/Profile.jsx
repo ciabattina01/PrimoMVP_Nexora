@@ -1,43 +1,29 @@
-import { useEffect, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { STORAGE_KEYS } from '../data/appConfig'
 import { saveTesterRemote } from '../utils/dataTracking'
 import { trackEvent } from '../utils/tracking'
+import { useLanguage } from '../i18n/language'
+import {
+  getChartReadingPracticeOptions,
+  getGraphBlockBehaviorOptions,
+  getProfileSkillOptions,
+  getUiCopy,
+} from '../i18n/uiCopy'
 
 const USO_TV_STORAGE_KEY = 'uso_TV'
 
-const INITIAL_SKILL_OPTIONS = [
-  'Mi oriento da solo.',
-  'Ho qualche base ma mi perdo spesso.',
-  'Spesso non so cosa guardare.',
-]
+function renderTextWithBold(text) {
+  const source = String(text ?? '')
+  const parts = source.split(/(\*\*[\s\S]+?\*\*)/g)
 
-const GRAPH_BLOCK_BEHAVIOR_OPTIONS = [
-  { value: 'Lascio perdere o rimando', label: 'Lascio perdere o rimando' },
-  {
-    value: 'Cerco altre informazioni o spiegazioni (video, libri, forum, persone…)',
-    label: 'Cerco altre informazioni o spiegazioni (video, libri, forum, persone…)',
-  },
-  {
-    value: 'Continuo comunque e finisco spesso per decidere a sensazione',
-    label: 'Continuo comunque e finisco spesso per decidere a sensazione',
-  },
-  { value: 'Non mi ci rivedo', label: 'Non mi ci rivedo' },
-]
-
-const CHART_READING_PRACTICE_OPTIONS = [
-  {
-    value: 'No, non l’ho ancora fatto da solo',
-    label: 'No, non l’ho ancora fatto da solo',
-  },
-  {
-    value: 'Sì, qualche volta, ma con molta difficoltà',
-    label: 'Sì, qualche volta, ma con molta difficoltà',
-  },
-  {
-    value: 'Sì, lo faccio già autonomamente, anche se spesso ho dubbi sulla mia lettura',
-    label: 'Sì, lo faccio già autonomamente, anche se spesso ho dubbi sulla mia lettura',
-  },
-]
+  return parts.map((part, index) => {
+    const match = part.match(/^\*\*([\s\S]+)\*\*$/)
+    if (match) {
+      return <strong key={`profile-bold-${index}`}>{match[1]}</strong>
+    }
+    return <Fragment key={`profile-text-${index}`}>{part}</Fragment>
+  })
+}
 
 function readTesterId() {
   if (typeof window === 'undefined' || !window.localStorage) return ''
@@ -81,6 +67,13 @@ function TrashIcon(props) {
 }
 
 function Profile({ onSave, onDelete }) {
+  const { language } = useLanguage()
+  const ui = getUiCopy(language)
+  const copy = ui.profile
+  const initialSkillOptions = getProfileSkillOptions(language)
+  const graphBlockBehaviorOptions = getGraphBlockBehaviorOptions(language)
+  const chartReadingPracticeOptions = getChartReadingPracticeOptions(language)
+
   const [name, setName] = useState('')
   const [initialSkillLevel, setInitialSkillLevel] = useState('')
   const [initialSkillError, setInitialSkillError] = useState('')
@@ -111,17 +104,17 @@ function Profile({ onSave, onDelete }) {
       let hasOnboardingError = false
 
       if (!initialSkillLevel) {
-        setInitialSkillError('Seleziona un’opzione prima di continuare.')
+        setInitialSkillError(copy.optionError)
         hasOnboardingError = true
       }
 
       if (!graphBlockBehavior) {
-        setGraphBlockBehaviorError('Seleziona un’opzione prima di continuare.')
+        setGraphBlockBehaviorError(copy.optionError)
         hasOnboardingError = true
       }
 
       if (!chartReadingPractice) {
-        setChartReadingPracticeError('Seleziona un’opzione prima di continuare.')
+        setChartReadingPracticeError(copy.optionError)
         hasOnboardingError = true
       }
 
@@ -150,6 +143,7 @@ function Profile({ onSave, onDelete }) {
         filtro: initialSkillLevel || '',
         comportamento_blocco_grafico: graphBlockBehavior || '',
         uso_TV: chartReadingPractice || '',
+        language,
         timestamp: new Date().toISOString(),
       })
       trackEvent({ type: 'profile_saved', tester_id: trimmedName || null })
@@ -184,72 +178,55 @@ function Profile({ onSave, onDelete }) {
         <div className="onboarding-card">
           <div className="onboarding-hero">
             <h1 className="onboarding-title">
-              <span></span>
-              <span className="gradient-text"> Prototipo Test di Percep</span>
+              <span className="gradient-text">{copy.onboardingTitle}</span>
             </h1>
-            <p className="lead">
-              <strong></strong>.
-            </p>
+            <p className="lead">{copy.onboardingLead}</p>
           </div>
 
-          <div className="onboarding-info" aria-label="Informazioni sul test">
-            <div className="onboarding-info-item">
-              <span className="onboarding-info-dot" aria-hidden="true" />
-              <span>Gli step <strong>allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi</strong></span>
-            </div>
-            <div className="onboarding-info-item">
-              <span className="onboarding-info-dot" aria-hidden="true" />
-              <span>
-                Pensato per:{' '}
-                <strong>chi parte da 0</strong>
-              </span>
-            </div>
+          <div className="onboarding-info" aria-label={copy.onboardingInfoAriaLabel}>
+            {copy.onboardingPoints.map((point) => (
+              <div key={point} className="onboarding-info-item">
+                <span className="onboarding-info-dot" aria-hidden="true" />
+                <span>{renderTextWithBold(point)}</span>
+              </div>
+            ))}
           </div>
 
          
 
           <div className="onboarding-test-info">
-            <h4>COME SI SVOLGE IL TEST:</h4>
+            <h4>{copy.testInfoTitle}</h4>
             <div className="onboarding-test-details">
-              <div className="onboarding-test-item">
-                <span>2 percorsi:</span>
-              </div>
-              <div className="onboarding-test-item">
-                <span>• Percorso"Da dove iniziare": <strong> 3 step per avere le basi pratiche</strong></span>
-              </div>
-              <div className="onboarding-test-item">
-                <span>
-                  • Percorso "Capire cosa guardare sul grafico":<strong> 9 step</strong>
-                </span>
-              </div>
-              <div className="onboarding-test-item">
-                <span>• 💻 <strong>Usa un computer per visualizzare meglio i grafici</strong></span>
-              </div>
+              {copy.testInfoItems.map((item) => (
+                <div key={item} className="onboarding-test-item">
+                  <span>{renderTextWithBold(item)}</span>
+                </div>
+              ))}
             </div>
           </div>
 
           <form className="profile-form onboarding-form" onSubmit={handleSubmit}>
             <p className="muted onboarding-form-note">
-              <strong>Non è la versione definitiva. Verifichiamo prima che il metodo di apprendimento sia efficace.</strong>
+              {renderTextWithBold(copy.formNote)}
              
             </p>
 
             <div className="onboarding-skill-card" role="group" aria-labelledby="initial-skill-title">
-              <p id="initial-skill-title" className="onboarding-skill-title">📊 Sul grafico io…</p>
+              <p id="initial-skill-title" className="onboarding-skill-title">{copy.initialSkillTitle}</p>
               <div className="onboarding-skill-options">
-                {INITIAL_SKILL_OPTIONS.map((option) => (
-                  <label key={option} className="onboarding-skill-option">
+                {initialSkillOptions.map((option) => (
+                  <label key={option.value} className="onboarding-skill-option">
                     <input
                       type="radio"
                       name="initialSkillLevel"
-                      value={option}
-                      checked={initialSkillLevel === option}
+                      value={option.value}
+                      checked={initialSkillLevel === option.value}
                       onChange={(event) => {
                         setInitialSkillLevel(event.target.value)
                         setInitialSkillError('')
                       }}
                     />
-                    <span>{option}</span>
+                    <span>{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -260,10 +237,10 @@ function Profile({ onSave, onDelete }) {
 
             <div className="onboarding-skill-card" role="group" aria-labelledby="graph-block-behavior-title">
               <p id="graph-block-behavior-title" className="onboarding-skill-title">
-                Quando non sai cosa guardare sul grafico, cosa fai dopo?
+                {copy.graphBlockTitle}
               </p>
               <div className="onboarding-skill-options">
-                {GRAPH_BLOCK_BEHAVIOR_OPTIONS.map((option) => (
+                {graphBlockBehaviorOptions.map((option) => (
                   <label key={option.value} className="onboarding-skill-option">
                     <input
                       type="radio"
@@ -286,10 +263,10 @@ function Profile({ onSave, onDelete }) {
 
             <div className="onboarding-skill-card" role="group" aria-labelledby="chart-reading-practice-title">
               <p id="chart-reading-practice-title" className="onboarding-skill-title">
-                Quando hai aperto un grafico su TradingView o su un'altra piattaforma per analizzarlo, ti è capitato di segnare autonomamente livelli/zone o struttura e costruire una tua lettura?
+                {copy.chartPracticeTitle}
               </p>
               <div className="onboarding-skill-options">
-                {CHART_READING_PRACTICE_OPTIONS.map((option) => (
+                {chartReadingPracticeOptions.map((option) => (
                   <label key={option.value} className="onboarding-skill-option">
                     <input
                       type="radio"
@@ -311,12 +288,12 @@ function Profile({ onSave, onDelete }) {
             </div>
 
             <div className="field">
-              <label htmlFor="profileName">Nome utente</label>
+              <label htmlFor="profileName">{copy.usernameLabel}</label>
               <input
                 id="profileName"
                 name="profileName"
                 type="text"
-                placeholder="es. Marco"
+                placeholder={copy.usernamePlaceholder}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 required
@@ -325,7 +302,7 @@ function Profile({ onSave, onDelete }) {
 
             <div className="form-actions">
               <button type="submit" className="btn btn-action">
-                Salva e inizia
+                {copy.submit}
               </button>
             </div>
           </form>
@@ -337,18 +314,18 @@ function Profile({ onSave, onDelete }) {
   return (
     <section className="profile">
       <header className="profile-head">
-        <span className="eyebrow">Profilo</span>
-        <h1 className="page-title">Il tuo profilo</h1>
+        <span className="eyebrow">{copy.profileEyebrow}</span>
+        <h1 className="page-title">{copy.profileTitle}</h1>
       </header>
 
       <form className="profile-form" onSubmit={handleSubmit}>
         <div className="field">
-          <label htmlFor="profileName">Nome</label>
+          <label htmlFor="profileName">{copy.profileNameLabel}</label>
           <input
             id="profileName"
             name="profileName"
             type="text"
-            placeholder="es. tester_03"
+            placeholder={copy.profileNamePlaceholder}
             value={name}
             readOnly
             required
@@ -359,9 +336,9 @@ function Profile({ onSave, onDelete }) {
       <div className="profile-delete-card" role="group" aria-labelledby="profile-delete-title">
         <div className="profile-delete-info">
           <div className="profile-delete-text">
-            <h3 id="profile-delete-title">Elimina il tuo profilo</h3>
+            <h3 id="profile-delete-title">{copy.deleteTitle}</h3>
             <p>
-              Questa azione cancella il nome salvato e i dati locali del test su questo dispositivo.
+              {copy.deleteText}
             </p>
           </div>
         </div>
@@ -369,21 +346,21 @@ function Profile({ onSave, onDelete }) {
           <span className="profile-delete-icon" aria-hidden="true">
             <TrashIcon className="profile-delete-icon-svg" />
           </span>
-          <span>Elimina</span>
+          <span>{copy.deleteButton}</span>
         </button>
       </div>
 
       {showDeleteConfirm && (
         <div className="profile-delete-modal__backdrop" role="presentation">
           <div className="profile-delete-modal" role="dialog" aria-modal="true" aria-labelledby="delete-confirm-title">
-            <h3 id="delete-confirm-title">Sicuro di confermare?</h3>
-            <p>Questa azione eliminerà il profilo e i dati salvati su questo dispositivo.</p>
+            <h3 id="delete-confirm-title">{copy.deleteConfirmTitle}</h3>
+            <p>{copy.deleteConfirmText}</p>
             <div className="profile-delete-modal__actions">
               <button type="button" className="btn btn-outline" onClick={handleCancelDelete}>
-                Indietro
+                {copy.deleteBack}
               </button>
               <button type="button" className="btn btn-action" onClick={handleConfirmDelete}>
-                Confermo
+                {copy.deleteConfirm}
               </button>
             </div>
           </div>

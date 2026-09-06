@@ -1,11 +1,13 @@
 import { Fragment, useMemo, useState } from 'react'
-import { INTRO_STEPS, getIntroStepById } from '../data/introExercises'
+import { getIntroStepById, getIntroSteps } from '../data/introExercises'
 import {
   getTesterId,
   saveDifficultyRating,
   saveRisposta,
   updateRispostaWithDifficulty,
 } from '../utils/dataTracking'
+import { useLanguage } from '../i18n/language'
+import { getUiCopy } from '../i18n/uiCopy'
 import introStep0AInitialImage from '../../immagini_intro/2coppie_e_3perche_prezzi_si_muovono.jpeg'
 import introStep0ASecondImage from '../../immagini_intro/domanda_offerta.jpeg'
 import introStep0ATrendUpImage from '../../immagini_intro/rialzista.png'
@@ -45,310 +47,6 @@ function renderIntroTextWithBold(text) {
 
     return <Fragment key={`intro-text-${index}`}>{part}</Fragment>
   })
-}
-
-function splitIntroStepBMyfxbookSection(feedbackText) {
-  const source = String(feedbackText ?? '')
-  const markerPattern = /(\*\*\s*Come\s+usare\s+il\s+calcolatore\s+Myfxbook:\s*\*\*[\s\S]*)/i
-  const parts = source.split(markerPattern)
-
-  if (parts.length < 2 || !parts[1]?.trim()) {
-    return null
-  }
-
-  return {
-    beforeMyfxbook: parts[0] || '',
-    myfxbookSection: parts[1],
-  }
-}
-
-function splitIntroStepATrendSection(feedbackText) {
-  const source = String(feedbackText ?? '')
-  const trendHeadingPattern = /\*\*\s*Come riconoscere un trend rialzista\/ribassista\?\s*\*\*/i
-  const headingMatch = trendHeadingPattern.exec(source)
-
-  if (!headingMatch || typeof headingMatch.index !== 'number') {
-    return null
-  }
-
-  const beforeTrend = source.slice(0, headingMatch.index)
-  const afterHeading = source.slice(headingMatch.index + headingMatch[0].length)
-  const nextSectionMatch = /(\*\*\s*5-Cosa[\s\S]*)/i.exec(afterHeading)
-
-  if (!nextSectionMatch?.[1]) {
-    return null
-  }
-
-  const trendBody = afterHeading.slice(0, nextSectionMatch.index)
-  const trendSectionPattern = /(?:^|\n)\s*(\*\*[^\n]*?:\s*\*\*[\s\S]*?)(?=(?:\n\s*\*\*[^\n]*?:\s*\*\*)|$)/g
-  const trendSections = Array.from(trendBody.matchAll(trendSectionPattern))
-    .map((match) => String(match[1] ?? '').trim())
-    .filter(Boolean)
-
-  if (trendSections.length < 2) {
-    return null
-  }
-
-  return {
-    beforeTrend,
-    trendUpSection: trendSections[0],
-    trendDownSection: trendSections[1],
-    afterTrend: nextSectionMatch[1],
-  }
-}
-
-function splitIntroStepBLeverageSection(feedbackText) {
-  const source = String(feedbackText ?? '')
-  const leverageHeadingPattern = /(\*\*6\s*-\s*Ma se[\s\S]*?la Leva\*\*)/i
-  const headingMatch = leverageHeadingPattern.exec(source)
-
-  if (!headingMatch || typeof headingMatch.index !== 'number') {
-    return null
-  }
-
-  const beforeLeverage = source.slice(0, headingMatch.index)
-  const afterHeading = source.slice(headingMatch.index + headingMatch[0].length)
-  const pipMarkerPattern = /🔎\s*\*\*Unità di Pip\*\*/i
-  const pipMatch = pipMarkerPattern.exec(afterHeading)
-
-  if (!pipMatch || typeof pipMatch.index !== 'number') {
-    return null
-  }
-
-  return {
-    beforeLeverage,
-    leverageSection: `${headingMatch[0]}${afterHeading.slice(0, pipMatch.index)}`,
-    afterLeverage: afterHeading.slice(pipMatch.index),
-  }
-}
-
-function splitIntroStepBZoneSection(practicalExplanationText) {
-  const source = String(practicalExplanationText ?? '')
-  const zoneStartPattern = /(\*\*\s*Quale candela utilizzo\?\s*\*\*)/i
-  const zoneStartMatch = zoneStartPattern.exec(source)
-
-  if (!zoneStartMatch || typeof zoneStartMatch.index !== 'number') {
-    return null
-  }
-
-  const beforeZone = source.slice(0, zoneStartMatch.index)
-  const fromZoneStart = source.slice(zoneStartMatch.index)
-  const nextSectionPattern = /(\*\*\s*7[\s\S]*?\*\*)/i
-  const nextSectionMatch = nextSectionPattern.exec(fromZoneStart)
-
-  if (!nextSectionMatch || typeof nextSectionMatch.index !== 'number') {
-    return null
-  }
-
-  return {
-    beforeZone,
-    zoneSection: fromZoneStart.slice(0, nextSectionMatch.index),
-    afterZone: fromZoneStart.slice(nextSectionMatch.index),
-  }
-}
-
-function splitIntroStepCZoneSection(questionText) {
-  const source = String(questionText ?? '')
-  const zoneStartPatterns = [
-    /((?:_{2,}\s*)?\*\*\s*A\s*cosa\s*serve\s*\*\*)/i,
-    /((?:_{2,}\s*)?A\s*cosa\s*serve)/i,
-    /(\*\*\s*3\s*-\s*Zona\s+interessante[\s\S]*?\*\*)/i,
-  ]
-  const zoneStartMatch = zoneStartPatterns
-    .map((pattern) => pattern.exec(source))
-    .find((match) => match && typeof match.index === 'number')
-
-  if (!zoneStartMatch || typeof zoneStartMatch.index !== 'number') {
-    return null
-  }
-
-  const beforeZone = source.slice(0, zoneStartMatch.index)
-  const zoneSection = source.slice(zoneStartMatch.index)
-
-  return {
-    beforeZone,
-    zoneSection,
-    afterZone: '',
-  }
-}
-
-function splitIntroStepBTriggerSection(zoneSectionText) {
-  const source = String(zoneSectionText ?? '')
-  const triggerHeadingPattern = /(\*\*\s*TRIGGER\s*\*\*)/i
-  const triggerHeadingMatch = triggerHeadingPattern.exec(source)
-
-  if (!triggerHeadingMatch || typeof triggerHeadingMatch.index !== 'number') {
-    return null
-  }
-  const beforeTrigger = source.slice(0, triggerHeadingMatch.index)
-
-  const fromTrigger = source.slice(triggerHeadingMatch.index)
-  const takeProfitPattern = /(\*\*\s*TAKE\s+PROFIT\s*\*\*)/i
-  const takeProfitMatch = takeProfitPattern.exec(fromTrigger)
-
-  if (!takeProfitMatch || typeof takeProfitMatch.index !== 'number') {
-    return null
-  }
-
-  return {
-    beforeTrigger,
-    triggerSection: fromTrigger.slice(0, takeProfitMatch.index),
-    afterTrigger: fromTrigger.slice(takeProfitMatch.index),
-  }
-}
-
-function splitIntroStepCTriggerIntroAndDetails(triggerSectionText) {
-  const source = String(triggerSectionText ?? '').trim()
-  if (!source) {
-    return null
-  }
-
-  const triggerHeadingPatterns = [
-    /(\*\*\s*TRIGGER\s*:[\s\S]*?\*\*)/i,
-    /(\*\*\s*TRIGGER\s*\*\*)/i,
-  ]
-  const headingMatch = triggerHeadingPatterns
-    .map((pattern) => pattern.exec(source))
-    .find((match) => match && typeof match.index === 'number')
-
-  if (!headingMatch || typeof headingMatch.index !== 'number') {
-    return {
-      intro: source,
-      details: '',
-    }
-  }
-
-  const heading = headingMatch[0].trimEnd()
-  const afterHeading = source.slice(headingMatch.index + headingMatch[0].length).trimStart()
-
-  if (!afterHeading) {
-    return {
-      intro: heading,
-      details: '',
-    }
-  }
-
-  const paragraphBreakMatch = /(\n\s*\n+)/.exec(afterHeading)
-
-  if (!paragraphBreakMatch || typeof paragraphBreakMatch.index !== 'number') {
-    return {
-      intro: `${heading}\n${afterHeading}`.trim(),
-      details: '',
-    }
-  }
-
-  const introBody = afterHeading.slice(0, paragraphBreakMatch.index).trim()
-  const details = afterHeading.slice(paragraphBreakMatch.index + paragraphBreakMatch[0].length).trim()
-
-  return {
-    intro: `${heading}\n${introBody}`.trim(),
-    details,
-  }
-}
-
-function splitIntroStepCTriggerSection(feedbackText) {
-  const source = String(feedbackText ?? '')
-  const triggerHeadingPatterns = [
-    /(\*\*\s*TRIGGER\s*:[\s\S]*?\*\*)/i,
-    /(\*\*\s*TRIGGER\s*\*\*)/i,
-  ]
-  const triggerHeadingMatch = triggerHeadingPatterns
-    .map((pattern) => pattern.exec(source))
-    .find((match) => match && typeof match.index === 'number')
-
-  if (!triggerHeadingMatch || typeof triggerHeadingMatch.index !== 'number') {
-    return null
-  }
-
-  const timeframeLeadPattern = /(•\s*\*\*\s*Ci\s+spostiamo\s+su\s+un\s+timeframe\s+inferiore\s*\*\*)/i
-  const timeframeLeadMatch = timeframeLeadPattern.exec(source)
-  const hasTimeframeLeadBeforeTrigger =
-    timeframeLeadMatch &&
-    typeof timeframeLeadMatch.index === 'number' &&
-    timeframeLeadMatch.index <= triggerHeadingMatch.index
-
-  let beforeTrigger = source.slice(0, triggerHeadingMatch.index)
-  let timeframeLead = ''
-
-  if (hasTimeframeLeadBeforeTrigger) {
-    const leadStart = timeframeLeadMatch.index
-    const leadText = timeframeLeadMatch[0] ?? ''
-    const leadEnd = leadStart + leadText.length
-    const beforeLead = source.slice(0, leadStart)
-    const betweenLeadAndTrigger = source.slice(leadEnd, triggerHeadingMatch.index)
-
-    timeframeLead = leadText
-    beforeTrigger = `${beforeLead}${betweenLeadAndTrigger}`
-  }
-
-  const fromTrigger = source.slice(triggerHeadingMatch.index)
-  const takeProfitPattern = /(\*\*\s*TAKE\s+PROFIT\s*\*\*)/i
-  const takeProfitMatch = takeProfitPattern.exec(fromTrigger)
-
-  if (!takeProfitMatch || typeof takeProfitMatch.index !== 'number') {
-    return null
-  }
-
-  return {
-    beforeTrigger,
-    timeframeLead,
-    triggerSection: fromTrigger.slice(0, takeProfitMatch.index),
-    afterTrigger: fromTrigger.slice(takeProfitMatch.index),
-  }
-}
-
-function splitIntroStepBRiskWinSection(practicalExplanationText) {
-  const source = String(practicalExplanationText ?? '')
-  const markerPattern = /(\*\*\s*8\s*-\s*Rischio\/Rendimento\s+e\s+Win\s+Ratio[\s\S]*)/i
-  const markerMatch = markerPattern.exec(source)
-
-  if (!markerMatch || typeof markerMatch.index !== 'number') {
-    return null
-  }
-
-  return {
-    beforeRiskWin: source.slice(0, markerMatch.index),
-    riskWinSection: source.slice(markerMatch.index),
-  }
-}
-
-function splitIntroStepBStructureFocusSection(text) {
-  const source = String(text ?? '')
-  const stepOneHeadingPattern = /(\*\*\s*1\s*-\s*Da\s+dove\s+inizia\s+la\s+struttura\s+rialzista\?\s*\*\*)/i
-  const stepOneHeadingMatch = stepOneHeadingPattern.exec(source)
-
-  if (!stepOneHeadingMatch || typeof stepOneHeadingMatch.index !== 'number') {
-    return null
-  }
-
-  const sourceFromStepOne = source.slice(stepOneHeadingMatch.index)
-  const stepTwoHeadingPattern = /(\*\*\s*2\s*-\s*Minimi\s+strutturali\s+rialzisti[\s\S]*?\*\*)/i
-  const stepTwoHeadingMatch = stepTwoHeadingPattern.exec(sourceFromStepOne)
-  const stepOneSection = stepTwoHeadingMatch
-    ? sourceFromStepOne.slice(0, stepTwoHeadingMatch.index)
-    : sourceFromStepOne
-  const afterStepOneSection = stepTwoHeadingMatch
-    ? sourceFromStepOne.slice(stepTwoHeadingMatch.index)
-    : ''
-
-  const focusBoundaryPatterns = [
-    /(\n+\s*Ora[\s\S]{0,120}massimo\s+strutturale\s+ribassista[\s\S]*)/i,
-    /(\n+\s*_{3,}\s*Troviamo[\s\S]*)/i,
-    /(\n+\s*(?:Adesso\s+)?ci\s+interessa[\s\S]*)/i,
-  ]
-
-  const match = focusBoundaryPatterns
-    .map((pattern) => pattern.exec(stepOneSection))
-    .find((boundaryMatch) => boundaryMatch && typeof boundaryMatch.index === 'number')
-
-  if (!match || typeof match.index !== 'number') {
-    return null
-  }
-
-  return {
-    beforeFocus: source.slice(0, stepOneHeadingMatch.index) + stepOneSection.slice(0, match.index),
-    afterFocus: stepOneSection.slice(match.index) + afterStepOneSection,
-  }
 }
 
 function getSavedIntroState(step) {
@@ -400,6 +98,11 @@ function getSavedIntroState(step) {
 }
 
 function IntroExercises() {
+  const { language } = useLanguage()
+  const ui = getUiCopy(language)
+  const copy = ui.intro
+  const introSteps = useMemo(() => getIntroSteps(language), [language])
+
   const [selectedStepId, setSelectedStepId] = useState(null)
   const [pendingAnswer, setPendingAnswer] = useState(null)
   const [selectedAnswer, setSelectedAnswer] = useState(null)
@@ -417,72 +120,15 @@ function IntroExercises() {
   }
 
   const selectedStep = useMemo(
-    () => (selectedStepId ? getIntroStepById(selectedStepId) : null),
-    [selectedStepId],
+    () => (selectedStepId ? getIntroStepById(selectedStepId, language) : null),
+    [selectedStepId, language],
   )
   const isStepA = selectedStep?.id === INTRO_STEP_A_ID
   const isStepB = selectedStep?.id === INTRO_STEP_B_ID
   const isStepC = selectedStep?.id === INTRO_STEP_C_ID
 
-  const stepBMyfxbookFeedback = useMemo(() => {
-    if (!isStepB || !selectedStep) {
-      return null
-    }
-
-    return splitIntroStepBMyfxbookSection(selectedStep.feedback)
-  }, [isStepB, selectedStep])
-  const stepATrendFeedback = useMemo(() => {
-    if (!isStepA || !selectedStep) {
-      return null
-    }
-
-    return splitIntroStepATrendSection(selectedStep.feedback)
-  }, [isStepA, selectedStep])
-  const stepBLeverageFeedback = useMemo(() => {
-    if (!isStepB || !selectedStep) {
-      return null
-    }
-
-    return splitIntroStepBLeverageSection(selectedStep.feedback)
-  }, [isStepB, selectedStep])
-  const stepCZoneQuestionSection = useMemo(() => {
-    if (!isStepC || !selectedStep?.question) {
-      return null
-    }
-
-    return splitIntroStepCZoneSection(selectedStep.question)
-  }, [isStepC, selectedStep])
-  const stepCStructureFocusQuestionSection = useMemo(() => {
-    if (!stepCZoneQuestionSection?.beforeZone) {
-      return null
-    }
-
-    return splitIntroStepBStructureFocusSection(stepCZoneQuestionSection.beforeZone)
-  }, [stepCZoneQuestionSection])
-  const stepCTriggerFeedbackSection = useMemo(() => {
-    if (!isStepC || !selectedStep?.feedback) {
-      return null
-    }
-
-    return splitIntroStepCTriggerSection(selectedStep.feedback)
-  }, [isStepC, selectedStep])
-  const stepCFeedbackRiskWinSection = useMemo(() => {
-    if (!stepCTriggerFeedbackSection?.afterTrigger) {
-      return null
-    }
-
-    return splitIntroStepBRiskWinSection(stepCTriggerFeedbackSection.afterTrigger)
-  }, [stepCTriggerFeedbackSection])
-  const stepCTriggerContentSplit = useMemo(() => {
-    if (!stepCTriggerFeedbackSection?.triggerSection) {
-      return null
-    }
-
-    return splitIntroStepCTriggerIntroAndDetails(stepCTriggerFeedbackSection.triggerSection)
-  }, [stepCTriggerFeedbackSection])
-
   const handleOpenStep = (stepId) => {
-    const step = getIntroStepById(stepId)
+    const step = getIntroStepById(stepId, language)
     const savedIntroState = getSavedIntroState(step)
 
     setSelectedStepId(stepId)
@@ -565,7 +211,7 @@ function IntroExercises() {
     if (isDifficultyFeedbackLocked) return
     if (!selectedStep) return
 
-    const isLastIntroStep = selectedStep.order === INTRO_STEPS.length
+    const isLastIntroStep = selectedStep.order === introSteps.length
     setDifficultyRating(value)
     if (!isLastIntroStep) {
       persistIntroDifficultyFeedback(value)
@@ -573,7 +219,7 @@ function IntroExercises() {
   }
 
   const handleSaveAndCloseIntro = async () => {
-    if (!selectedStep || selectedStep.order !== INTRO_STEPS.length) return
+    if (!selectedStep || selectedStep.order !== introSteps.length) return
     if (!selectedAnswer || difficultyRating == null) return
     if (isSavingAndClosingIntro) return
 
@@ -593,10 +239,10 @@ function IntroExercises() {
     persistIntroDifficultyFeedback(difficultyRating)
     markCurrentStepAsCompleted()
 
-    const currentIndex = INTRO_STEPS.findIndex((step) => step.id === selectedStep.id)
+    const currentIndex = introSteps.findIndex((step) => step.id === selectedStep.id)
     if (currentIndex < 0) return
 
-    const nextStep = INTRO_STEPS[currentIndex + 1]
+    const nextStep = introSteps[currentIndex + 1]
     if (!nextStep) return
 
     handleOpenStep(nextStep.id)
@@ -607,12 +253,12 @@ function IntroExercises() {
     return (
       <section className="exercises intro-exercises">
         <div className="exercise-day-completion intro-completion-card">
-          <h2>🎉 Hai completato i tre step "Inizia dalle basi"!</h2>
+          <h2>{copy.completionTitle}</h2>
           <p></p>
-          <p>Ora puoi continuare con il percorso principale in Esercitati.</p>
+          <p>{copy.completionSubtitle}</p>
           <div className="exercise-day-completion__actions">
             <button type="button" className="btn" onClick={() => setShowFinalScreen(false)}>
-              Torna al programma
+              {copy.returnProgram}
             </button>
           </div>
         </div>
@@ -621,10 +267,10 @@ function IntroExercises() {
   }
 
   if (selectedStep) {
-    const selectedIndex = INTRO_STEPS.findIndex((step) => step.id === selectedStep.id)
-    const nextStep = selectedIndex >= 0 ? INTRO_STEPS[selectedIndex + 1] : null
+    const selectedIndex = introSteps.findIndex((step) => step.id === selectedStep.id)
+    const nextStep = selectedIndex >= 0 ? introSteps[selectedIndex + 1] : null
     const isGuidedIntroStep = INTRO_GUIDED_STEP_IDS.has(selectedStep.id)
-    const isLastIntroStep = selectedStep.order === INTRO_STEPS.length
+    const isLastIntroStep = selectedStep.order === introSteps.length
     const hasAnswered = isAnswerConfirmed
     const canContinue = hasAnswered && difficultyRating != null
     const canSaveAndCloseIntro = isLastIntroStep && canContinue && !isDifficultyFeedbackLocked
@@ -633,13 +279,13 @@ function IntroExercises() {
       <section className="exercises intro-exercises">
         {!canSaveAndCloseIntro && (
           <button type="button" className="btn btn-outline back-to-program" onClick={handleBackToIntroProgram}>
-            ← Torna al programma
+            {copy.backToProgram}
           </button>
         )}
 
         <div className="exercise-detail" aria-live="polite">
           <div className="exercise-detail-head">
-            <span className="exercise-detail-day">Inizia dalle basi</span>
+            <span className="exercise-detail-day">{copy.listEyebrow}</span>
             <h1 className="page-title">{selectedStep.title}</h1>
             <span className="exercise-detail-block">{selectedStep.block}</span>
           </div>
@@ -651,13 +297,13 @@ function IntroExercises() {
                 {isStepA ? (
                   <img
                     src={introStep0AInitialImage}
-                    alt="Grafico iniziale dello Step 0A"
+                    alt={language === 'en' ? 'Initial chart for Step 0A' : 'Grafico iniziale dello Step 0A'}
                     loading="lazy"
                   />
                 ) : isStepB ? (
                   <img
                     src={introStep0BInitialImage}
-                    alt="Grafico iniziale dello Step 0B"
+                    alt={language === 'en' ? 'Initial chart for Step 0B' : 'Grafico iniziale dello Step 0B'}
                     loading="lazy"
                   />
                 ) : null}
@@ -671,69 +317,38 @@ function IntroExercises() {
               {isStepC ? (
                 <div className="intro-practical-explanation">
                   <div className="intro-timeframe-standalone">
-                    <h5 className="intro-timeframe-card-title">Timeframe di esempio H4 - si individua trend e zona</h5>
+                    <h5 className="intro-timeframe-card-title">{copy.timeframeSupTitle}</h5>
                     <img
                       src={introStep0BTimeframeSupImage}
-                      alt="Timeframe superiore nello Step 0C"
+                      alt={language === 'en' ? 'Higher timeframe in Step 0C' : 'Timeframe superiore nello Step 0C'}
                       className="intro-timeframe-image-large"
                       loading="lazy"
                     />
                   </div>
-
-                  {stepCZoneQuestionSection ? (
-                    <>
-                      {stepCStructureFocusQuestionSection ? (
-                        <>
-                          {stepCStructureFocusQuestionSection.beforeFocus.trim() && (
-                            <p className="intro-feedback-text">
-                              {renderIntroTextWithBold(stepCStructureFocusQuestionSection.beforeFocus)}
-                            </p>
-                          )}
-                          <div className="intro-structure-focus">
-                            <img
-                              src={introStep0BConfermaMassimoImage}
-                              alt="Zoom di conferma del massimo strutturale"
-                              className="intro-structure-focus-image"
-                              loading="lazy"
-                            />
-                          </div>
-                          {stepCStructureFocusQuestionSection.afterFocus.trim() && (
-                            <p className="intro-feedback-text">
-                              {renderIntroTextWithBold(stepCStructureFocusQuestionSection.afterFocus)}
-                            </p>
-                          )}
-                        </>
-                      ) : (
-                        stepCZoneQuestionSection.beforeZone.trim() && (
-                          <p className="intro-feedback-text">
-                            {renderIntroTextWithBold(stepCZoneQuestionSection.beforeZone)}
-                          </p>
-                        )
-                      )}
-                      <div className="intro-zone-layout">
-                        <div className="intro-zone-copy">
-                          <p className="intro-feedback-text">
-                            {renderIntroTextWithBold(stepCZoneQuestionSection.zoneSection)}
-                          </p>
-                        </div>
-                        <div className="intro-zone-visual">
-                          <img
-                            src={introStep0BZoneImage}
-                            alt="Esempio grafico della costruzione della zona long"
-                            className="intro-zone-image"
-                            loading="lazy"
-                          />
-                        </div>
-                      </div>
-                      {stepCZoneQuestionSection.afterZone.trim() && (
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepCZoneQuestionSection.afterZone)}
-                        </p>
-                      )}
-                    </>
-                  ) : (
-                    <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.question)}</p>
-                  )}
+                  <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.question)}</p>
+                  <div className="intro-zone-layout">
+                    <div className="intro-zone-copy" />
+                    <div className="intro-zone-visual">
+                      <img
+                        src={introStep0BZoneImage}
+                        alt={language === 'en'
+                          ? 'Chart example for long-zone construction'
+                          : 'Esempio grafico della costruzione della zona long'}
+                        className="intro-zone-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                  <div className="intro-structure-focus">
+                    <img
+                      src={introStep0BConfermaMassimoImage}
+                      alt={language === 'en'
+                        ? 'Zoom confirmation of structural high'
+                        : 'Zoom di conferma del massimo strutturale'}
+                      className="intro-structure-focus-image"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
               ) : (
                 <p className="intro-question-text">
@@ -773,7 +388,7 @@ function IntroExercises() {
                 onClick={handleConfirmAnswer}
                 disabled={isGuidedIntroStep ? isAnswerConfirmed : (!pendingAnswer || isAnswerConfirmed)}
               >
-               Continua ➡️
+                {copy.continueButton}
               </button>
             </div>
           )}
@@ -787,13 +402,13 @@ function IntroExercises() {
                     {isStepA ? (
                       <img
                         src={introStep0ASecondImage}
-                        alt="Grafico spiegato dello Step 0A"
+                        alt={language === 'en' ? 'Explained chart for Step 0A' : 'Grafico spiegato dello Step 0A'}
                         loading="lazy"
                       />
                     ) : isStepB ? (
                       <img
                         src={introStep0BSecondImage}
-                        alt="Grafico spiegato dello Step 0B"
+                        alt={language === 'en' ? 'Explained chart for Step 0B' : 'Grafico spiegato dello Step 0B'}
                         loading="lazy"
                       />
                     ) : null}
@@ -803,63 +418,29 @@ function IntroExercises() {
 
               <div className="exercise-feedback is-correct">
                 <h3></h3>
-                {isStepC && stepCTriggerFeedbackSection ? (
+                {isStepC ? (
                   <>
                     <div className="intro-timeframe-standalone intro-timeframe-standalone-inferior">
-                      <h5 className="intro-timeframe-card-title">Timeframe inferiore - Trigger e gestione dell’operazione</h5>
+                      <h5 className="intro-timeframe-card-title">{copy.timeframeInfTitle}</h5>
                       <img
                         src={introStep0BTimeframeInfImage}
-                        alt="Timeframe inferiore nello Step 0C"
+                        alt={language === 'en' ? 'Lower timeframe in Step 0C' : 'Timeframe inferiore nello Step 0C'}
                         className="intro-timeframe-image-large"
                         loading="lazy"
                       />
                     </div>
 
                     <div className="intro-practical-explanation">
-                      {stepCTriggerFeedbackSection.beforeTrigger.trim() && (
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepCTriggerFeedbackSection.beforeTrigger)}
-                        </p>
-                      )}
-
-                      {stepCTriggerContentSplit?.intro ? (
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepCTriggerContentSplit.intro)}
-                        </p>
-                      ) : (
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepCTriggerFeedbackSection.triggerSection)}
-                        </p>
-                      )}
+                      <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.feedback)}</p>
 
                       <div className="intro-structure-focus">
                         <img
                           src={introStep0BTriggerImage}
-                          alt="Esempio visivo del trigger operativo"
+                          alt={language === 'en' ? 'Visual example of operational trigger' : 'Esempio visivo del trigger operativo'}
                           className="intro-trigger-image"
                           loading="lazy"
                         />
                       </div>
-
-                      {stepCTriggerContentSplit?.details && (
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepCTriggerContentSplit.details)}
-                        </p>
-                      )}
-
-                      {stepCFeedbackRiskWinSection ? (
-                        stepCFeedbackRiskWinSection.beforeRiskWin.trim() && (
-                          <p className="intro-feedback-text">
-                            {renderIntroTextWithBold(stepCFeedbackRiskWinSection.beforeRiskWin)}
-                          </p>
-                        )
-                      ) : (
-                        stepCTriggerFeedbackSection.afterTrigger.trim() && (
-                          <p className="intro-feedback-text">
-                            {renderIntroTextWithBold(stepCTriggerFeedbackSection.afterTrigger)}
-                          </p>
-                        )
-                      )}
 
                       {selectedStep.riskWinSection && (
                         <div className="intro-risk-win-section">
@@ -890,99 +471,61 @@ function IntroExercises() {
                       )}
                     </div>
                   </>
-                ) : isStepB && stepBMyfxbookFeedback ? (
+                ) : isStepB ? (
                   <>
-                    {stepBMyfxbookFeedback.beforeMyfxbook.trim() && (
-                      <p className="intro-feedback-text">
-                        {renderIntroTextWithBold(stepBMyfxbookFeedback.beforeMyfxbook)}
-                      </p>
-                    )}
+                    <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.feedback)}</p>
                     <div className="intro-myfxbook-layout">
-                      <div className="intro-myfxbook-copy">
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepBMyfxbookFeedback.myfxbookSection)}
-                        </p>
-                      </div>
+                      <div className="intro-myfxbook-copy" />
                       <div className="intro-myfxbook-visual">
                         <img
                           src={introStep0BMyfxbookImage}
-                          alt="Esempio del calcolatore Myfxbook per il dimensionamento della posizione"
+                          alt={language === 'en'
+                            ? 'Myfxbook calculator example for position sizing'
+                            : 'Esempio del calcolatore Myfxbook per il dimensionamento della posizione'}
                           className="intro-myfxbook-image"
                           loading="lazy"
                         />
                       </div>
                     </div>
-                  </>
-                ) : isStepB && stepBLeverageFeedback ? (
-                  <>
-                    {stepBLeverageFeedback.beforeLeverage.trim() && (
-                      <p className="intro-feedback-text">
-                        {renderIntroTextWithBold(stepBLeverageFeedback.beforeLeverage)}
-                      </p>
-                    )}
                     <div className="intro-leverage-layout">
-                      <div className="intro-leverage-copy">
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepBLeverageFeedback.leverageSection.trimEnd())}
-                        </p>
-                      </div>
+                      <div className="intro-leverage-copy" />
                       <div className="intro-leverage-visual">
                         <img
                           src={introStep0BLeverageImage}
-                          alt="Schema esplicativo del rapporto leva, margine ed esposizione"
+                          alt={language === 'en'
+                            ? 'Visual scheme of leverage, margin, and exposure'
+                            : 'Schema esplicativo del rapporto leva, margine ed esposizione'}
                           className="intro-leverage-image"
                           loading="lazy"
                         />
                       </div>
                     </div>
-                    {stepBLeverageFeedback.afterLeverage.trim() && (
-                      <p className="intro-feedback-text">
-                        {renderIntroTextWithBold(stepBLeverageFeedback.afterLeverage.trimStart())}
-                      </p>
-                    )}
                   </>
-                ) : isStepA && stepATrendFeedback ? (
+                ) : isStepA ? (
                   <>
-                    {stepATrendFeedback.beforeTrend.trim() && (
-                      <p className="intro-feedback-text">
-                        {renderIntroTextWithBold(stepATrendFeedback.beforeTrend)}
-                      </p>
-                    )}
+                    <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.feedback)}</p>
                     <div className="intro-trend-row">
-                      <div className="intro-trend-copy">
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepATrendFeedback.trendUpSection)}
-                        </p>
-                      </div>
+                      <div className="intro-trend-copy" />
                       <div className="intro-trend-visual">
                         <img
                           src={introStep0ATrendUpImage}
-                          alt="Esempio visivo di trend rialzista"
+                          alt={language === 'en' ? 'Visual example of bullish trend' : 'Esempio visivo di trend rialzista'}
                           className="intro-trend-image"
                           loading="lazy"
                         />
                       </div>
                     </div>
                     <div className="intro-trend-row">
-                      <div className="intro-trend-copy">
-                        <p className="intro-feedback-text">
-                          {renderIntroTextWithBold(stepATrendFeedback.trendDownSection)}
-                        </p>
-                      </div>
+                      <div className="intro-trend-copy" />
                       <div className="intro-trend-visual">
                         <img
                           src={introStep0ATrendDownImage}
-                          alt="Esempio visivo di trend ribassista"
+                          alt={language === 'en' ? 'Visual example of bearish trend' : 'Esempio visivo di trend ribassista'}
                           className="intro-trend-image"
                           loading="lazy"
                         />
                       </div>
                     </div>
-                    {stepATrendFeedback.afterTrend.trim() && (
-                      <p className="intro-feedback-text">
-                        {renderIntroTextWithBold(stepATrendFeedback.afterTrend)}
-                      </p>
-                    )}
                   </>
                 ) : (
                   <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.feedback)}</p>
@@ -990,12 +533,12 @@ function IntroExercises() {
               </div>
 
               <div className="exercise-difficulty-rating intro-final-box">
-                <h4>Questo per me era:</h4>
+                <h4>{copy.difficultyTitle}</h4>
                 <div className="difficulty-scale">
                   <div className="scale-labels">
-                    <span className="scale-label scale-label-left">Troppo facile</span>
-                    <span className="scale-label scale-label-center">Per me ok</span>
-                    <span className="scale-label scale-label-right">Troppo difficile</span>
+                    <span className="scale-label scale-label-left">{copy.tooEasy}</span>
+                    <span className="scale-label scale-label-center">{copy.okForMe}</span>
+                    <span className="scale-label scale-label-right">{copy.tooHard}</span>
                   </div>
                   <div className="scale-buttons">
                     {[1, 2, 3, 4, 5, 6, 7].map((value) => (
@@ -1012,10 +555,10 @@ function IntroExercises() {
                   </div>
                 </div>
 
-                <h4>C'è qualcosa che ti è rimasto poco chiaro? (facoltativo)</h4>
+                <h4>{copy.reflectionTitle}</h4>
                 <textarea
                   className="exercise-confirm-modal__textarea"
-                  placeholder="Scrivi qui eventuali osservazioni"
+                  placeholder={copy.reflectionPlaceholder}
                   value={reflectionText}
                   onChange={(event) => {
                     if (isDifficultyFeedbackLocked) return
@@ -1037,13 +580,13 @@ function IntroExercises() {
                   onClick={handleSaveAndCloseIntro}
                   disabled={isSavingAndClosingIntro}
                 >
-                  {isSavingAndClosingIntro ? 'Salvataggio...' : 'Salva e chiudi la parte introduttiva'}
+                  {isSavingAndClosingIntro ? copy.saving : copy.saveAndClose}
                 </button>
               ) : (
                 <>
                   {nextStep && (
                     <button type="button" className="btn btn-action" onClick={handleGoToNextStep}>
-                      Vai al prossimo step 💪🏻
+                      {copy.nextStep}
                     </button>
                   )}
                   <button
@@ -1055,7 +598,7 @@ function IntroExercises() {
                       handleBackToIntroProgram()
                     }}
                   >
-                    Torna al programma
+                    {copy.returnProgram}
                   </button>
                 </>
               )}
@@ -1069,30 +612,23 @@ function IntroExercises() {
   return (
     <section className="exercises intro-exercises">
       <header className="exercise-head">
-        <span className="eyebrow">Inizia dalle basi</span>
-        <h1 className="page-title">1. Inizia dalle basi</h1>
+        <span className="eyebrow">{copy.listEyebrow}</span>
+        <h1 className="page-title">{copy.listTitle}</h1>
       </header>
 
       <div className="exercise-goals-grid intro-goals-grid">
         <div className="exercise-progress" aria-live="polite">
-          <p className="exercise-goal-title">🎯 Obiettivo dei tre step — 📶 DA DOVE INIZIARE</p>
-          <p className="exercise-goal-line">
-            {renderIntroTextWithBold('**•** Questi **3 step ti danno le basi pratiche per iniziare**; nello **Step C** segui un **esempio su un grafico***')}
-          </p>
-          <p className="exercise-goal-line">
-            {renderIntroTextWithBold(' **•Ogni step - lettura: 5-10 min **')}
-          </p>
-          <p className="exercise-goal-line">
-            {renderIntroTextWithBold(' ')}
-          </p>
-            <p className="exercise-goal-line">
-            {renderIntroTextWithBold('')}
-          </p>
+          <p className="exercise-goal-title">{copy.goalsTitle}</p>
+          {copy.goalsLines.map((line) => (
+            <p key={line} className="exercise-goal-line">
+              {renderIntroTextWithBold(line)}
+            </p>
+          ))}
         </div>
       </div>
 
       <div className="exercise-list">
-        {INTRO_STEPS.map((step) => {
+        {introSteps.map((step) => {
           const isCompleted = completedStepIds.has(step.id)
 
           return (
@@ -1100,20 +636,20 @@ function IntroExercises() {
               <div className="exercise-card-content">
                 <header className="exercise-card-head">
                   <div className="exercise-chip"></div>
-                  <span className="exercise-status">{isCompleted ? 'Compreso ✅' : 'Da iniziare'}</span>
+                  <span className="exercise-status">{isCompleted ? copy.statusDone : copy.statusTodo}</span>
                 </header>
                 <div className="exercise-body">
                   <h2>{step.title}</h2>
-                  <div className="exercise-meta" aria-label="Dettagli didattici">
-                    <span className="exercise-meta-item"></span>
-                    <span className="exercise-meta-item"> </span>
-                    <span className="exercise-meta-item"></span>
+                  <div className="exercise-meta" aria-label={copy.exerciseMetaAriaLabel}>
+                    <span className="exercise-meta-item">{copy.listSummaryLabel}</span>
+                    <span className="exercise-meta-item">{copy.listFocusLabel}</span>
+                    <span className="exercise-meta-item">{copy.listDepthLabel}</span>
                   </div>
                 </div>
               </div>
               <div className="exercise-card-actions">
                 <button type="button" className="btn btn-action" onClick={() => handleOpenStep(step.id)}>
-                  {isCompleted ? 'Rivedi' : 'Inizia'}
+                  {isCompleted ? copy.review : copy.start}
                 </button>
               </div>
             </article>

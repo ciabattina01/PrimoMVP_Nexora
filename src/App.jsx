@@ -8,9 +8,11 @@ import Profile from './components/Profile'
 import Progress from './components/Progress'
 import InfoPlan from './components/InfoPlan'
 import ArticleTriggerEntry from './components/ArticleTriggerEntry'
+import LanguageGate from './components/LanguageGate'
 import { NAV_ITEMS, STORAGE_KEYS } from './data/appConfig'
 import { clearLocalTestData } from './utils/dataTracking'
 import { trackEvent } from './utils/tracking'
+import { useLanguage } from './i18n/language'
 import './App.css'
 
 const DEFAULT_PAGE = NAV_ITEMS[0]?.id || 'home'
@@ -65,6 +67,7 @@ function readProfileName() {
 function App() {
   ensureRequiredStorageVersion()
   const showTriggerArticlePage = isTriggerArticleRoute()
+  const { isLanguageConfirmed } = useLanguage()
 
   const [profileName, setProfileName] = useState(() => readProfileName())
   const [activePage, setActivePage] = useState(() => {
@@ -134,6 +137,10 @@ function App() {
 
   if (showTriggerArticlePage) {
     return <ArticleTriggerEntry />
+  }
+
+  if (!isLanguageConfirmed) {
+    return <LanguageGate />
   }
 
   if (!testerId) {

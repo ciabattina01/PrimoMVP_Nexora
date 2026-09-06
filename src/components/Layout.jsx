@@ -1,4 +1,5 @@
-import { APP_META } from '../data/appConfig'
+import { useLanguage } from '../i18n/language'
+import { getUiCopy } from '../i18n/uiCopy'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/percep_progetto'
 const DISCORD_URL = 'https://discord.gg/VVJCRzGXr'
@@ -176,10 +177,10 @@ function resolveIcon(iconKey) {
   return ICONS[iconKey] || ICONS.info
 }
 
-function renderFeedbackBrand(className) {
+function renderFeedbackBrand(className, ui) {
   return (
     <span className={className}>
-      {APP_META.name}{' '}Instagram{' '}
+      {ui.layout.brandPrefix}{' '}Instagram{' '}
       <a className="brand-link" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
         @percep_progetto
       </a>
@@ -192,6 +193,9 @@ function renderFeedbackBrand(className) {
 }
 
 function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, children }) {
+  const { language } = useLanguage()
+  const ui = getUiCopy(language)
+
   const renderNavButtons = (variant) =>
     navItems.map((item) => {
       const isActive = activeItem === item.id
@@ -209,7 +213,7 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
           <span className={iconClass} aria-hidden="true">
             {resolveIcon(item.icon)}
           </span>
-          <span className={labelClass}>{item.label}</span>
+          <span className={labelClass}>{ui.nav[item.id] || item.label}</span>
         </button>
       )
     })
@@ -224,8 +228,8 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
               <span className="logo-dot" />
             </div>
             <div className="brand-text">
-              {renderFeedbackBrand('brand-title')}
-              <span className="brand-subtitle">Prototipo guidato</span>
+              {renderFeedbackBrand('brand-title', ui)}
+              <span className="brand-subtitle">{ui.layout.prototypeGuided}</span>
             </div>
           </div>
 
@@ -235,8 +239,8 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
 
           <div className="sidebar-plan" aria-label="Dettagli piano">
             <div className="profile-chip">
-              <span className="chip-plan">PIANO ESPLORA ATTUALE - GRATUITO</span>
-              <span className="chip-meta">Nome: {profileName || 'non impostato'}</span>
+              <span className="chip-plan">{ui.layout.sidebarPlan}</span>
+              <span className="chip-meta">{ui.layout.name}: {profileName || ui.layout.notSet}</span>
             </div>
           </div>
         </aside>
@@ -253,15 +257,15 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
       <header className="top-nav-header">
         <div className="top-nav-brand" aria-label="Nexora">
           <span className="top-logo-dot" />
-          {renderFeedbackBrand('top-brand-text')}
+          {renderFeedbackBrand('top-brand-text', ui)}
         </div>
         <nav className="top-nav" aria-label="Navigazione principale">
           {renderNavButtons('top')}
         </nav>
         <div className="top-nav-profile" aria-label="Dettagli piano">
           <div className="profile-chip profile-chip--top">
-            <span className="chip-plan">IL TUO PIANO: GRATUITO</span>
-            <span className="chip-meta">Nome: {profileName || 'non impostato'}</span>
+            <span className="chip-plan">{ui.layout.topPlan}</span>
+            <span className="chip-meta">{ui.layout.name}: {profileName || ui.layout.notSet}</span>
           </div>
         </div>
       </header>
