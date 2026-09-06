@@ -580,7 +580,7 @@ Chiediti:
 
 
 
-👉 **Domanda:** quale candela rappresenta un trigger valido per entrare long?
+👉 **Domanda:** quale candela numerata sul grafico rappresenta un trigger valido per entrare long?
 
 
 `, 
