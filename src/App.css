@@ -3028,3 +3028,133 @@
     grid-template-columns: 1fr;
   }
 }
+
+.article-page {
+  width: min(100%, 980px);
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 44px) clamp(14px, 3.5vw, 26px) clamp(32px, 6vw, 54px);
+}
+
+.article-shell {
+  display: grid;
+  gap: 24px;
+}
+
+.article-hero,
+.article-copy-card,
+.article-reflection-space,
+.article-cta-box {
+  border: 1px solid rgba(107, 158, 125, 0.34);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: clamp(16px, 2.6vw, 22px);
+}
+
+.article-hero {
+  display: grid;
+  gap: 14px;
+}
+
+.article-title {
+  margin: 0;
+  color: var(--color-text);
+  font-size: clamp(1.5rem, 3.3vw, 2rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+}
+
+.article-kicker {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.article-jump-link {
+  justify-self: flex-start;
+}
+
+.article-scenario {
+  display: grid;
+  gap: 16px;
+}
+
+.article-section-title {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--color-text);
+}
+
+.article-chart-card {
+  margin: 0;
+  border: 1px solid rgba(107, 158, 125, 0.34);
+  border-radius: 18px;
+  background: #ffffff;
+  padding: 8px;
+}
+
+.article-chart-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.article-copy-card {
+  color: var(--color-text);
+  display: grid;
+  gap: 10px;
+}
+
+.article-copy-card h3 {
+  margin: 0;
+}
+
+.article-copy-card p {
+  margin: 0;
+}
+
+.article-rich-list {
+  margin: 0;
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 6px;
+}
+
+.article-reflection-space p {
+  margin: 0;
+}
+
+.article-answer-block {
+  display: grid;
+  gap: 16px;
+}
+
+.article-copy-card--answer {
+  border-color: rgba(79, 127, 97, 0.42);
+}
+
+.article-cta-box {
+  display: grid;
+  gap: 10px;
+  justify-items: start;
+}
+
+.article-cta-box h2,
+.article-cta-box p {
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .article-page {
+    padding-top: 16px;
+  }
+
+  .article-chart-card {
+    padding: 6px;
+    border-radius: 14px;
+  }
+
+  .article-chart-card img {
+    border-radius: 10px;
+  }
+}

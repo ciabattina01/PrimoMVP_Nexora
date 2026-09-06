@@ -7,6 +7,7 @@ import Feedback from './components/Feedback'
 import Profile from './components/Profile'
 import Progress from './components/Progress'
 import InfoPlan from './components/InfoPlan'
+import ArticleTriggerEntry from './components/ArticleTriggerEntry'
 import { NAV_ITEMS, STORAGE_KEYS } from './data/appConfig'
 import { clearLocalTestData } from './utils/dataTracking'
 import { trackEvent } from './utils/tracking'
@@ -15,6 +16,17 @@ import './App.css'
 const DEFAULT_PAGE = NAV_ITEMS[0]?.id || 'home'
 const STORAGE_VERSION_KEY = 'nexora_storage_version'
 const REQUIRED_STORAGE_VERSION = 'beta_2026_08_18_v1'
+const TRIGGER_ARTICLE_PATH = '/articolo/come-capire-quando-entrare-trading'
+
+function normalizePathname(pathname) {
+  const normalized = String(pathname || '/').replace(/\/+$/, '')
+  return normalized || '/'
+}
+
+function isTriggerArticleRoute() {
+  if (typeof window === 'undefined') return false
+  return normalizePathname(window.location.pathname) === TRIGGER_ARTICLE_PATH
+}
 
 function ensureRequiredStorageVersion() {
   if (typeof window === 'undefined' || !window.localStorage) return
@@ -52,6 +64,7 @@ function readProfileName() {
 
 function App() {
   ensureRequiredStorageVersion()
+  const showTriggerArticlePage = isTriggerArticleRoute()
 
   const [profileName, setProfileName] = useState(() => readProfileName())
   const [activePage, setActivePage] = useState(() => {
@@ -117,6 +130,10 @@ function App() {
 
     setProfileName('')
     setActivePage('profile')
+  }
+
+  if (showTriggerArticlePage) {
+    return <ArticleTriggerEntry />
   }
 
   if (!testerId) {
