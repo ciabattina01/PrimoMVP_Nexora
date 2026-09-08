@@ -2833,10 +2833,7 @@
 }
 
 .intro-trend-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 30%);
-  gap: 14px;
-  align-items: start;
+  display: block;
 }
 
 .intro-trend-row + .intro-trend-row {
@@ -2848,7 +2845,8 @@
 }
 
 .intro-trend-visual {
-  align-self: start;
+  width: min(100%, 650px);
+  margin-top: 10px;
 }
 
 .intro-trend-image {

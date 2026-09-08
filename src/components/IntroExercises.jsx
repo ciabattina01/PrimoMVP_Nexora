@@ -49,6 +49,53 @@ function renderIntroTextWithBold(text) {
   })
 }
 
+function renderTrendImage(image, alt) {
+  return (
+    <div className="intro-trend-row">
+      <div className="intro-trend-visual">
+        <img src={image} alt={alt} className="intro-trend-image" loading="lazy" />
+      </div>
+    </div>
+  )
+}
+
+function renderStepATrendFeedback(text, language) {
+  const source = String(text ?? '')
+  const bullishHeading = language === 'en' ? '**Bullish trend:**' : '**Trend rialzista:**'
+  const bearishHeading = language === 'en' ? '**Bearish trend:**' : '**Trend ribassista:**'
+  const conclusionHeading = language === 'en'
+    ? 'Structural lows and highs are not just one point:'
+    : '**Importante per gli step**:'
+  const bullishStart = source.indexOf(bullishHeading)
+  const bearishStart = source.indexOf(bearishHeading)
+  const conclusionStart = source.indexOf(conclusionHeading)
+
+  if (bullishStart < 0 || bearishStart < 0 || conclusionStart < 0) {
+    return <p className="intro-feedback-text">{renderIntroTextWithBold(source)}</p>
+  }
+
+  return (
+    <>
+      <p className="intro-feedback-text">{renderIntroTextWithBold(source.slice(0, bullishStart))}</p>
+      <p className="intro-feedback-text">
+        {renderIntroTextWithBold(source.slice(bullishStart, bearishStart))}
+      </p>
+      {renderTrendImage(
+        introStep0ATrendUpImage,
+        language === 'en' ? 'Visual example of bullish trend' : 'Esempio visivo di trend rialzista',
+      )}
+      <p className="intro-feedback-text">
+        {renderIntroTextWithBold(source.slice(bearishStart, conclusionStart))}
+      </p>
+      {renderTrendImage(
+        introStep0ATrendDownImage,
+        language === 'en' ? 'Visual example of bearish trend' : 'Esempio visivo di trend ribassista',
+      )}
+      <p className="intro-feedback-text">{renderIntroTextWithBold(source.slice(conclusionStart))}</p>
+    </>
+  )
+}
+
 function getSavedIntroState(step) {
   if (!step || typeof window === 'undefined' || !window.localStorage) return null
 
@@ -502,31 +549,7 @@ function IntroExercises() {
                     </div>
                   </>
                 ) : isStepA ? (
-                  <>
-                    <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.feedback)}</p>
-                    <div className="intro-trend-row">
-                      <div className="intro-trend-copy" />
-                      <div className="intro-trend-visual">
-                        <img
-                          src={introStep0ATrendUpImage}
-                          alt={language === 'en' ? 'Visual example of bullish trend' : 'Esempio visivo di trend rialzista'}
-                          className="intro-trend-image"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                    <div className="intro-trend-row">
-                      <div className="intro-trend-copy" />
-                      <div className="intro-trend-visual">
-                        <img
-                          src={introStep0ATrendDownImage}
-                          alt={language === 'en' ? 'Visual example of bearish trend' : 'Esempio visivo di trend ribassista'}
-                          className="intro-trend-image"
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  </>
+                  renderStepATrendFeedback(selectedStep.feedback, language)
                 ) : (
                   <p className="intro-feedback-text">{renderIntroTextWithBold(selectedStep.feedback)}</p>
                 )}
