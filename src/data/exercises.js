@@ -25,7 +25,7 @@ Osserva il grafico **da sinistra verso destra. Nella prima parte il mercato cost
 
 Chiediti:
 
-• **I minimi principali stanno continuando a formarsi progressivamente più in alto?**
+• **I minimi STRUTTURALI - RICORDA la seconda parte dello step A iniziale - principali stanno continuando a formarsi progressivamente più in alto?**
 
 • **Quali minimi stanno realmente sostenendo la struttura rialzista? Cerca l'ultimo minimo (della struttura rialzista)da cui si è formato un nuovo massimo: è questo il minimo da considerare.**
 
