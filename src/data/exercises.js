@@ -14,7 +14,9 @@ const EXERCISE_ITEMS = [
       timeframe: '',
       instrument: '',
     },
-    question: `
+    question: ` **Nei primi step useremo grafici qualitativi: rappresentazioni semplificate, senza candele, per allenare l’occhio a riconoscere andamento, punti strutturali e zone.**
+
+Negli step successivi passeremo progressivamente ai grafici a candele e poi a grafici reali.
 Osserva il grafico **da sinistra verso destra. Nella prima parte il mercato costruisce una chiara struttura rialzista.**
 
 👀 Questa volta concentrati soprattutto sui minimi che compongono il trend rialzista.
@@ -30,7 +32,7 @@ Chiediti:
 • **Da quest'ultimo minimo, immagina una linea orizzontale. In quale punto il prezzo rompe e chiude al di sotto di questa linea? **
 
 
-•**Obiettivo**: individua il punto in cui avviene la rottura di questa linea (livello di rottura), indica un'invalidazione della struttura ribassista, quindi il passaggio da rialzista a ribassista.
+•**Obiettivo**: individua il punto in cui avviene la rottura di questa linea (livello di rottura), indica un'invalidazione della struttura rialzista, quindi il passaggio da rialzista a ribassista.
 
 👉 **Domanda**: osservando i punti 1, 2 e 3, in quale punto viene invalidata la struttura rialzista e cambia la direzione, da rialzista a ribassista?`,
     answers: [
