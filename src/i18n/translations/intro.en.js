@@ -56,6 +56,8 @@ lows from which **new highs above previous highs** are created.
 What supports trend are **structural highs:**
 highs from which **new lows below previous lows** are created.
 
+Structural lows and highs are not just one point: they are all the lows or highs that, during the trend, meet the condition described above.
+
 **5-What can you do on a platform like TradingView?** 👉 In the image: 3 environments.
 
 📊 **Observe and analyze:**

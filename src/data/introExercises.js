@@ -58,6 +58,8 @@ cioè i minimi da cui si creano **nuovi massimi più alti dei precedenti.**
 Ciò che fa da "impalcatura" al trend sono i **massimi struttursli**.
 cioè i massimi da cui si creano **nuovi minimi più bassi dei precedenti.**
 
+I minimi e i massimi strutturali non sono un solo punto: sono tutti i minimi o massimi che, durante il trend, soddisfano la condizione appena descritta.
+
 
   **5-Cosa puoi fare in una piattaforma come TradingView?** 👉 Nell'immagine: 3 ambienti.
     

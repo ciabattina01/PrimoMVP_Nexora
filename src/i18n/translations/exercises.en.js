@@ -68,6 +68,10 @@ At Point 3, price breaks that level, i.e. a candle closes below it, and somethin
     },
     question: `**Here you analyze the same chart from Step 1.**
 
+    
+    **This is a qualitative chart: the candles are not shown here. Each colored zone is a simplified representation of the area that, on a real chart, would be defined by the high and low of a candle.**
+  
+
 Observe the chart **from left to right.** In the first part, the market is in a **bullish trend.**
 
 💡**What is a zone in practical terms?**

@@ -87,6 +87,10 @@ Nel Punto 3 il prezzo rompe questo livello, cioè una candela chiude al di sotto
     },
     question: `**Qui analizzi lo stesso grafico di Step 1.**
     
+
+**Il grafico è qualitativo: qui le candele non sono disegnate. Ogni zona colorata rappresenta, in modo semplificato, l’area che su un grafico reale sarebbe definita dagli estremi di una candela.**
+
+
     Osserva il grafico **da sinistra verso destra.** Nella prima parte il mercato si muove in **trend rialzista. **
     
     💡**Cos’è concretamente una zona?**
@@ -94,8 +98,6 @@ Nel Punto 3 il prezzo rompe questo livello, cioè una candela chiude al di sotto
 È un’area di prezzo individuata a partire dagli **estremi di una candela: in verticale comprende il range tra il suo massimo e il suo minimo.**
 Sul grafico la **estendiamo poi verso destra, cioè nel tempo, per osservare cosa succede se il prezzo torna in quel range.**
 
-
-In poche parole: la zona conserva il range di prezzi di quella candela e lo proietta in avanti nel grafico.
 
    👀 **Obiettivo: capire su quali minimi abbia senso cercare una possibile zona interessante.**
 
