@@ -1,6 +1,5 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { getExerciseById } from '../data/exercises'
-import LanguageGate from './LanguageGate'
 import { useLanguage } from '../i18n/language'
 import { getUiCopy } from '../i18n/uiCopy'
 
@@ -165,7 +164,7 @@ function applySeoTags() {
 
 function ArticleTriggerEntry() {
   const [showReasoning, setShowReasoning] = useState(false)
-  const { language, isLanguageConfirmed } = useLanguage()
+  const { language } = useLanguage()
   const ui = getUiCopy(language)
   const article = ui.article
   const scenario = useMemo(() => getExerciseById('day2-ex3', language), [language])
@@ -174,10 +173,6 @@ function ArticleTriggerEntry() {
     if (typeof document === 'undefined') return undefined
     return applySeoTags()
   }, [])
-
-  if (!isLanguageConfirmed) {
-    return <LanguageGate />
-  }
 
   if (!scenario) {
     return (
