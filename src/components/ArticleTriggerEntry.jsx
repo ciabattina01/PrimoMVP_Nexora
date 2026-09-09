@@ -1,5 +1,8 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { getExerciseById } from '../data/exercises'
+import LanguageGate from './LanguageGate'
+import { useLanguage } from '../i18n/language'
+import { getUiCopy } from '../i18n/uiCopy'
 
 const ARTICLE_PATH = '/articolo/come-capire-quando-entrare-trading'
 const ARTICLE_URL = `https://primo-mvp-nexora.vercel.app${ARTICLE_PATH}`
@@ -162,19 +165,26 @@ function applySeoTags() {
 
 function ArticleTriggerEntry() {
   const [showReasoning, setShowReasoning] = useState(false)
-  const scenario = useMemo(() => getExerciseById('day2-ex3'), [])
+  const { language, isLanguageConfirmed } = useLanguage()
+  const ui = getUiCopy(language)
+  const article = ui.article
+  const scenario = useMemo(() => getExerciseById('day2-ex3', language), [language])
 
   useEffect(() => {
     if (typeof document === 'undefined') return undefined
     return applySeoTags()
   }, [])
 
+  if (!isLanguageConfirmed) {
+    return <LanguageGate />
+  }
+
   if (!scenario) {
     return (
       <main className="article-page">
         <article className="article-shell">
-          <h1 className="article-title">Sai davvero cosa aspettare prima di valutare un ingresso?</h1>
-          <p>Contenuto temporaneamente non disponibile.</p>
+          <h1 className="article-title">{article.challengeTitle}</h1>
+          <p>{article.unavailable}</p>
         </article>
       </main>
     )
@@ -187,23 +197,18 @@ function ArticleTriggerEntry() {
     <main className="article-page">
       <article className="article-shell">
         <header className="article-hero">
-          <h1 className="article-title">Sai davvero cosa aspettare prima di valutare un ingresso?</h1>
-          <p className="article-kicker">Ragiona su uno scenario pratico.</p>
-          <p>
-            Conoscere la teoria è una cosa. Collegarla al grafico quando si
-             valuta un ingresso è un’altra. Prova a ragionare su
-            questo scenario.
-          </p>
+          <h1 className="article-title">{article.challengeTitle}</h1>
+          <p className="article-kicker">{article.challengeQuestion}</p>
           <a href="#scenario-trigger" className="btn btn-outline article-jump-link">
-            Inizia lo scenario ↓
+            {article.startChallenge}
           </a>
         </header>
 
-        <section id="scenario-trigger" className="article-scenario" aria-label="Scenario pratico sul trigger">
-          <h2 className="article-section-title">Scenario pratico: Trigger</h2>
+        <section id="scenario-trigger" className="article-scenario" aria-label={article.scenarioAriaLabel}>
+          <h2 className="article-section-title">{article.scenarioTitle}</h2>
 
           <figure className="article-chart-card">
-            <img src={initialImage} alt="Scenario iniziale dell'esercizio sul trigger" loading="lazy" />
+            <img src={initialImage} alt={article.initialImageAlt} loading="lazy" />
           </figure>
 
           <div className="article-copy-card">
@@ -211,7 +216,7 @@ function ArticleTriggerEntry() {
           </div>
 
           <div className="article-reflection-space">
-            <p>Prenditi qualche minuto per riflettere prima di aprire il ragionamento guidato.</p>
+            <p>{article.reflectionPrompt}</p>
           </div>
 
           {!showReasoning && (
@@ -220,29 +225,29 @@ function ArticleTriggerEntry() {
               className="btn btn-action"
               onClick={() => setShowReasoning(true)}
             >
-              Vedi il ragionamento
+              {article.showReasoning}
             </button>
           )}
 
           {showReasoning && (
             <div className="article-answer-block">
               <figure className="article-chart-card">
-                <img src={explainedImage} alt="Grafico spiegato dell'esercizio sul trigger" loading="lazy" />
+                <img src={explainedImage} alt={article.explainedImageAlt} loading="lazy" />
               </figure>
 
               <div className="article-copy-card article-copy-card--answer">
-                <h3>Ragionamento guidato</h3>
+                <h3>{article.guidedReasoning}</h3>
                 {renderRichText(scenario.feedback)}
               </div>
             </div>
           )}
         </section>
 
-        <section className="article-cta-box" aria-label="Invito al percorso gratuito">
-          <h2>Conosci la teoria, ma hai difficoltà a collegarla a ciò che vedi sul grafico?</h2>
-          <p>Allenati con altri scenari guidati di Percep.</p>
+        <section className="article-cta-box" aria-label={article.ctaAriaLabel}>
+          <h2>{article.ctaTitle}</h2>
+          <p>{article.ctaText}</p>
           <a href="https://primo-mvp-nexora.vercel.app/" className="btn btn-action">
-            Continua con altri scenari - gratuito →
+            {article.ctaButton}
           </a>
         </section>
       </article>
