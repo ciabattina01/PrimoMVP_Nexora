@@ -3111,6 +3111,14 @@
   margin: 0;
 }
 
+.article-answer-options {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
 .article-rich-list {
   margin: 0;
   padding-left: 1.15rem;
@@ -3140,6 +3148,16 @@
 .article-cta-box h2,
 .article-cta-box p {
   margin: 0;
+}
+
+.article-page[dir='rtl'] {
+  text-align: right;
+}
+
+.article-page[dir='rtl'] .article-rich-list,
+.article-page[dir='rtl'] .article-answer-options {
+  padding-left: 0;
+  padding-right: 1.25rem;
 }
 
 @media (max-width: 760px) {

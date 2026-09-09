@@ -162,6 +162,7 @@ export const UI_COPY = {
       title: 'Lingua',
       italian: '🇮🇹 Italiano',
       english: '🇬🇧 English',
+      persian: 'فارسی',
       confirm: 'Conferma',
       error: 'Seleziona una lingua prima di continuare.',
     },
@@ -173,6 +174,7 @@ export const UI_COPY = {
       scenarioAriaLabel: 'Scenario pratico sul trigger',
       scenarioTitle: 'Scenario pratico: Trigger',
       initialImageAlt: "Scenario iniziale dell'esercizio sul trigger",
+      answerOptionsLabel: 'Opzioni di risposta',
       reflectionPrompt: 'Prenditi qualche minuto per riflettere prima di aprire il ragionamento guidato.',
       showReasoning: 'Vedi il ragionamento',
       explainedImageAlt: "Grafico spiegato dell'esercizio sul trigger",
@@ -444,6 +446,7 @@ export const UI_COPY = {
       title: 'Language',
       italian: '🇮🇹 Italiano',
       english: '🇬🇧 English',
+      persian: 'فارسی',
       confirm: 'Confirm',
       error: 'Select a language before continuing.',
     },
@@ -455,6 +458,7 @@ export const UI_COPY = {
       scenarioAriaLabel: 'Practical trigger scenario',
       scenarioTitle: 'Practical scenario: Trigger',
       initialImageAlt: 'Initial chart for the trigger exercise',
+      answerOptionsLabel: 'Answer options',
       reflectionPrompt: 'Take a few minutes to think it through before opening the guided reasoning.',
       showReasoning: 'See the reasoning',
       explainedImageAlt: 'Explained chart for the trigger exercise',
@@ -712,10 +716,38 @@ export const UI_COPY = {
       button: 'Leave email - suggest a price',
     },
   },
+  fa: {
+    languageGate: {
+      title: 'زبان',
+      italian: '🇮🇹 ایتالیایی',
+      english: '🇬🇧 انگلیسی',
+      persian: 'فارسی',
+      confirm: 'تأیید',
+      error: 'پیش از ادامه یک زبان را انتخاب کنید.',
+    },
+    article: {
+      challengeTitle: '👾📈 در چالش نمودار شرکت کنید 👾📈',
+      challengeQuestion: 'آیا واقعاً می‌دانید پیش از بررسی یک ورود، باید منتظر چه چیزی باشید؟',
+      startChallenge: 'شروع چالش 👾',
+      unavailable: 'این محتوا موقتاً در دسترس نیست.',
+      scenarioAriaLabel: 'سناریوی عملی تریگر',
+      scenarioTitle: 'سناریوی عملی: تریگر',
+      initialImageAlt: 'نمودار اولیه تمرین تریگر',
+      answerOptionsLabel: 'گزینه‌های پاسخ',
+      reflectionPrompt: 'چند دقیقه برای فکر کردن وقت بگذارید و سپس استدلال هدایت‌شده را باز کنید.',
+      showReasoning: 'مشاهده استدلال',
+      explainedImageAlt: 'نمودار توضیح‌داده‌شده تمرین تریگر',
+      guidedReasoning: 'استدلال هدایت‌شده',
+      ctaAriaLabel: 'دعوت به مسیر رایگان',
+      ctaTitle: 'تئوری را می‌دانید، اما در ارتباط دادن آن با چیزی که روی نمودار می‌بینید مشکل دارید؟',
+      ctaText: 'با سناریوهای هدایت‌شده بیشتری از Percep تمرین کنید.',
+      ctaButton: 'ادامه با سناریوهای رایگان بیشتر ←',
+    },
+  },
 }
 
 export function getUiCopy(language) {
-  if (language === 'en') return UI_COPY.en
+  if (UI_COPY[language]) return UI_COPY[language]
   return UI_COPY.it
 }
 

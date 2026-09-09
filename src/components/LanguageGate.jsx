@@ -63,6 +63,20 @@ function LanguageGate({ persistLanguage = true, onLanguageConfirmed }) {
             />
             <span>{ui.languageGate.english}</span>
           </label>
+
+          <label className="onboarding-skill-option language-gate-option">
+            <input
+              type="radio"
+              name="language"
+              value="fa"
+              checked={pendingLanguage === 'fa'}
+              onChange={(event) => {
+                setPendingLanguage(event.target.value)
+                setError('')
+              }}
+            />
+            <span>{ui.languageGate.persian}</span>
+          </label>
         </div>
 
         {error && <p className="onboarding-skill-error">{error}</p>}

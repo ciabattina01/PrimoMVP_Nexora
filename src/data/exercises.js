@@ -1,4 +1,5 @@
 import { EXERCISE_TRANSLATIONS_EN } from '../i18n/translations/exercises.en'
+import { EXERCISE_TRANSLATIONS_FA } from '../i18n/translations/exercises.fa'
 
 const EXERCISE_ITEMS = [
   {
@@ -656,11 +657,12 @@ export const EXERCISES_BY_DAY = EXERCISES.reduce((acc, exercise) => {
 }, {})
 
 function localizeExercise(exercise, language) {
-  if (!exercise || language !== 'en') {
+  if (!exercise || !['en', 'fa'].includes(language)) {
     return exercise
   }
 
-  const translation = EXERCISE_TRANSLATIONS_EN[exercise.id]
+  const translations = language === 'fa' ? EXERCISE_TRANSLATIONS_FA : EXERCISE_TRANSLATIONS_EN
+  const translation = translations[exercise.id]
   if (!translation) {
     return exercise
   }

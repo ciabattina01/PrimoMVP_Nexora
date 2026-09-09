@@ -7,22 +7,37 @@ import { getUiCopy } from '../i18n/uiCopy'
 const ARTICLE_PATH = '/articolo/come-capire-quando-entrare-trading'
 const ARTICLE_URL = `https://primo-mvp-nexora.vercel.app${ARTICLE_PATH}`
 const ARTICLE_LANGUAGE_STORAGE_KEY = 'article_challenge_language'
-const SEO_TITLE = 'Come capire quando entrare in un trade: quali conferme aspettare sul grafico?'
-const SEO_DESCRIPTION = 'Hai studiato trading ma fai fatica a capire quando valutare un ingresso? Rifletti su uno scenario pratico.'
+const SEO_COPY = {
+  it: {
+    title: 'Come capire quando entrare in un trade: quali conferme aspettare sul grafico?',
+    description: 'Hai studiato trading ma fai fatica a capire quando valutare un ingresso? Rifletti su uno scenario pratico.',
+  },
+  en: {
+    title: 'How to know when to enter a trade: which chart confirmations should you wait for?',
+    description: 'Have you studied trading but struggle to know when to consider an entry? Reflect on a practical scenario.',
+  },
+  fa: {
+    title: 'چگونه زمان ورود به معامله را تشخیص دهیم؟ منتظر چه تأییدهایی روی نمودار باشیم؟',
+    description: 'آیا تریدینگ را مطالعه کرده‌اید اما تشخیص زمان بررسی ورود برایتان دشوار است؟ روی یک سناریوی عملی فکر کنید.',
+  },
+}
 
-const SEO_META_TAGS = [
-  { attr: 'name', key: 'description', content: SEO_DESCRIPTION },
+function getSeoMetaTags(language) {
+  const copy = SEO_COPY[language] || SEO_COPY.it
+  return [
+  { attr: 'name', key: 'description', content: copy.description },
   { attr: 'name', key: 'robots', content: 'index,follow' },
   { attr: 'property', key: 'og:type', content: 'article' },
-  { attr: 'property', key: 'og:title', content: SEO_TITLE },
-  { attr: 'property', key: 'og:description', content: SEO_DESCRIPTION },
+  { attr: 'property', key: 'og:title', content: copy.title },
+  { attr: 'property', key: 'og:description', content: copy.description },
   { attr: 'property', key: 'og:url', content: ARTICLE_URL },
   { attr: 'property', key: 'og:image', content: 'https://primo-mvp-nexora.vercel.app/Grafici_2/domanda_trigger_3.jpeg' },
   { attr: 'name', key: 'twitter:card', content: 'summary_large_image' },
-  { attr: 'name', key: 'twitter:title', content: SEO_TITLE },
-  { attr: 'name', key: 'twitter:description', content: SEO_DESCRIPTION },
+  { attr: 'name', key: 'twitter:title', content: copy.title },
+  { attr: 'name', key: 'twitter:description', content: copy.description },
   { attr: 'name', key: 'twitter:image', content: 'https://primo-mvp-nexora.vercel.app/Grafici_2/domanda_trigger_3.jpeg' },
-]
+  ]
+}
 
 function renderTextWithBold(text) {
   const source = String(text ?? '')
@@ -63,7 +78,7 @@ function buildRichTextBlocks(text) {
       return
     }
 
-    if (/^(•|\*|-)/.test(trimmed)) {
+    if (/^(?:•|-)(?!\*)\s*|^\*(?!\*)\s+/.test(trimmed)) {
       flushParagraph()
       listItems.push(trimmed.replace(/^(•|\*|-)\s*/, ''))
       return
@@ -98,13 +113,14 @@ function renderRichText(text) {
 function readArticleLanguage() {
   if (typeof window === 'undefined' || !window.sessionStorage) return ''
   const storedLanguage = window.sessionStorage.getItem(ARTICLE_LANGUAGE_STORAGE_KEY)
-  return storedLanguage === 'it' || storedLanguage === 'en' ? storedLanguage : ''
+  return ['it', 'en', 'fa'].includes(storedLanguage) ? storedLanguage : ''
 }
 
-function applySeoTags() {
+function applySeoTags(language) {
+  const seoMetaTags = getSeoMetaTags(language)
   const head = document.head
   const previousTitle = document.title
-  const previousMetaState = SEO_META_TAGS.map(({ attr, key, content }) => {
+  const previousMetaState = seoMetaTags.map(({ attr, key, content }) => {
     let element = head.querySelector(`meta[${attr}="${key}"]`)
     const existed = Boolean(element)
     const previousContent = element ? element.getAttribute('content') : null
@@ -137,7 +153,7 @@ function applySeoTags() {
 
   canonical.setAttribute('href', ARTICLE_URL)
   canonical.setAttribute('data-article-seo', 'true')
-  document.title = SEO_TITLE
+  document.title = SEO_COPY[language]?.title || SEO_COPY.it.title
 
   return () => {
     document.title = previousTitle
@@ -188,8 +204,8 @@ function ArticleTriggerEntry() {
 
   useEffect(() => {
     if (typeof document === 'undefined') return undefined
-    return applySeoTags()
-  }, [])
+    return applySeoTags(language)
+  }, [language])
 
   if (!articleLanguage) {
     return (
@@ -202,7 +218,7 @@ function ArticleTriggerEntry() {
 
   if (!scenario) {
     return (
-      <main className="article-page">
+      <main className="article-page" dir={language === 'fa' ? 'rtl' : 'ltr'}>
         <article className="article-shell">
           <h1 className="article-title">{article.challengeTitle}</h1>
           <p>{article.unavailable}</p>
@@ -215,7 +231,7 @@ function ArticleTriggerEntry() {
   const explainedImage = scenario.imageAfter
 
   return (
-    <main className="article-page">
+    <main className="article-page" dir={language === 'fa' ? 'rtl' : 'ltr'}>
       <article className="article-shell">
         <header className="article-hero">
           <h1 className="article-title">{article.challengeTitle}</h1>
@@ -234,6 +250,11 @@ function ArticleTriggerEntry() {
 
           <div className="article-copy-card">
             {renderRichText(scenario.question)}
+            <ul className="article-answer-options" aria-label={article.answerOptionsLabel}>
+              {scenario.answers.map((answer) => (
+                <li key={answer.key}>{answer.key}. {answer.text}</li>
+              ))}
+            </ul>
           </div>
 
           <div className="article-reflection-space">
