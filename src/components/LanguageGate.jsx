@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useLanguage } from '../i18n/language'
 import { getUiCopy } from '../i18n/uiCopy'
 
-function LanguageGate() {
+function LanguageGate({ persistLanguage = true, onLanguageConfirmed }) {
   const { language, setLanguage } = useLanguage()
   const ui = getUiCopy(language)
   const [pendingLanguage, setPendingLanguage] = useState(language || '')
@@ -18,10 +18,14 @@ function LanguageGate() {
       return
     }
 
-    const didSet = setLanguage(pendingLanguage)
-    if (!didSet) {
-      setError(ui.languageGate.error)
-      return
+    if (persistLanguage) {
+      const didSet = setLanguage(pendingLanguage)
+      if (!didSet) {
+        setError(ui.languageGate.error)
+        return
+      }
+    } else {
+      onLanguageConfirmed?.(pendingLanguage)
     }
 
     setError('')

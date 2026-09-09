@@ -136,10 +136,6 @@ function App() {
   }
 
   if (showTriggerArticlePage) {
-    if (!isLanguageConfirmed) {
-      return <LanguageGate />
-    }
-
     return <ArticleTriggerEntry />
   }
 

@@ -1,10 +1,12 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { getExerciseById } from '../data/exercises'
+import LanguageGate from './LanguageGate'
 import { useLanguage } from '../i18n/language'
 import { getUiCopy } from '../i18n/uiCopy'
 
 const ARTICLE_PATH = '/articolo/come-capire-quando-entrare-trading'
 const ARTICLE_URL = `https://primo-mvp-nexora.vercel.app${ARTICLE_PATH}`
+const ARTICLE_LANGUAGE_STORAGE_KEY = 'article_challenge_language'
 const SEO_TITLE = 'Come capire quando entrare in un trade: quali conferme aspettare sul grafico?'
 const SEO_DESCRIPTION = 'Hai studiato trading ma fai fatica a capire quando valutare un ingresso? Rifletti su uno scenario pratico.'
 
@@ -93,6 +95,12 @@ function renderRichText(text) {
   })
 }
 
+function readArticleLanguage() {
+  if (typeof window === 'undefined' || !window.sessionStorage) return ''
+  const storedLanguage = window.sessionStorage.getItem(ARTICLE_LANGUAGE_STORAGE_KEY)
+  return storedLanguage === 'it' || storedLanguage === 'en' ? storedLanguage : ''
+}
+
 function applySeoTags() {
   const head = document.head
   const previousTitle = document.title
@@ -164,15 +172,33 @@ function applySeoTags() {
 
 function ArticleTriggerEntry() {
   const [showReasoning, setShowReasoning] = useState(false)
-  const { language } = useLanguage()
+  const { language: globalLanguage } = useLanguage()
+  const [articleLanguage, setArticleLanguage] = useState(() => readArticleLanguage())
+  const language = articleLanguage || globalLanguage
   const ui = getUiCopy(language)
   const article = ui.article
   const scenario = useMemo(() => getExerciseById('day2-ex3', language), [language])
+
+  const handleArticleLanguageConfirmed = (nextLanguage) => {
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      window.sessionStorage.setItem(ARTICLE_LANGUAGE_STORAGE_KEY, nextLanguage)
+    }
+    setArticleLanguage(nextLanguage)
+  }
 
   useEffect(() => {
     if (typeof document === 'undefined') return undefined
     return applySeoTags()
   }, [])
+
+  if (!articleLanguage) {
+    return (
+      <LanguageGate
+        persistLanguage={false}
+        onLanguageConfirmed={handleArticleLanguageConfirmed}
+      />
+    )
+  }
 
   if (!scenario) {
     return (
