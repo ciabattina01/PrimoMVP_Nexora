@@ -231,6 +231,10 @@ export const UI_COPY = {
     home: {
       eyebrow: 'Home',
       title: 'Non sai da dove iniziare?',
+      challengeAriaLabel: 'Accesso alla challenge pratica',
+      challengeTitle: 'Prima prova un singolo step-challenge',
+      challengeCopy: 'Uno scenario pratico per mettere alla prova il tuo ragionamento.',
+      challengeButton: 'Prova la challenge',
       introCardTitle: '1. Inizia dalle basi',
       introCardAriaLabel: 'Accesso alla sezione di base',
       introCardCopy: '3 step per avere le basi necessarie.',
@@ -515,6 +519,10 @@ export const UI_COPY = {
     home: {
       eyebrow: 'Home',
       title: 'Do not know where to start?',
+      challengeAriaLabel: 'Access to the practical challenge',
+      challengeTitle: 'Try a single challenge first',
+      challengeCopy: 'One practical scenario to test your chart reasoning.',
+      challengeButton: 'Try the challenge',
       introCardTitle: '1. Start from basics',
       introCardAriaLabel: 'Access to the basics section',
       introCardCopy: '3 steps to build the necessary foundations.',

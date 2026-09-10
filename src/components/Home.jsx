@@ -31,6 +31,15 @@ function Home({ onStartIntro, onStartExercises }) {
             <h1 className="home-title">
               <span className="gradient-text">{copy.title}</span>
             </h1>
+            <div className="home-intro-entry" aria-label={copy.challengeAriaLabel}>
+              <h2 className="home-intro-entry-title">{copy.challengeTitle}</h2>
+              <p className="home-intro-entry-copy">
+                {copy.challengeCopy}
+              </p>
+              <a className="btn btn-primary btn-primary--intro" href="/articolo/come-capire-quando-entrare-trading">
+                {copy.challengeButton}
+              </a>
+            </div>
             <div className="home-intro-entry" aria-label={copy.introCardAriaLabel}>
               <h2 className="home-intro-entry-title">{copy.introCardTitle}</h2>
               <p className="home-intro-entry-copy">
