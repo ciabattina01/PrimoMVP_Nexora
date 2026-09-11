@@ -9,16 +9,16 @@ const ARTICLE_URL = `https://primo-mvp-nexora.vercel.app${ARTICLE_PATH}`
 const ARTICLE_LANGUAGE_STORAGE_KEY = 'article_challenge_language'
 const SEO_COPY = {
   it: {
-    title: 'Come capire quando entrare in un trade: quali conferme aspettare sul grafico?',
-    description: 'Hai studiato trading ma fai fatica a capire quando valutare un ingresso? Rifletti su uno scenario pratico.',
+    title: 'Esercizio sul grafico',
+    description: 'Un breve scenario sul grafico.',
   },
   en: {
-    title: 'How to know when to enter a trade: which chart confirmations should you wait for?',
-    description: 'Have you studied trading but struggle to know when to consider an entry? Reflect on a practical scenario.',
+    title: 'Chart Exercise',
+    description: 'A short chart scenario.',
   },
   fa: {
-    title: 'چگونه زمان ورود به معامله را تشخیص دهیم؟ منتظر چه تأییدهایی روی نمودار باشیم؟',
-    description: 'آیا تریدینگ را مطالعه کرده‌اید اما تشخیص زمان بررسی ورود برایتان دشوار است؟ روی یک سناریوی عملی فکر کنید.',
+    title: 'تمرین نمودار',
+    description: 'یک سناریوی کوتاه روی نمودار.',
   },
 }
 
