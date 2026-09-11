@@ -36,7 +36,7 @@ function Home({ onStartIntro, onStartExercises }) {
               <p className="home-intro-entry-copy">
                 {copy.challengeCopy}
               </p>
-              <a className="btn btn-primary btn-primary--intro" href="/articolo/come-capire-quando-entrare-trading">
+              <a className="btn btn-primary btn-primary--intro" href="/chart-exercise">
                 {copy.challengeButton}
               </a>
             </div>

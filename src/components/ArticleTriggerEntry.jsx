@@ -4,7 +4,7 @@ import LanguageGate from './LanguageGate'
 import { useLanguage } from '../i18n/language'
 import { getUiCopy } from '../i18n/uiCopy'
 
-const ARTICLE_PATH = '/articolo/come-capire-quando-entrare-trading'
+const ARTICLE_PATH = '/chart-exercise'
 const ARTICLE_URL = `https://primo-mvp-nexora.vercel.app${ARTICLE_PATH}`
 const ARTICLE_LANGUAGE_STORAGE_KEY = 'article_challenge_language'
 const SEO_COPY = {

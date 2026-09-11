@@ -18,7 +18,10 @@ import './App.css'
 const DEFAULT_PAGE = NAV_ITEMS[0]?.id || 'home'
 const STORAGE_VERSION_KEY = 'nexora_storage_version'
 const REQUIRED_STORAGE_VERSION = 'beta_2026_08_18_v1'
-const TRIGGER_ARTICLE_PATH = '/articolo/come-capire-quando-entrare-trading'
+const TRIGGER_ARTICLE_PATHS = [
+  '/chart-exercise',
+  '/articolo/come-capire-quando-entrare-trading',
+]
 
 function normalizePathname(pathname) {
   const normalized = String(pathname || '/').replace(/\/+$/, '')
@@ -27,7 +30,7 @@ function normalizePathname(pathname) {
 
 function isTriggerArticleRoute() {
   if (typeof window === 'undefined') return false
-  return normalizePathname(window.location.pathname) === TRIGGER_ARTICLE_PATH
+  return TRIGGER_ARTICLE_PATHS.includes(normalizePathname(window.location.pathname))
 }
 
 function ensureRequiredStorageVersion() {
