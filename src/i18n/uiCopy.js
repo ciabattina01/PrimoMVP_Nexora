@@ -167,9 +167,9 @@ export const UI_COPY = {
       error: 'Seleziona una lingua prima di continuare.',
     },
     article: {
-      challengeTitle: '👾📈 Partecipa alla challenge su uno scenario 👾📈',
+      challengeTitle: ' Scenario educativo su un grafico ',
       challengeQuestion: 'Sai davvero cosa aspettare prima di valutare un ingresso?',
-      startChallenge: 'Inizia challenge 👾',
+      startChallenge: 'Inizia ⬇️',
       unavailable: 'Contenuto temporaneamente non disponibile.',
       scenarioAriaLabel: 'Scenario pratico sul trigger',
       scenarioTitle: 'Scenario pratico: Trigger',
@@ -181,8 +181,8 @@ export const UI_COPY = {
       guidedReasoning: 'Ragionamento guidato',
       ctaAriaLabel: 'Invito al percorso gratuito',
       ctaTitle: 'Conosci la teoria, ma hai difficoltà a collegarla a ciò che vedi sul grafico?',
-      ctaText: 'Allenati con altri scenari guidati di Percep.',
-      ctaButton: 'Continua con altri scenari - gratuito →',
+      ctaText: '',
+      ctaButton: 'Allenati con altri scenari - gratuito →',
     },
     layout: {
       brandPrefix: '💬 Feedback o difficoltà? Scrivimi:',
