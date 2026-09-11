@@ -167,7 +167,7 @@ export const UI_COPY = {
       error: 'Seleziona una lingua prima di continuare.',
     },
     article: {
-      challengeTitle: ' Scenario educativo su un grafico ',
+      challengeTitle: ' Scenario grafico educativo  ',
       challengeQuestion: 'Sai davvero cosa aspettare prima di valutare un ingresso?',
       startChallenge: 'Inizia ⬇️',
       unavailable: 'Contenuto temporaneamente non disponibile.',
@@ -455,9 +455,9 @@ export const UI_COPY = {
       error: 'Select a language before continuing.',
     },
     article: {
-      challengeTitle: '👾📈 Take the chart challenge 👾📈',
+      challengeTitle: ' Educational chart scenario ',
       challengeQuestion: 'Do you really know what to wait for before considering an entry?',
-      startChallenge: 'Start challenge 👾',
+      startChallenge: 'Start ⬇️',
       unavailable: 'Content temporarily unavailable.',
       scenarioAriaLabel: 'Practical trigger scenario',
       scenarioTitle: 'Practical scenario: Trigger',
