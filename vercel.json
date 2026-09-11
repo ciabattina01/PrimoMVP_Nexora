@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/chart-exercise",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/chart-exercise/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/articolo/come-capire-quando-entrare-trading",
       "destination": "/index.html"
     },
