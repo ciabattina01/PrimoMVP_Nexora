@@ -195,7 +195,7 @@ export const UI_COPY = {
     profile: {
       onboardingTitle: 'Prototipo Test di Percep',
       onboardingPoints: [
-        '',
+        'Gli step **allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi**',
         'Pensato per: **chi ha studiato la teoria, ma fa fatica a collegarla al grafico**',
       ],
       testInfoTitle: 'COME SI SVOLGE IL TEST:',
