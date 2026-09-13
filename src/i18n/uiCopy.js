@@ -195,7 +195,7 @@ export const UI_COPY = {
     profile: {
       onboardingTitle: 'Prototipo Test di Percep',
       onboardingPoints: [
-        'Gli step **allenano un modo di ragionare da utilizzare su timeframe e tipi di operatività diversi**',
+        '',
         'Pensato per: **chi ha studiato la teoria, ma fa fatica a collegarla al grafico**',
       ],
       testInfoTitle: 'COME SI SVOLGE IL TEST:',
@@ -216,7 +216,7 @@ export const UI_COPY = {
       submit: 'Salva e inizia',
       profileEyebrow: 'Profilo',
       profileTitle: 'Il tuo profilo',
-      onboardingLead: 'Il percorso ti aiuta a costruire una lettura chiara del grafico, passo dopo passo.',
+      onboardingLead: '',
       onboardingInfoAriaLabel: 'Informazioni sul test',
       profileNameLabel: 'Nome',
       profileNamePlaceholder: 'es. tester_03',
@@ -504,7 +504,7 @@ export const UI_COPY = {
       submit: 'Save and start',
       profileEyebrow: 'Profile',
       profileTitle: 'Your profile',
-      onboardingLead: 'The path helps you build a clear chart reading, step by step.',
+      onboardingLead: '',
       onboardingInfoAriaLabel: 'Test information',
       profileNameLabel: 'Name',
       profileNamePlaceholder: 'e.g. tester_03',
