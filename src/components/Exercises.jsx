@@ -179,7 +179,7 @@ function renderRichText(text) {
   })
 }
 
-function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
+function Exercises({ testerId, onNavigateToProgress, onReturnToProgram, onDay1Completed }) {
   const { language } = useLanguage()
   const ui = getUiCopy(language)
   const copy = ui.exercises
@@ -456,6 +456,9 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram }) {
       if (!hasPersisted) return
 
       setCompletedDayScreen(pendingCompletionDay)
+      if (pendingCompletionDay === 1 && onDay1Completed) {
+        onDay1Completed()
+      }
       setPendingCompletionDay(null)
 
       const returnDay = selectedExercise.day

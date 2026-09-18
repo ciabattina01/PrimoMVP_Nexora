@@ -2,12 +2,21 @@ import { STORAGE_KEYS } from '../data/appConfig'
 
 const TEST_STORAGE_KEYS = {
   testerId: 'nexora_tester_id',
+  userId: 'nexora_user_id',
   risposte: 'nexora_risposte',
   valutazioni: 'nexora_valutazioni',
 }
 
 const isBrowser = typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
 const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL
+
+function createStableUserId() {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID()
+  }
+
+  return `user-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+}
 
 function normalizeExerciseKey(value) {
   if (typeof value === 'number') return value
@@ -24,6 +33,7 @@ function normalizeExerciseKey(value) {
 function toRispostaSheetPayload(risposta) {
   return {
     tester_id: risposta.tester_id,
+    user_id: risposta.user_id,
     esercizio_id: normalizeExerciseKey(risposta.esercizio_id),
     risposta_scelta: risposta.risposta_scelta,
     risposta_corretta: Boolean(risposta.risposta_corretta),
@@ -68,16 +78,27 @@ function postToAppsScript(action, payload) {
     })
 }
 
-export function saveTesterRemote({ tester_id, filtro, comportamento_blocco_grafico, uso_TV, language, timestamp }) {
+export function saveTesterRemote({ tester_id, user_id, filtro, comportamento_blocco_grafico, uso_TV, language, timestamp }) {
   if (!isBrowser || !tester_id) return
   postToAppsScript('tester', {
     tester_id,
+    user_id: user_id || getUserId(),
     filtro: filtro || '',
     comportamento_blocco_grafico: comportamento_blocco_grafico || '',
     uso_TV: uso_TV || '',
     language: language || '',
     timestamp: timestamp || new Date().toISOString(),
   })
+}
+
+export function getUserId() {
+  if (!isBrowser) return ''
+  const storedUserId = window.localStorage.getItem(TEST_STORAGE_KEYS.userId)
+  if (storedUserId) return storedUserId
+
+  const userId = createStableUserId()
+  window.localStorage.setItem(TEST_STORAGE_KEYS.userId, userId)
+  return userId
 }
 
 export function upsertRispostaRemote(risposta) {
@@ -89,6 +110,7 @@ export function updateRispostaDifficultyRemote({ tester_id, esercizio_id, diffic
   if (!isBrowser || !tester_id) return
   postToAppsScript('risposta_difficolta', {
     tester_id,
+    user_id: getUserId(),
     esercizio_id: normalizeExerciseKey(esercizio_id),
     difficolta_percepita,
     cosa_non_chiaro: cosa_non_chiaro || '',
@@ -164,6 +186,7 @@ export function getValutazioni() {
 
 export function saveRisposta({ esercizio_id, risposta_scelta, risposta_corretta }) {
   const testerId = getTesterId()
+  const userId = getUserId()
   const normalizedExerciseKey = normalizeExerciseKey(esercizio_id)
   const timestamp = new Date().toISOString()
   const risposte = getAllRisposte()
@@ -177,6 +200,7 @@ export function saveRisposta({ esercizio_id, risposta_scelta, risposta_corretta 
   const risposta = {
     ...(preservedRisposta || {}),
     tester_id: testerId,
+    user_id: userId,
     esercizio_id: normalizedExerciseKey,
     esercizio: String(normalizedExerciseKey),
     risposta_scelta,
@@ -259,9 +283,11 @@ export function updateRispostaWithDifficulty({ testerId, esercizio_id, difficolt
 
 export function saveValutazione({ valutazione, feedback_testo }) {
   const testerId = getTesterId()
+  const userId = getUserId()
   const parsedValutazione = Number.parseInt(valutazione, 10)
   const valutazionePayload = {
     tester_id: testerId,
+    user_id: userId,
     valutazione: Number.isNaN(parsedValutazione) ? 0 : parsedValutazione,
     feedback_testo: feedback_testo ?? '',
     timestamp: new Date().toISOString(),

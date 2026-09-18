@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from 'react'
 import { STORAGE_KEYS } from '../data/appConfig'
-import { saveTesterRemote } from '../utils/dataTracking'
+import { getUserId, saveTesterRemote } from '../utils/dataTracking'
 import { trackEvent } from '../utils/tracking'
 import { useLanguage } from '../i18n/language'
 import {
@@ -11,6 +11,7 @@ import {
 } from '../i18n/uiCopy'
 
 const USO_TV_STORAGE_KEY = 'uso_TV'
+const QUESTIONNAIRE_COMPLETED_KEY = 'nexora_initial_questionnaire_completed'
 
 function renderTextWithBold(text) {
   const source = String(text ?? '')
@@ -66,7 +67,7 @@ function TrashIcon(props) {
   )
 }
 
-function Profile({ onSave, onDelete }) {
+function Profile({ onSave, onDelete, articleNameEntry = false, articleQuestionnaire = false, onQuestionnaireSaved }) {
   const { language } = useLanguage()
   const ui = getUiCopy(language)
   const copy = ui.profile
@@ -83,20 +84,21 @@ function Profile({ onSave, onDelete }) {
   const [chartReadingPracticeError, setChartReadingPracticeError] = useState('')
   const [showOnboarding, setShowOnboarding] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const isArticleQuestionnaire = articleQuestionnaire
 
   useEffect(() => {
     const storedTesterId = readTesterId().trim()
     const existing = readProfile()
     const initialName = (existing.name || storedTesterId || '').trim()
     setName(initialName)
-    setShowOnboarding(!storedTesterId)
-  }, [])
+    setShowOnboarding(!storedTesterId && !articleNameEntry && !isArticleQuestionnaire)
+  }, [articleNameEntry, isArticleQuestionnaire])
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const trimmedName = name.trim()
+    const trimmedName = (isArticleQuestionnaire ? readProfile().name : name).trim()
 
-    if (!trimmedName) {
+    if (!trimmedName && !isArticleQuestionnaire) {
       return
     }
 
@@ -126,7 +128,7 @@ function Profile({ onSave, onDelete }) {
     try {
       window.localStorage.setItem(
         STORAGE_KEYS.profile,
-        JSON.stringify({ name: trimmedName, savedAt: new Date().toISOString() }),
+        JSON.stringify({ name: trimmedName, user_id: getUserId(), savedAt: new Date().toISOString() }),
       )
       window.localStorage.setItem('nexora_tester_id', trimmedName)
       if (showOnboarding) {
@@ -140,14 +142,23 @@ function Profile({ onSave, onDelete }) {
       })
       saveTesterRemote({
         tester_id: trimmedName,
+        user_id: getUserId(),
         filtro: initialSkillLevel || '',
         comportamento_blocco_grafico: graphBlockBehavior || '',
         uso_TV: chartReadingPractice || '',
         language,
         timestamp: new Date().toISOString(),
       })
+      if (isArticleQuestionnaire) {
+        window.localStorage.setItem(QUESTIONNAIRE_COMPLETED_KEY, 'true')
+      }
+      if (showOnboarding) {
+        window.localStorage.setItem(QUESTIONNAIRE_COMPLETED_KEY, 'true')
+      }
       trackEvent({ type: 'profile_saved', tester_id: trimmedName || null })
-      if (onSave) onSave(trimmedName)
+      if (isArticleQuestionnaire) {
+        if (onQuestionnaireSaved) onQuestionnaireSaved(trimmedName)
+      } else if (onSave) onSave(trimmedName)
     } catch (error) {
       console.warn('Impossibile salvare il profilo', error)
     }
@@ -172,7 +183,37 @@ function Profile({ onSave, onDelete }) {
     setShowDeleteConfirm(false)
   }
 
-  if (showOnboarding) {
+  if (articleNameEntry) {
+    return (
+      <section className="profile profile-onboarding">
+        <div className="onboarding-card">
+          <div className="onboarding-hero">
+            <h1 className="onboarding-title">Come vuoi chiamarti?</h1>
+          </div>
+          <form className="profile-form onboarding-form" onSubmit={handleSubmit}>
+            <div className="field">
+              <label htmlFor="profileName">{copy.usernameLabel}</label>
+              <input
+                id="profileName"
+                name="profileName"
+                type="text"
+                placeholder={copy.usernamePlaceholder}
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                required
+                autoFocus
+              />
+            </div>
+            <div className="form-actions">
+              <button type="submit" className="btn btn-action">Inizia</button>
+            </div>
+          </form>
+        </div>
+      </section>
+    )
+  }
+
+  if (showOnboarding || isArticleQuestionnaire) {
     return (
       <section className="profile profile-onboarding">
         <div className="onboarding-card">
@@ -183,18 +224,18 @@ function Profile({ onSave, onDelete }) {
             <p className="lead">{copy.onboardingLead}</p>
           </div>
 
-          <div className="onboarding-info" aria-label={copy.onboardingInfoAriaLabel}>
+          {!isArticleQuestionnaire && <div className="onboarding-info" aria-label={copy.onboardingInfoAriaLabel}>
             {copy.onboardingPoints.map((point) => (
               <div key={point} className="onboarding-info-item">
                 <span className="onboarding-info-dot" aria-hidden="true" />
                 <span>{renderTextWithBold(point)}</span>
               </div>
             ))}
-          </div>
+          </div>}
 
          
 
-          <div className="onboarding-test-info">
+          {!isArticleQuestionnaire && <div className="onboarding-test-info">
             <h4>{copy.testInfoTitle}</h4>
             <div className="onboarding-test-details">
               {copy.testInfoItems.map((item) => (
@@ -203,13 +244,12 @@ function Profile({ onSave, onDelete }) {
                 </div>
               ))}
             </div>
-          </div>
+          </div>}
 
           <form className="profile-form onboarding-form" onSubmit={handleSubmit}>
-            <p className="muted onboarding-form-note">
+            {!isArticleQuestionnaire && <p className="muted onboarding-form-note">
               {renderTextWithBold(copy.formNote)}
-             
-            </p>
+            </p>}
 
             <div className="onboarding-skill-card" role="group" aria-labelledby="initial-skill-title">
               <p id="initial-skill-title" className="onboarding-skill-title">{copy.initialSkillTitle}</p>
@@ -287,7 +327,7 @@ function Profile({ onSave, onDelete }) {
               )}
             </div>
 
-            <div className="field">
+            {!isArticleQuestionnaire && <div className="field">
               <label htmlFor="profileName">{copy.usernameLabel}</label>
               <input
                 id="profileName"
@@ -298,7 +338,7 @@ function Profile({ onSave, onDelete }) {
                 onChange={(event) => setName(event.target.value)}
                 required
               />
-            </div>
+            </div>}
 
             <div className="form-actions">
               <button type="submit" className="btn btn-action">

@@ -288,7 +288,7 @@ function ArticleTriggerEntry() {
         <section className="article-cta-box" aria-label={article.ctaAriaLabel}>
           <h2>{article.ctaTitle}</h2>
           <p>{article.ctaText}</p>
-          <a href="https://primo-mvp-nexora.vercel.app/" className="btn btn-action">
+          <a href="/?entry=chart-exercise" className="btn btn-action">
             {article.ctaButton}
           </a>
         </section>
