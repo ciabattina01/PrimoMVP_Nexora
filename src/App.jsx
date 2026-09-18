@@ -21,6 +21,7 @@ const REQUIRED_STORAGE_VERSION = 'beta_2026_08_18_v1'
 const ARTICLE_ENTRY_QUERY = 'entry=chart-exercise'
 const DAY1_COMPLETION_KEY = 'nexora_day1_completion_date'
 const QUESTIONNAIRE_COMPLETED_KEY = 'nexora_initial_questionnaire_completed'
+const GUIDED_FLOW_STARTED_KEY = 'nexora_guided_flow_started'
 const TRIGGER_ARTICLE_PATHS = [
   '/chart-exercise',
   '/articolo/come-capire-quando-entrare-trading',
@@ -49,6 +50,11 @@ function hasStoredQuestionnaire() {
 function hasCompletedDayOne() {
   if (typeof window === 'undefined' || !window.localStorage) return false
   return Boolean(window.localStorage.getItem(DAY1_COMPLETION_KEY))
+}
+
+function hasStartedGuidedFlow() {
+  if (typeof window === 'undefined' || !window.localStorage) return false
+  return window.localStorage.getItem(GUIDED_FLOW_STARTED_KEY) === 'true'
 }
 
 function ensureRequiredStorageVersion() {
@@ -88,17 +94,21 @@ function readProfileName() {
 function App() {
   ensureRequiredStorageVersion()
   const showTriggerArticlePage = isTriggerArticleRoute()
-  const [articleFlow, setArticleFlow] = useState(() => isArticleEntryRequested())
+  const [guidedFlow, setGuidedFlow] = useState(() => {
+    const savedProfile = readProfileName()
+    return isArticleEntryRequested() || !savedProfile || hasStartedGuidedFlow()
+  })
   const { isLanguageConfirmed } = useLanguage()
 
   const [profileName, setProfileName] = useState(() => readProfileName())
   const [activePage, setActivePage] = useState(() => {
     const savedProfile = readProfileName()
-    if (isArticleEntryRequested() && savedProfile && hasCompletedDayOne() && !hasStoredQuestionnaire()) {
+    const shouldUseGuidedFlow = isArticleEntryRequested() || hasStartedGuidedFlow()
+    if (savedProfile && hasCompletedDayOne() && !hasStoredQuestionnaire()) {
       return 'profile'
     }
-    if (isArticleEntryRequested() && savedProfile) return 'exercises'
-    if (isArticleEntryRequested()) return 'profile'
+    if (shouldUseGuidedFlow && savedProfile) return 'exercises'
+    if (shouldUseGuidedFlow) return 'profile'
     return savedProfile ? DEFAULT_PAGE : 'profile'
   })
   const [progressInitialDay, setProgressInitialDay] = useState(null)
@@ -141,7 +151,7 @@ function App() {
     }
 
     setProfileName(normalizedName)
-    setActivePage(articleFlow ? 'exercises' : 'home')
+    setActivePage(guidedFlow ? 'exercises' : 'home')
     trackEvent({ type: 'navigation', destination: 'home', tester_id: normalizedName })
   }
 
@@ -150,12 +160,12 @@ function App() {
       window.localStorage.setItem(QUESTIONNAIRE_COMPLETED_KEY, 'true')
     }
     setProfileName(name || profileName)
-    setArticleFlow(false)
+    setGuidedFlow(false)
     setActivePage('exercises')
   }
 
   const handleDay1Completed = () => {
-    if (articleFlow && !hasStoredQuestionnaire()) {
+    if (!hasStoredQuestionnaire()) {
       setActivePage('profile')
     }
   }
@@ -174,7 +184,7 @@ function App() {
     clearLocalTestData()
 
     setProfileName('')
-    setArticleFlow(false)
+    setGuidedFlow(false)
     setActivePage('profile')
   }
 
@@ -191,7 +201,7 @@ function App() {
       <div className="welcome-screen">
         <Profile
           onSave={handleProfileSaved}
-          articleNameEntry={articleFlow}
+          articleNameEntry={guidedFlow}
           onDelete={handleProfileDeleted}
         />
       </div>
@@ -226,8 +236,8 @@ function App() {
         return (
           <Profile
             onSave={handleProfileSaved}
-            articleNameEntry={articleFlow && !profileName}
-            articleQuestionnaire={articleFlow && Boolean(profileName) && hasCompletedDayOne() && !hasStoredQuestionnaire()}
+            articleNameEntry={guidedFlow && !profileName}
+            articleQuestionnaire={Boolean(profileName) && hasCompletedDayOne() && !hasStoredQuestionnaire()}
             onQuestionnaireSaved={handleQuestionnaireSaved}
             onDelete={handleProfileDeleted}
           />

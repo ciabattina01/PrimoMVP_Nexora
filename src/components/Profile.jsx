@@ -12,6 +12,7 @@ import {
 
 const USO_TV_STORAGE_KEY = 'uso_TV'
 const QUESTIONNAIRE_COMPLETED_KEY = 'nexora_initial_questionnaire_completed'
+const GUIDED_FLOW_STARTED_KEY = 'nexora_guided_flow_started'
 
 function renderTextWithBold(text) {
   const source = String(text ?? '')
@@ -131,6 +132,9 @@ function Profile({ onSave, onDelete, articleNameEntry = false, articleQuestionna
         JSON.stringify({ name: trimmedName, user_id: getUserId(), savedAt: new Date().toISOString() }),
       )
       window.localStorage.setItem('nexora_tester_id', trimmedName)
+      if (articleNameEntry) {
+        window.localStorage.setItem(GUIDED_FLOW_STARTED_KEY, 'true')
+      }
       if (showOnboarding) {
         window.localStorage.setItem(USO_TV_STORAGE_KEY, chartReadingPractice || '')
       }

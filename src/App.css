@@ -27,7 +27,7 @@
   left: 0;
   z-index: 2;
   min-width: 230px;
-  max-height: calc(100vh - 90px);
+  max-height: calc(100vh - 100px);
   padding: 8px;
   display: grid;
   gap: 4px;
@@ -236,7 +236,8 @@
 }
 
 .top-nav-header {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 20;
   isolation: isolate;
   overflow: visible;
@@ -2831,7 +2832,7 @@
   .sections-menu-list {
     right: 0;
     min-width: 0;
-    max-height: calc(100dvh - 108px);
+    max-height: calc(100dvh - 160px);
   }
 
   .top-nav-profile {
