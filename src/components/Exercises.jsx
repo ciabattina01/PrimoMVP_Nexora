@@ -38,24 +38,6 @@ function formatExerciseTitle(exercise) {
   return `Step ${exerciseNumber} — ${title}`
 }
 
-function getGeneralObjectiveSummary(correctSteps, language) {
-  if (!correctSteps.length) {
-    return language === 'en'
-      ? 'No step correctly completed yet'
-      : 'Nessuno step ancora completato correttamente'
-  }
-
-  if (correctSteps.length === 1) {
-    return language === 'en'
-      ? `🎉You understood step ${correctSteps[0]}`
-      : `🎉Hai capito lo step ${correctSteps[0]}`
-  }
-
-  return language === 'en'
-    ? `🎉You understood steps ${correctSteps.join(', ')}`
-    : `🎉Hai capito gli step ${correctSteps.join(', ')}`
-}
-
 function formatStepList(stepNumbers, language) {
   if (stepNumbers.length <= 1) {
     return String(stepNumbers[0] || '')
@@ -185,7 +167,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram, onDay1Co
   const copy = ui.exercises
   const dayScenarioLabels = copy.dayScenarioLabels
   const dailyObjectives = copy.dailyObjectives
-  const generalObjectives = copy.generalObjectives
   const dayCompletionMessages = copy.dayCompletionMessages
 
   const [activeDay, setActiveDay] = useState(1)
@@ -842,23 +823,6 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram, onDay1Co
           )}
         </div>
 
-        <div className="exercise-progress exercise-progress-general">
-          <p className="exercise-goal-title">{copy.goalsGeneralTitle}</p>
-          {generalObjectives.map((objective) => {
-            const correctSteps = objective.steps.filter((stepNumber) => {
-              const risposta = risposteByExercise.get(stepNumber)
-              return Boolean(risposta?.risposta_corretta)
-            })
-            const objectiveSummary = getGeneralObjectiveSummary(correctSteps, language)
-
-            return (
-              <div key={objective.title} className="exercise-general-objective-item">
-                <p className="exercise-goal-line">{objective.title}</p>
-                <p className="exercise-goal-line exercise-goal-line-secondary">{objectiveSummary}</p>
-              </div>
-            )
-          })}
-        </div>
       </div>
 
       <div className="exercise-day-header">

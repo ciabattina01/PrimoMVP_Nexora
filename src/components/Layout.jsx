@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useLanguage } from '../i18n/language'
 import { getUiCopy } from '../i18n/uiCopy'
 
@@ -195,6 +196,7 @@ function renderFeedbackBrand(className, ui) {
 function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, children }) {
   const { language } = useLanguage()
   const ui = getUiCopy(language)
+  const [isSectionsOpen, setIsSectionsOpen] = useState(false)
 
   const renderNavButtons = (variant) =>
     navItems.map((item) => {
@@ -259,9 +261,39 @@ function Layout({ navItems, activeItem, onSelectNav, profileName, showSidebar, c
           <span className="top-logo-dot" />
           {renderFeedbackBrand('top-brand-text', ui)}
         </div>
-        <nav className="top-nav" aria-label="Navigazione principale">
-          {renderNavButtons('top')}
-        </nav>
+        <div className="sections-menu">
+          <button
+            type="button"
+            className="sections-menu-toggle"
+            aria-expanded={isSectionsOpen}
+            aria-controls="sections-menu-list"
+            onClick={() => setIsSectionsOpen((open) => !open)}
+          >
+            <span aria-hidden="true">☰</span>
+            <span>{ui.layout.sections}</span>
+          </button>
+          {isSectionsOpen && (
+            <nav id="sections-menu-list" className="sections-menu-list" aria-label="Navigazione principale">
+              {navItems.map((item) => {
+                const isActive = activeItem === item.id
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={`sections-menu-item${isActive ? ' is-active' : ''}`}
+                    onClick={() => {
+                      onSelectNav(item.id)
+                      setIsSectionsOpen(false)
+                    }}
+                  >
+                    <span className="nav-icon" aria-hidden="true">{resolveIcon(item.icon)}</span>
+                    <span className="nav-label">{ui.nav[item.id] || item.label}</span>
+                  </button>
+                )
+              })}
+            </nav>
+          )}
+        </div>
         <div className="top-nav-profile" aria-label="Dettagli piano">
           <div className="profile-chip profile-chip--top">
             <span className="chip-plan">{ui.layout.topPlan}</span>

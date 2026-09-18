@@ -1,3 +1,58 @@
+.sections-menu {
+  position: relative;
+  z-index: 5;
+}
+
+.sections-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--color-primary-dark);
+  border-radius: 12px;
+  padding: 9px 14px;
+  background: #ffffff;
+  color: var(--color-primary-dark);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sections-menu-toggle:is(:hover, :focus-visible) {
+  background: var(--color-primary-light);
+}
+
+.sections-menu-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: 230px;
+  padding: 8px;
+  display: grid;
+  gap: 4px;
+  border: 1px solid rgba(79, 127, 97, 0.22);
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 18px 36px -22px rgba(24, 32, 27, 0.38);
+}
+
+.sections-menu-item {
+  all: unset;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 9px;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+}
+
+.sections-menu-item:is(:hover, :focus-visible),
+.sections-menu-item.is-active {
+  background: var(--color-primary-light);
+}
+
 :root {
   --color-primary: #6b9e7d;
   --color-primary-dark: #4f7f61;
@@ -2662,6 +2717,136 @@
 
 .intro-feedback-text {
   white-space: pre-line;
+}
+
+/* Compact top navigation and exercise entry view. */
+.top-nav-header {
+  gap: clamp(10px, 2vw, 20px);
+  padding-block: 10px;
+}
+
+.top-nav-brand {
+  gap: 8px;
+}
+
+.top-brand-text {
+  font-size: 0.78rem;
+}
+
+.top-nav-profile {
+  padding: 5px 10px;
+  font-size: 0.76rem;
+}
+
+.profile-chip--top {
+  padding: 6px 10px;
+}
+
+.main-inner--topnav {
+  padding-block-start: clamp(12px, 2.2vw, 24px);
+}
+
+.exercises {
+  gap: 18px;
+}
+
+.exercise-goals-grid {
+  display: block;
+}
+
+.exercise-progress {
+  padding: 10px 14px;
+  gap: 4px;
+}
+
+@media (max-width: 760px) {
+  .top-nav-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px 12px;
+    padding-block: 8px;
+  }
+
+  .top-nav-brand {
+    min-width: 0;
+  }
+
+  .top-brand-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .sections-menu {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .sections-menu-toggle {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sections-menu-list {
+    right: 0;
+    min-width: 0;
+  }
+
+  .top-nav-profile {
+    justify-self: end;
+  }
+
+  .exercises {
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .exercise-head {
+    gap: 8px;
+  }
+
+  .exercise-head > .btn {
+    padding-block: 9px;
+  }
+
+  .exercise-goal-line {
+    line-height: 1.3;
+  }
+
+  .exercise-day-header {
+    gap: 5px;
+  }
+
+  .exercise-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    padding: 16px 18px;
+  }
+
+  .exercise-card-content {
+    gap: 8px;
+  }
+
+  .exercise-body {
+    gap: 6px;
+  }
+
+  .exercise-card-actions {
+    align-items: stretch;
+    justify-content: center;
+    min-width: 0;
+    width: 120px;
+  }
+
+  .exercise-card-actions .btn {
+    width: 100%;
+    padding-inline: 14px;
+  }
+
+  .exercise-head .page-title {
+    font-size: clamp(1.7rem, 8vw, 2.2rem);
+  }
 }
 
 .intro-myfxbook-layout {

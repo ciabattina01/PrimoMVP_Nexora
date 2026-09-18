@@ -185,6 +185,7 @@ export const UI_COPY = {
       ctaButton: 'Allenati con 9 scenari progressivi, gratuito →',
     },
     layout: {
+      sections: 'Sezioni',
       brandPrefix: '💬 Feedback o difficoltà? Scrivimi:',
       prototypeGuided: 'Prototipo guidato',
       sidebarPlan: 'PIANO ESPLORA ATTUALE - GRATUITO',
@@ -326,7 +327,7 @@ export const UI_COPY = {
       infoText:
         'Gli step servono ad **allenare un modo di ragionare sul grafico**, un passo alla volta.\n\nIl focus non è memorizzare tutti i termini tecnici, ma imparare a farsi le **domande giuste, capire cosa osservare e riconoscere ciò che conta davvero su un grafico.**\n\nQuesto modo di ragionare può essere applicato su **timeframe e tipi di operatività diversi.**\n\nNel percorso partiremo da:\n\n**Giorno 1 e 2 — Grafici semplici e qualitativi**\n\n**Obiettivo:** imparare cosa osservare sul grafico e distinguere le informazioni che contano davvero.\n\n**Giorno 3 — Primo grafico reale**\n\n**Obiettivo:** allenare l’occhio su una situazione più realistica e complessa, applicando però lo stesso ragionamento imparato nei giorni precedenti.',
       eyebrow: 'Esercitati',
-      title: 'Ordine di difficoltà dal Giorno 1 al 3',
+      title: 'Inizia ad allenarti',
       goalsGeneralTitle: '🎯 Obiettivi generali',
       dayPill: 'Giorni del programma',
       hintNoProfile: 'Salva il profilo per abilitare il tracciamento quando gli step saranno attivi.',
@@ -473,6 +474,7 @@ export const UI_COPY = {
       ctaButton: 'Continue with more free scenarios →',
     },
     layout: {
+      sections: 'Sections',
       brandPrefix: '💬 Feedback or difficulty? Write to me:',
       prototypeGuided: 'Guided prototype',
       sidebarPlan: 'CURRENT EXPLORE PLAN - FREE',
@@ -614,7 +616,7 @@ export const UI_COPY = {
       infoText:
         'These steps are meant to **train a way of reasoning on charts**, one step at a time.\n\nThe focus is not memorizing every technical term, but learning to ask the **right questions, understand what to observe, and recognize what really matters on a chart.**\n\nThis reasoning method can be applied across **different timeframes and trading styles.**\n\nThe path starts with:\n\n**Day 1 and 2 — Simple and qualitative charts**\n\n**Goal:** learn what to observe and distinguish what really matters.\n\n**Day 3 — First real chart**\n\n**Goal:** train your eye on a more realistic and complex scenario while applying the same reasoning learned in the previous days.',
       eyebrow: 'Practice',
-      title: 'Difficulty order from Day 1 to 3',
+      title: 'Start training',
       goalsGeneralTitle: '🎯 General goals',
       dayPill: 'Program days',
       hintNoProfile: 'Save your profile to enable tracking when steps are active.',
