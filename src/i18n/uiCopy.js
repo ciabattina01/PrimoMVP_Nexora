@@ -318,7 +318,7 @@ export const UI_COPY = {
       reflectionTitle: "C'è qualcosa che ti è rimasto poco chiaro? (facoltativo)",
       reflectionPlaceholder: 'Scrivi qui eventuali osservazioni',
       exerciseMetaAriaLabel: 'Dettagli didattici',
-      daysHeaderText: 'Aspetta di completare i giorni precedenti per sbloccare i nuovi step.',
+      daysHeaderText: '',
       next: 'Vai al prossimo ➡️',
       returnProgram: 'Torna al programma',
       saveAndCloseDay: 'Salva e chiudi il giorno',
@@ -327,7 +327,7 @@ export const UI_COPY = {
       infoText:
         'Gli step servono ad **allenare un modo di ragionare sul grafico**, un passo alla volta.\n\nIl focus non è memorizzare tutti i termini tecnici, ma imparare a farsi le **domande giuste, capire cosa osservare e riconoscere ciò che conta davvero su un grafico.**\n\nQuesto modo di ragionare può essere applicato su **timeframe e tipi di operatività diversi.**\n\nNel percorso partiremo da:\n\n**Giorno 1 e 2 — Grafici semplici e qualitativi**\n\n**Obiettivo:** imparare cosa osservare sul grafico e distinguere le informazioni che contano davvero.\n\n**Giorno 3 — Primo grafico reale**\n\n**Obiettivo:** allenare l’occhio su una situazione più realistica e complessa, applicando però lo stesso ragionamento imparato nei giorni precedenti.',
       eyebrow: 'Esercitati',
-      title: 'Inizia ad allenarti',
+      title: 'Inizia ad allenarti⬇️',
       goalsGeneralTitle: '🎯 Obiettivi generali',
       dayPill: 'Giorni del programma',
       hintNoProfile: 'Salva il profilo per abilitare il tracciamento quando gli step saranno attivi.',
