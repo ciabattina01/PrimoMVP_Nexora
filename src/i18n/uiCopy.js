@@ -182,7 +182,7 @@ export const UI_COPY = {
       ctaAriaLabel: 'Invito al percorso gratuito',
       ctaTitle: 'Conosci la teoria, ma hai difficoltà a collegarla a ciò che vedi sul grafico?',
       ctaText: '',
-      ctaButton: 'Allenati con altri scenari - gratuito →',
+      ctaButton: 'Allenati con 9 scenari progressivi, gratuito →',
     },
     layout: {
       brandPrefix: '💬 Feedback o difficoltà? Scrivimi:',
