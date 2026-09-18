@@ -188,7 +188,7 @@ function Profile({ onSave, onDelete, articleNameEntry = false, articleQuestionna
       <section className="profile profile-onboarding">
         <div className="onboarding-card">
           <div className="onboarding-hero">
-            <h1 className="onboarding-title">Come vuoi chiamarti?</h1>
+            <h1 className="onboarding-title">{copy.articleNameTitle}</h1>
           </div>
           <form className="profile-form onboarding-form" onSubmit={handleSubmit}>
             <div className="field">
@@ -205,7 +205,7 @@ function Profile({ onSave, onDelete, articleNameEntry = false, articleQuestionna
               />
             </div>
             <div className="form-actions">
-              <button type="submit" className="btn btn-action">Inizia</button>
+              <button type="submit" className="btn btn-action">{copy.articleNameSubmit}</button>
             </div>
           </form>
         </div>

@@ -1,6 +1,7 @@
 import { createContext, createElement, useContext, useMemo, useState } from 'react'
 
 export const LANGUAGE_STORAGE_KEY = 'language'
+export const ARTICLE_LANGUAGE_STORAGE_KEY = 'article_challenge_language'
 export const DEFAULT_LANGUAGE = 'it'
 const SUPPORTED_LANGUAGES = new Set(['it', 'en'])
 
@@ -11,6 +12,18 @@ function normalizeLanguage(value) {
 
 function readStoredLanguage() {
   if (typeof window === 'undefined' || !window.localStorage) return ''
+
+  const isArticleEntry = new URLSearchParams(window.location.search).get('entry') === 'chart-exercise'
+  if (isArticleEntry && window.sessionStorage) {
+    const articleLanguage = normalizeLanguage(
+      window.sessionStorage.getItem(ARTICLE_LANGUAGE_STORAGE_KEY),
+    )
+    if (articleLanguage) {
+      window.localStorage.setItem(LANGUAGE_STORAGE_KEY, articleLanguage)
+      return articleLanguage
+    }
+  }
+
   return normalizeLanguage(window.localStorage.getItem(LANGUAGE_STORAGE_KEY))
 }
 

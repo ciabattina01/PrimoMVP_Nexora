@@ -25,10 +25,13 @@
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
+  z-index: 2;
   min-width: 230px;
+  max-height: calc(100vh - 90px);
   padding: 8px;
   display: grid;
   gap: 4px;
+  overflow-y: auto;
   border: 1px solid rgba(79, 127, 97, 0.22);
   border-radius: 14px;
   background: #ffffff;
@@ -233,6 +236,10 @@
 }
 
 .top-nav-header {
+  position: relative;
+  z-index: 20;
+  isolation: isolate;
+  overflow: visible;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -400,6 +407,8 @@
 }
 
 .main--topnav {
+  position: relative;
+  z-index: 1;
   width: 100%;
 }
 
@@ -2822,6 +2831,7 @@
   .sections-menu-list {
     right: 0;
     min-width: 0;
+    max-height: calc(100dvh - 108px);
   }
 
   .top-nav-profile {

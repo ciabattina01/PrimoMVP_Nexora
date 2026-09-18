@@ -1,12 +1,11 @@
 import { Fragment, useEffect, useMemo, useState } from 'react'
 import { getExerciseById } from '../data/exercises'
 import LanguageGate from './LanguageGate'
-import { useLanguage } from '../i18n/language'
+import { ARTICLE_LANGUAGE_STORAGE_KEY, useLanguage } from '../i18n/language'
 import { getUiCopy } from '../i18n/uiCopy'
 
 const ARTICLE_PATH = '/chart-exercise'
 const ARTICLE_URL = `https://primo-mvp-nexora.vercel.app${ARTICLE_PATH}`
-const ARTICLE_LANGUAGE_STORAGE_KEY = 'article_challenge_language'
 const SEO_COPY = {
   it: {
     title: 'Esercizio sul grafico',
@@ -188,7 +187,7 @@ function applySeoTags(language) {
 
 function ArticleTriggerEntry() {
   const [showReasoning, setShowReasoning] = useState(false)
-  const { language: globalLanguage } = useLanguage()
+  const { language: globalLanguage, setLanguage } = useLanguage()
   const [articleLanguage, setArticleLanguage] = useState(() => readArticleLanguage())
   const language = articleLanguage || globalLanguage
   const ui = getUiCopy(language)
@@ -199,6 +198,7 @@ function ArticleTriggerEntry() {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       window.sessionStorage.setItem(ARTICLE_LANGUAGE_STORAGE_KEY, nextLanguage)
     }
+    setLanguage(nextLanguage)
     setArticleLanguage(nextLanguage)
   }
 
