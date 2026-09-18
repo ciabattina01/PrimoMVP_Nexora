@@ -794,33 +794,36 @@ function Exercises({ testerId, onNavigateToProgress, onReturnToProgram, onDay1Co
   return (
     <section className="exercises">
       <header className="exercise-head">
-        <button
-          type="button"
-          className="btn btn-outline"
-          onClick={() => setIsExercisesInfoOpen((prev) => !prev)}
-          aria-expanded={isExercisesInfoOpen}
-          style={{ alignSelf: 'flex-start', width: 'auto' }}
-        >
-          {copy.infoToggle}
-        </button>
-        {isExercisesInfoOpen && (
-          <div>
-            {renderRichText(copy.infoText)}
-          </div>
-        )}
         <span className="eyebrow">{copy.eyebrow}</span>
         <h1 className="page-title">{copy.title}</h1>
       </header>
 
       <div className="exercise-goals-grid">
         <div className="exercise-progress" aria-live="polite">
-          <p className="exercise-goal-title">{currentObjective.title}</p>
-          {currentObjective.lines.map((line) => (
-            <p key={line} className="exercise-goal-line">{line}</p>
-          ))}
-          {currentObjective.divider && (
-            <p className="exercise-goal-divider">{currentObjective.divider}</p>
-          )}
+          <div className="exercise-goal-copy">
+            <p className="exercise-goal-title">{currentObjective.title}</p>
+            {currentObjective.lines.map((line) => (
+              <p key={line} className="exercise-goal-line">{line}</p>
+            ))}
+            {currentObjective.divider && (
+              <p className="exercise-goal-divider">{currentObjective.divider}</p>
+            )}
+          </div>
+          <div className="exercise-goal-info">
+            <button
+              type="button"
+              className="btn btn-outline"
+              onClick={() => setIsExercisesInfoOpen((prev) => !prev)}
+              aria-expanded={isExercisesInfoOpen}
+            >
+              {copy.infoToggle}
+            </button>
+            {isExercisesInfoOpen && (
+              <div className="exercise-goal-info-content">
+                {renderRichText(copy.infoText)}
+              </div>
+            )}
+          </div>
         </div>
 
       </div>
